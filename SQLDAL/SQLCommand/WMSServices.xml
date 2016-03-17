@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SqlCommand>
+  <!--产品信息 -->
+  <Command ID="InsertProduct">
+    <CommandString>
+      INSERT INTO CMD_PRODUCT(ProductCode,ProductNo, ProductName, ProductEName, Spec, Propertity,Weight, ModelNo, StandardNo, PartNo, Memo,Creator, CreateDate, Updater, UpdateDate, AreaCode,CategoryCode,FactoryID)
+      values(@ProductWMSCode, @ProductCode, @ProductName, @ProductEName, @Size, @AlloyTemper, @Weight, @ProductType, @StandardNo, @PartNo, @Memo,'WebServices',getdate(),'WebServices',getdate(),'001','0002','0000000001')
+    </CommandString>
+  </Command>
+
+  <Command ID="UpdateProduct">
+    <CommandString>
+      update CMD_PRODUCT set ProductNo=@ProductCode,ProductName=@ProductName, ProductEName=@ProductEName, Spec=@Size, Propertity=@AlloyTemper,Weight=@Weight,
+      ModelNo=@ProductType, StandardNo=@StandardNo, PartNo=@PartNo, Memo=@Memo,UpdateDate=getdate() where ProductNo=@ProductOldCode and Spec=@OldSize
+    </CommandString>
+  </Command>
+
+  <Command ID="InsertBillTemp">
+    <CommandString>
+      INSERT INTO WMS_BillTemp(BillType, BillNo, BillDate, BatchNo, ProductCode, Size, Weight, Quantity, Memo,CreateDate)
+      values(@BillType,@BillNo,@BillDate,@BatchNo,@ProductCode,@Size,@Weight,@Quantity,@Memo,getdate())
+    </CommandString>
+  </Command>
+
+
+  <Command ID="DeleteBillTemp">
+    <CommandString>
+      delete from WMS_BillTemp where BillNo=@BillNo and BillType=@BillType
+    </CommandString>
+  </Command>
+
+
+
+  <!--入库单据-->
+  <Command ID="InsertInStock">
+    <CommandString>
+      insert into WMS_BillMaster(BillID,BillDate,BillTypeCode,FactoryID,SourceBillNo,Memo,BatchNo,Creator,CreateDate,Updater,UpdateDate,State,Checker,CheckDate)
+      select distinct @BillID,BillDate,'001','00001',BillNo,'','','WebServices',GETDATE(),'WebServices',GETDATE(),1,'WebServices',GETDATE() from WMS_BillTemp
+      where BillNo=@BillNo and BillType='IS'
+    </CommandString>
+  </Command>
+  <Command ID="InsertInStockDetail">
+    <CommandString>
+      insert into WMS_BillDetail(BillID,RowID,ProductCode,Quantity,Weight,Barcode,Memo)
+      select @BillID,ROW_NUMBER() over(order by wms_billtemp.productcode,size),CMD_Product.ProductCode, Quantity,wms_billtemp.Weight,BatchNo,wms_billtemp.Memo
+      from WMS_BillTemp
+      left join CMD_Product on WMS_BillTemp.ProductCode=CMD_Product.ProductNo and WMS_BillTemp.Size=CMD_Product.Spec
+      where BillNo=@BillNo and BillType='IS'
+    </CommandString>
+  </Command>
+  
+  <Command ID="SpInstockTask">
+    <CommandString>
+      Sp_InstockTask
+    </CommandString>
+  </Command>
+  <!--出库单据-->
+  <Command ID="InsertOutStock">
+    <CommandString>
+      insert into WMS_BillMaster(BillID,BillDate,BillTypeCode,SourceBillNo,Memo,BatchNo,Creator,CreateDate,Updater,UpdateDate,State,Checker,CheckDate)
+      select distinct @BillID,BillDate,'020',BillNo,'','','WebServices',GETDATE(),'WebServices',GETDATE(),1,'WebServices',GETDATE() from WMS_BillTemp
+      where BillNo=@BillNo and BillType='OS'
+    </CommandString>
+  </Command>
+  <Command ID="InsertInStockDetail">
+    <CommandString>
+      insert into WMS_BillDetail(BillID,RowID,ProductCode,Quantity,Weight,Barcode,Memo)
+      select @BillID,ROW_NUMBER() over(order by wms_billtemp.productcode,size),CMD_Product.ProductCode, Quantity,wms_billtemp.Weight,BatchNo,wms_billtemp.Memo
+      from WMS_BillTemp
+      left join CMD_Product on WMS_BillTemp.ProductCode=CMD_Product.ProductNo and WMS_BillTemp.Size=CMD_Product.Spec
+      where BillNo=@BillNo and BillType='OS'
+    </CommandString>
+  </Command>
+
+  <Command ID="SpOutstockTask">
+    <CommandString>
+      Sp_OutstockTask
+    </CommandString>
+  </Command>
+
+  <Command ID="SelectBillSource">
+    <CommandString>
+      select main.SourceBillNo as BillNo,sub.Barcode as BatchNo,task.AreaCode
+      from WMS_BillMaster Main
+      left join WMS_BillDetail Sub on main.BillID=sub.BillID
+      left join WCS_TASK task on task.ProductCode=sub.ProductCode and task.Barcode=sub.Barcode
+      where main.BillID=@BillID
+    </CommandString>
+  </Command>
+  <Command ID="UpdateBillERP">
+    <CommandString>
+      update WMS_BillMaster set IsUpERP=@IsUpERP,ErpMSG=@ErpMSG where BillID=@BillID
+    </CommandString>
+  </Command>
+
+  
+  
+</SqlCommand>

@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="10/14/2015 22:11:24" ReportInfo.Modified="03/11/2016 10:13:17" ReportInfo.CreatorVersion="1.9.9.0">
+  <Dictionary>
+    <TableDataSource Name="ProductQuery" ReferenceName="ProductQuery" DataType="System.Int32" Enabled="true">
+      <Column Name="ProductCode" DataType="System.String"/>
+      <Column Name="ProductName" DataType="System.String"/>
+      <Column Name="AreaName" DataType="System.String"/>
+      <Column Name="CategoryName" DataType="System.String"/>
+      <Column Name="Unit" DataType="System.String"/>
+      <Column Name="Spec" DataType="System.String"/>
+      <Column Name="Quantity" DataType="System.Int32"/>
+      <Column Name="LockQty" DataType="System.Int32"/>
+      <Column Name="ModelNo" DataType="System.String"/>
+    </TableDataSource>
+  </Dictionary>
+  <ReportPage Name="Page1" LeftMargin="3" RightMargin="2">
+    <PageHeaderBand Name="PageHeader1" Width="774.9" Height="62.26">
+      <TableObject Name="Table1" Left="6.48" Top="43.36" Width="744.63" Height="18.9" Border.Lines="All">
+        <TableColumn Name="Column21" Width="93.31"/>
+        <TableColumn Name="Column1" Width="82.35"/>
+        <TableColumn Name="Column2" Width="93.31"/>
+        <TableColumn Name="Column23" Width="131.11"/>
+        <TableColumn Name="Column35"/>
+        <TableColumn Name="Column3" Width="72.88"/>
+        <TableColumn Name="Column24" Width="74.41"/>
+        <TableColumn Name="Column17" Width="74.41"/>
+        <TableColumn Name="Column33" Width="56.7"/>
+        <TableRow Name="Row1">
+          <TableCell Name="Cell21" Border.Lines="Right" Text="库区" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell1" Border.Lines="Right" Text="产品类型" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell2" Border.Lines="Right" Text="产品编号" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell23" Border.Lines="Right" Text="品名" Font="宋体, 9pt"/>
+          <TableCell Name="Cell35" Border.Lines="Right" Text="型号" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell3" Border.Lines="Right" Text="规格" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell24" Border.Lines="Right" Text="库存数量" HorzAlign="Right" Font="宋体, 9pt"/>
+          <TableCell Name="Cell17" Border.Lines="Right" Text="分拣数量" HorzAlign="Right" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell33" Text="单位" Font="宋体, 9pt"/>
+        </TableRow>
+      </TableObject>
+      <TextObject Name="Text1" Left="6.48" Top="5.28" Width="708.75" Height="37.8" Text="库存汇总表" HorzAlign="Center" VertAlign="Center" Font="宋体, 12pt, style=Bold"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="66.26" Width="774.9" Height="28.35" DataSource="ProductQuery">
+      <TableObject Name="Table2" Left="6.48" Width="744.63" Height="28.35" Border.Lines="All">
+        <TableColumn Name="Column25" Width="93.31"/>
+        <TableColumn Name="Column26" Width="82.35"/>
+        <TableColumn Name="Column27" Width="93.31"/>
+        <TableColumn Name="Column28" Width="131.11"/>
+        <TableColumn Name="Column36"/>
+        <TableColumn Name="Column29" Width="72.88"/>
+        <TableColumn Name="Column31" Width="74.41"/>
+        <TableColumn Name="Column32" Width="74.41"/>
+        <TableColumn Name="Column34" Width="56.7"/>
+        <TableRow Name="Row2" Height="28.35">
+          <TableCell Name="Cell25" Border.Lines="Right" Text="[ProductQuery.AreaName]" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell26" Border.Lines="Right" Text="[ProductQuery.CategoryName]" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell27" Border.Lines="Right" Text="[ProductQuery.ProductCode]" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell28" Border.Lines="Right" Text="[ProductQuery.ProductName]" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell36" Border.Lines="Right" Text="[ProductQuery.ModelNo]" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell29" Border.Lines="Right" Text="[ProductQuery.Spec]" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell31" Border.Lines="Right" Text="[ProductQuery.Quantity]" HorzAlign="Right" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell32" Border.Lines="Right" Text="[ProductQuery.LockQty]" HorzAlign="Right" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell34" Text="[ProductQuery.Unit]" VertAlign="Center" Font="宋体, 9pt"/>
+        </TableRow>
+      </TableObject>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="98.61" Width="774.9"/>
+  </ReportPage>
+</Report>

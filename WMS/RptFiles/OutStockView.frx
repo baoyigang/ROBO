@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="03/12/2016 21:34:44" ReportInfo.Modified="03/15/2016 20:27:39" ReportInfo.CreatorVersion="1.9.9.0">
+  <Dictionary>
+    <TableDataSource Name="OutStockView" ReferenceName="OutStockView" DataType="System.Int32" Enabled="true">
+      <Column Name="BillID" DataType="System.String"/>
+      <Column Name="RowID" DataType="System.Byte"/>
+      <Column Name="ProductCode" DataType="System.String"/>
+      <Column Name="Quantity" DataType="System.Int32"/>
+      <Column Name="Weight" DataType="System.Decimal"/>
+      <Column Name="Barcode" DataType="System.String"/>
+      <Column Name="CellCode" DataType="System.String"/>
+      <Column Name="NewCellCode" DataType="System.String"/>
+      <Column Name="Memo" DataType="System.String"/>
+      <Column Name="ProductName" DataType="System.String"/>
+      <Column Name="CategoryName" DataType="System.String"/>
+      <Column Name="Unit" DataType="System.String"/>
+      <Column Name="ModelNo" DataType="System.String"/>
+      <Column Name="BillDate" DataType="System.DateTime"/>
+      <Column Name="MainMemo" DataType="System.String"/>
+      <Column Name="FactoryName" DataType="System.String"/>
+      <Column Name="RowNum" DataType="System.Int32"/>
+    </TableDataSource>
+  </Dictionary>
+  <ReportPage Name="Page1" PaperHeight="145" TopMargin="3" BottomMargin="3">
+    <PageHeaderBand Name="PageHeader1" Width="718.2" Height="122.63">
+      <PictureObject Name="Picture1" Left="0.01" Top="2.3" Width="160" Height="50" SizeMode="AutoSize" Image="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"/>
+      <TableObject Name="Table1" Left="0.02" Top="99.95" Width="715.87" Height="22.68" Border.Lines="All">
+        <TableColumn Name="Column1" Width="45.39"/>
+        <TableColumn Name="Column2" Width="167.3"/>
+        <TableColumn Name="Column3" Width="217.27"/>
+        <TableColumn Name="Column5" Width="67.7"/>
+        <TableColumn Name="Column6" Width="65.09"/>
+        <TableColumn Name="Column8" Width="153.12"/>
+        <TableRow Name="Row1" Height="22.68">
+          <TableCell Name="Cell1" Border.Lines="All" Text="序号" HorzAlign="Center" VertAlign="Center" Font="微软雅黑, 10pt"/>
+          <TableCell Name="Cell2" Border.Lines="All" Text="物料名称" HorzAlign="Center" VertAlign="Center" Font="微软雅黑, 10pt"/>
+          <TableCell Name="Cell3" Border.Lines="All" Text="物料规格" HorzAlign="Center" VertAlign="Center" Font="微软雅黑, 10pt"/>
+          <TableCell Name="Cell5" Border.Lines="All" Text="单位" HorzAlign="Center" VertAlign="Center" Font="微软雅黑, 10pt"/>
+          <TableCell Name="Cell26" Border.Lines="All" Text="数量" HorzAlign="Center" VertAlign="Center" Font="微软雅黑, 10pt"/>
+          <TableCell Name="Cell28" Border.Lines="All" Text="备注" HorzAlign="Center" VertAlign="Center" Font="微软雅黑, 10pt"/>
+        </TableRow>
+      </TableObject>
+      <TextObject Name="Text6" Left="276.4" Top="78.63" Width="132.36" Height="18.9" Text="[OutStockView.BillDate]" Format="Date" Format.Format="d" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text7" Left="223.6" Top="78.63" Width="51.35" Height="18.9" Text="日期：" HorzAlign="Right" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text1" Left="162.44" Top="1.5" Width="554.08" Height="21.93" Text="罗伯泰克自动化科技(苏州)有限公司" HorzAlign="Right" Font="宋体, 16pt, style=Bold"/>
+      <TextObject Name="Text8" Left="163.27" Top="25.71" Width="554.99" Height="27.24" Text="ROBO Technologies Automation(Suzhou) Co.,Ltd" HorzAlign="Right" Font="宋体, 16pt, style=Bold"/>
+      <TextObject Name="Text9" Left="-0.02" Top="55.9" Width="716.53" Height="18.9" Text="出 库 单" HorzAlign="Center" Font="宋体, 16pt, style=Bold"/>
+      <TextObject Name="Text10" Left="-0.01" Top="78.63" Width="219.33" Height="18.9" Text="订单号：[OutStockView.BillID]" Font="宋体, 10pt"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="126.63" Width="718.2" Height="23.44" DataSource="OutStockView" RowCount="10" KeepTogether="true" KeepDetail="true">
+      <TableObject Name="Table2" Left="0.02" Width="716.15" Height="23.44" Border.Lines="All">
+        <TableColumn Name="Column9" Width="45.39"/>
+        <TableColumn Name="Column10" Width="167.45"/>
+        <TableColumn Name="Column11" Width="217.23"/>
+        <TableColumn Name="Column13" Width="68.08"/>
+        <TableColumn Name="Column14" Width="65.04"/>
+        <TableColumn Name="Column16" Width="152.96"/>
+        <TableRow Name="Row2" Height="23.44">
+          <TableCell Name="Cell29" Border.Lines="All" Text="[OutStockView.RowNum]" HorzAlign="Center" VertAlign="Center" Font="微软雅黑, 10pt"/>
+          <TableCell Name="Cell30" Border.Lines="All" Text="[OutStockView.ProductName]" HorzAlign="Center" VertAlign="Center" Font="微软雅黑, 10pt"/>
+          <TableCell Name="Cell31" Border.Lines="All" Text="[OutStockView.ModelNo]" HorzAlign="Center" VertAlign="Center" Font="微软雅黑, 10pt"/>
+          <TableCell Name="Cell33" Border.Lines="All" Text="[OutStockView.Unit]" HorzAlign="Center" VertAlign="Center" Font="微软雅黑, 10pt"/>
+          <TableCell Name="Cell34" Border.Lines="All" Text="[IIf([OutStockView.Quantity]==0,&quot;&quot;,[OutStockView.Quantity])]" HorzAlign="Center" VertAlign="Center" Font="微软雅黑, 10pt"/>
+          <TableCell Name="Cell36" Border.Lines="All" Text="[OutStockView.Memo]" HorzAlign="Center" VertAlign="Center" Font="微软雅黑, 10pt"/>
+        </TableRow>
+      </TableObject>
+      <Sort>
+        <Sort Expression="[OutStockView.RowID]"/>
+      </Sort>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="154.07" Width="718.2" Height="65.4">
+      <TextObject Name="Text2" Left="2.26" Top="1.49" Width="71.02" Height="18.9" Text="仓管：" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text3" Left="216.07" Top="1.49" Width="71.02" Height="18.9" Text="领料：" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text5" Left="475.46" Top="1.49" Width="71.02" Height="18.9" Text="制单：" Font="微软雅黑, 10pt"/>
+      <TextObject Name="Text4" Left="1.5" Top="27.22" Width="200.48" Height="18.9" Text="表格号：ROBO2014–WH-01" VertAlign="Center" Font="宋体, 10pt"/>
+      <TextObject Name="Text14" Left="601.89" Top="27.22" Width="106.58" Height="18.9" Text="保存年限:7年" HorzAlign="Center" VertAlign="Center" Font="宋体, 10pt"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

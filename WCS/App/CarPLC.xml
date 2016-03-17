@@ -1,0 +1,33 @@
+﻿<?xml version='1.0' ?>
+<Config>
+    <OPCServer ConnectionString="OPC.SimaticNET">
+      <OPCGroup GroupName="PLCGroup" GroupString="S7:[PLC03]" UpdateRate="350">
+        <OPCItem ItemName="abc" ClientHandler="1" OPCItemName="DB101,W0,1"  ItemType="READ" IsActive="false"/>
+        <!--小车1信息-->
+        <OPCItem ItemName="01_CarInfo" ClientHandler="2" OPCItemName="DB101,B2,6"  ItemType="READ" IsActive="false"/>
+        <!--小车1信息-->
+        <OPCItem ItemName="01_CarTaskInfo" ClientHandler="3" OPCItemName="DB101,B8,10"  ItemType="READ" IsActive="false"/>
+        <!--小车1请求信息-->
+        <OPCItem ItemName="01_CarRequest" ClientHandler="4" OPCItemName="DB101,B31,1"  ItemType="READ"/>
+        <!--小车2信息-->
+        <OPCItem ItemName="02_CarInfo" ClientHandler="5" OPCItemName="DB101,B32,6"  ItemType="READ" IsActive="false"/>
+        <!--小车2信息-->
+        <OPCItem ItemName="02_CarTaskInfo" ClientHandler="6" OPCItemName="DB101,B38,10"  ItemType="READ" IsActive="false"/>
+        <!--小车2请求信息-->
+        <OPCItem ItemName="02_CarRequest" ClientHandler="7" OPCItemName="DB101,B61,1"  ItemType="READ"/>        
+        <!--小车3信息-->
+        <OPCItem ItemName="03_CarInfo" ClientHandler="8" OPCItemName="DB101,B62,6"  ItemType="READ" IsActive="false"/>
+        <!--小车3信息-->
+        <OPCItem ItemName="03_CarTaskInfo" ClientHandler="9" OPCItemName="DB101,B68,10"  ItemType="READ" IsActive="false"/>
+        <!--小车3请求信息-->
+        <OPCItem ItemName="03_CarRequest" ClientHandler="10" OPCItemName="DB101,B91,1"  ItemType="READ"/>
+
+        <!--小车1信息-->
+        <OPCItem ItemName="01_CarReply" ClientHandler="11" OPCItemName="DB100,B0,1"  ItemType="WRITE" />
+        <!--小车1信息-->
+        <OPCItem ItemName="02_CarReply" ClientHandler="12" OPCItemName="DB100,B10,1"  ItemType="WRITE" />
+        <!--小车1信息-->
+        <OPCItem ItemName="03_CarReply" ClientHandler="13" OPCItemName="DB100,B20,1"  ItemType="WRITE" />
+      </OPCGroup>
+    </OPCServer>
+  </Config>

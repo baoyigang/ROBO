@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+  <LogLevel>DEBUG</LogLevel>
+  <Attributes>
+    <Attribute Name="ScanPortName" Value="COM2" />
+    <Attribute Name="ScanBaudRate" Value="19200" />
+    <Attribute Name="IsShowFlag" Value="1" />
+  </Attributes>
+  <Services>
+    <Service Name="CranePLC1" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="CranePLC1.xml" />
+  </Services>
+  <Processes>
+    <!--堆垛机Process-->
+    <Process Name="CraneProcess" Type="App.exe, App.Dispatching.Process.CraneProcess">
+      <Item ServiceName="CranePLC1" ItemName="CraneTaskFinished" />
+      <Item ServiceName="CranePLC1" ItemName="CraneAlarmCode" />
+    </Process>
+  </Processes>
+</Configuration>
