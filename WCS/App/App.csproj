@@ -113,6 +113,12 @@
     <Compile Include="View\BaseForm.Designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Dispatcher\frmCellInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Dispatcher\frmCellInfo.Designer.cs">
+      <DependentUpon>frmCellInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\TaskCarNo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -239,6 +245,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Dispatcher\frmCellInfo.resx">
+      <DependentUpon>frmCellInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\TaskCarNo.resx">
       <DependentUpon>TaskCarNo.cs</DependentUpon>
