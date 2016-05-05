@@ -94,6 +94,13 @@
       select distinct CellColumn from CMD_Cell WHERE {0} ORDER BY CellColumn
     </CommandString>
   </Command>
+
+  <Command ID="SelectDepth">
+    <CommandString>
+      select distinct Depth from CMD_Cell WHERE {0} ORDER BY Depth
+    </CommandString>
+  </Command>
+  
  <!--货位信息-->
   <Command ID="SelectCell">
     <CommandString>

@@ -312,8 +312,11 @@ namespace App.View.Dispatcher
                 {
                     if (cellRows.Length != 0)
                     {
-                        frmCellInfo f = new frmCellInfo(cellRows[0]["PalletBarCode"].ToString());
-                        f.ShowDialog();
+                        if (cellRows[0]["PalletBarCode"].ToString() != "")
+                        {
+                            frmCellInfo f = new frmCellInfo(cellRows[0]["PalletBarCode"].ToString());
+                            f.ShowDialog();
+                        }
                         //Dictionary<string, Dictionary<string, object>> properties = new Dictionary<string, Dictionary<string, object>>();
                         //Dictionary<string, object> property = new Dictionary<string, object>();
                         //property.Add("产品编号", cellRows[0]["PalletBarCode"]);
@@ -373,32 +376,37 @@ namespace App.View.Dispatcher
                 DataRow[] cellRows = cellTable.Select(string.Format("ShelfCode='{0}' AND CellColumn='{1}' AND CellRow='{2}'", ShelfCode[shelf], column, row));
                 if (cellRows.Length != 0)
                 {
-                    Dictionary<string, Dictionary<string, object>> properties = new Dictionary<string, Dictionary<string, object>>();
-                    Dictionary<string, object> property = new Dictionary<string, object>();
-                    property.Add("产品名称", cellRows[0]["ProductName"]);
-                    property.Add("产品状态", cellRows[0]["StateName"]);
-                    //property.Add("条码", cellRows[0]["PalletBarcode"]);
-                    property.Add("托盘条码", cellRows[0]["PalletCode"]);
+                    if (cellRows[0]["PalletBarCode"].ToString() != "")
+                    {
+                        frmCellInfo f = new frmCellInfo(cellRows[0]["PalletBarCode"].ToString());
+                        f.ShowDialog();
+                    }
+                    //Dictionary<string, Dictionary<string, object>> properties = new Dictionary<string, Dictionary<string, object>>();
+                    //Dictionary<string, object> property = new Dictionary<string, object>();
+                    //property.Add("产品名称", cellRows[0]["ProductName"]);
+                    //property.Add("产品状态", cellRows[0]["StateName"]);
+                    ////property.Add("条码", cellRows[0]["PalletBarcode"]);
+                    //property.Add("托盘条码", cellRows[0]["PalletCode"]);
 
-                    property.Add("单据号", cellRows[0]["BillNo"]);
-                    property.Add("入库时间", cellRows[0]["InDate"]);
-                    properties.Add("产品信息", property);
+                    //property.Add("单据号", cellRows[0]["BillNo"]);
+                    //property.Add("入库时间", cellRows[0]["InDate"]);
+                    //properties.Add("产品信息", property);
 
-                    property = new Dictionary<string, object>();
-                    property.Add("库区名称", cellRows[0]["AreaName"]);
-                    property.Add("货架名称", cellRows[0]["ShelfName"]);
-                    property.Add("列", column);
-                    property.Add("层", row);
-                    string strState = "正常";
-                    if (cellRows[0]["IsLock"].ToString() == "0")
-                        strState = "正常";
-                    else
-                        strState = "锁定";
-                    if (cellRows[0]["ErrorFlag"].ToString() == "1")
-                        strState = "异常";
+                    //property = new Dictionary<string, object>();
+                    //property.Add("库区名称", cellRows[0]["AreaName"]);
+                    //property.Add("货架名称", cellRows[0]["ShelfName"]);
+                    //property.Add("列", column);
+                    //property.Add("层", row);
+                    //string strState = "正常";
+                    //if (cellRows[0]["IsLock"].ToString() == "0")
+                    //    strState = "正常";
+                    //else
+                    //    strState = "锁定";
+                    //if (cellRows[0]["ErrorFlag"].ToString() == "1")
+                    //    strState = "异常";
 
-                    property.Add("状态", strState);
-                    properties.Add("货位信息", property);
+                    //property.Add("状态", strState);
+                    //properties.Add("货位信息", property);
 
                     //CellDialog cellDialog = new CellDialog(properties);
                     //cellDialog.ShowDialog();

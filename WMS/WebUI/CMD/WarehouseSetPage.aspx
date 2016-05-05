@@ -99,7 +99,7 @@
                                 //货架
                                 $("#frmMain_warehouse").attr("src", "WarehouseShelfEditPage.aspx?CMD_WH_SHELF_ID=" + tNodeID);
                             }
-                            if (tNodeIDLen == 9) {
+                            if (tNodeIDLen >= 9) {
                                 //货位
                                 $("#frmMain_warehouse").attr("src", "WarehouseCellEditPage.aspx?CMD_CELL_ID=" + tNodeID);
                             }

@@ -9,7 +9,7 @@ using Util;
 
 public partial class WebUI_InStock_InStockTypes : BasePage
 {
-    private string Filter = "Flag=1";
+ 
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)

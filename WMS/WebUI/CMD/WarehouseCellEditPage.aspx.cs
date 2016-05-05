@@ -15,8 +15,7 @@ public partial class WebUI_CMD_WarehouseCellEditPage : BasePage
 {
     DataTable dtCell;
     BLL.BLLBase bll = new BLL.BLLBase();
-    private string TableName;
-    private string ColumnName;
+ 
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)

@@ -26,8 +26,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLDAL", "..\SQLDAL\SQLDAL.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceHost", "..\ServiceHost\ServiceHost.csproj", "{ABD63901-876D-4F98-8B47-A3EC620DFAE0}"
 EndProject
-Project("{2CFEAB61-6A3B-4EB8-B523-560B4BEEF521}") = "WMS_deploy", "..\WMS_deploy\WMS_deploy.wdproj", "{04FC5923-0673-4864-B839-80E0CB0FDBD2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Basic|Any CPU = Basic|Any CPU
@@ -122,31 +120,6 @@ Global
 		{ABD63901-876D-4F98-8B47-A3EC620DFAE0}.WinForms|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{ABD63901-876D-4F98-8B47-A3EC620DFAE0}.WinForms|Mixed Platforms.Build.0 = Release|Any CPU
 		{ABD63901-876D-4F98-8B47-A3EC620DFAE0}.WinForms|x86.ActiveCfg = Release|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.Basic|Any CPU.ActiveCfg = Release|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.Basic|Any CPU.Build.0 = Release|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.Basic|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.Basic|Mixed Platforms.Build.0 = Release|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.Basic|x86.ActiveCfg = Release|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.Demo|Any CPU.ActiveCfg = Debug|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.Demo|Any CPU.Build.0 = Debug|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.Demo|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.Demo|Mixed Platforms.Build.0 = Debug|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.Demo|x86.ActiveCfg = Debug|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.Release|x86.ActiveCfg = Release|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.WinForms|Any CPU.ActiveCfg = Release|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.WinForms|Any CPU.Build.0 = Release|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.WinForms|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.WinForms|Mixed Platforms.Build.0 = Release|Any CPU
-		{04FC5923-0673-4864-B839-80E0CB0FDBD2}.WinForms|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

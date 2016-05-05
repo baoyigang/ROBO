@@ -12,16 +12,14 @@ using System.Drawing;
 using Util;
 public partial class WebUI_SysInfo_SystemLog_OperationLog : BasePage
 {
-    int pageIndex = 1;
-    int pageSize = 15;
+    int pageIndex = 0;
     int totalCount = 0;
     int pageCount = 0;
     string filter = "1=1";
     DataTable dtLog;
-    string PrimaryKey = "OperatorLogID";
+ 
     string OrderByFields = "LoginTime desc ";
-    string TableName = "sys_OperatorLog";
-    string strQueryFields = "OperatorLogID,LoginUser,LoginTime,LoginModule,ExecuteOperator";
+ 
     BLL.BLLBase bll = new BLL.BLLBase();
 
     #region 窗体加裁
@@ -29,6 +27,7 @@ public partial class WebUI_SysInfo_SystemLog_OperationLog : BasePage
     {
         if (!IsPostBack)
         {
+            pageSize = 15;
             ViewState["filter"] = "1=1";
             ViewState["CurrentPage"] = 1;
             this.btnDeleteAll.Enabled = this.btnDelete.Enabled;

@@ -44,8 +44,8 @@ namespace App.View.Dispatcher
             this.txtCellCode.Text = CellCode;
 
             this.txtBillNo.Text = dr["BillNo"].ToString();
-            this.txtProductCode.Text = dr["ProductCode"].ToString();
-            BillTypeCode = dr["BillTypeCode"].ToString();
+            this.txtProductCode.Text = dr["PalletBarCode"].ToString();
+            
             this.checkBox1.Checked = dr["IsLock"].ToString() == "1";
             this.checkBox2.Checked = dr["IsActive"].ToString() == "0";
             this.checkBox3.Checked = dr["ErrorFlag"].ToString() == "1";
@@ -129,7 +129,7 @@ namespace App.View.Dispatcher
                     sql += string.Format(",ErrorFlag='{0}'", ErrorFlag);
 
                     //if (this.txtProductCode.Text.Trim().Length > 0)
-                        sql += string.Format(",ProductCode='{0}'", this.txtProductCode.Text.Trim());                        
+                    sql += string.Format(",PalletBarcode='{0}'", this.txtProductCode.Text.Trim());                        
 
                     //if (this.txtBillNo.Text.Trim().Length > 0)
                         sql += string.Format(",BillNo='{0}'", this.txtBillNo.Text.Trim());
@@ -138,7 +138,9 @@ namespace App.View.Dispatcher
                         sql += string.Format(",InDate='{0}'", this.dtpInDate.Value);                    
 
                     param = new DataParameter[] { new DataParameter("{0}", sql), new DataParameter("{1}", string.Format("CellCode='{0}'", this.txtCellCode.Text)) };
-                    bll.ExecNonQuery("WCS.UpdateCellByFilter", param);                    
+                    bll.ExecNonQuery("WCS.UpdateCellByFilter", param);
+           
+                    
                 }
 
                 

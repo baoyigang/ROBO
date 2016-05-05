@@ -132,7 +132,7 @@
     <CommandString>
       SELECT  CMD_Cell.CellCode, CMD_Cell.CellName, CMD_Cell.AreaCode, CMD_Area.AreaName, CMD_Cell.ShelfCode, CMD_Shelf.ShelfName, CMD_Cell.CellRow,
       CMD_Cell.CellColumn, CMD_Cell.IsActive, CMD_Cell.Priority,CMD_Cell.PalletBarcode,
-      CMD_Cell.IsLock, CMD_Cell.ErrorFlag, CMD_Cell.InDate,
+      CMD_Cell.IsLock, CMD_Cell.ErrorFlag, CMD_Cell.InDate,cmd_cell.BillNo,
       CMD_Cell.Memo,CMD_Shelf.Columns, CMD_Shelf.Rows
       FROM CMD_Cell
       LEFT OUTER JOIN CMD_Area ON CMD_Cell.AreaCode = CMD_Area.AreaCode
@@ -205,6 +205,24 @@
   <Command ID="Sp_UpdateTaskState">
     <CommandString>
       Sp_UpdateTaskState
+    </CommandString>
+  </Command>
+  <Command ID="UpdatePalletByCell">
+    <CommandString>
+      update WMS_Pallet  set CellCode=@CellCode where PalletCode=@PalletCode
+    </CommandString>
+  </Command>
+  <Command ID="UpdateCellByFilter">
+    <CommandString>
+      update CMD_Cell Set {0} where {1}
+    </CommandString>
+  </Command>
+  <Command ID="UpdateCellByTaskNo">
+    <CommandString>
+      update CMD_Cell Set IsLock='0',ProductCode=Task.ProductCode,PalletCode=Task.PalletCode,Quantity=1,InDate=Task.FinishDate,BillNo=Task.BillID
+      from CMD_Cell
+      Inner Join WCS_Task Task On CMD_Cell.CellCode=Task.CellCode
+      where Task.TaskNo=@TaskNo
     </CommandString>
   </Command>
 

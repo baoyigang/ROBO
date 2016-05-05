@@ -15,15 +15,14 @@ using Util;
 public partial class WebUI_SysInfo_SystemLog_ExceptionLog :BasePage
 {
     int pageIndex = 1;
-    int pageSize = 15;
     int totalCount = 0;
-    int pageCount = 0;
+ 
     string filter = "1=1";
     DataTable dtLog;
-    string PrimaryKey = "ExceptionalLogID";
-    string OrderByFields = "ExceptionalLogID desc";
+ 
+ 
     string TableName = "sys_ExceptionalLog";
-    string strQueryFields = "ExceptionalLogID,CatchTime,ModuleName,FunctionName,ExceptionalType,ExceptionalDescription";
+ 
     BLL.BLLBase bll = new BLL.BLLBase();
 
     #region 窗体加裁
@@ -33,6 +32,7 @@ public partial class WebUI_SysInfo_SystemLog_ExceptionLog :BasePage
 
         if (!IsPostBack)
         {
+            pageSize = 15;
             ViewState["filter"] = "1=1";
             ViewState["CurrentPage"] = 1;
             this.btnDeleteAll.Enabled = this.btnDelete.Enabled;

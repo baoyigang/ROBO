@@ -14,8 +14,7 @@ public partial class WebUI_CMD_WarehouseShelfEditPage : BasePage
 {
     DataTable dtShelf;
     BLL.BLLBase bll = new BLL.BLLBase();
-    private string TableName;
-    private string ColumnName;
+ 
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)

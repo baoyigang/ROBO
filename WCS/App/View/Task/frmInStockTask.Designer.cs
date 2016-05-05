@@ -48,6 +48,8 @@
             this.cmbStationNo = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.cmbDepth = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -89,7 +91,7 @@
             this.txtTaskNo.Location = new System.Drawing.Point(422, 124);
             this.txtTaskNo.Name = "txtTaskNo";
             this.txtTaskNo.ReadOnly = true;
-            this.txtTaskNo.Size = new System.Drawing.Size(237, 29);
+            this.txtTaskNo.Size = new System.Drawing.Size(259, 29);
             this.txtTaskNo.TabIndex = 40;
             // 
             // label1
@@ -120,7 +122,7 @@
             // 
             this.radioButton2.AutoSize = true;
             this.radioButton2.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.radioButton2.Location = new System.Drawing.Point(140, 19);
+            this.radioButton2.Location = new System.Drawing.Point(116, 19);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(92, 25);
             this.radioButton2.TabIndex = 56;
@@ -141,7 +143,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(483, 21);
+            this.label6.Location = new System.Drawing.Point(438, 21);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(26, 21);
             this.label6.TabIndex = 62;
@@ -151,7 +153,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(378, 21);
+            this.label7.Location = new System.Drawing.Point(350, 21);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(26, 21);
             this.label7.TabIndex = 61;
@@ -163,9 +165,9 @@
             this.cbHeight.Enabled = false;
             this.cbHeight.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cbHeight.FormattingEnabled = true;
-            this.cbHeight.Location = new System.Drawing.Point(515, 17);
+            this.cbHeight.Location = new System.Drawing.Point(470, 17);
             this.cbHeight.Name = "cbHeight";
-            this.cbHeight.Size = new System.Drawing.Size(50, 29);
+            this.cbHeight.Size = new System.Drawing.Size(40, 29);
             this.cbHeight.TabIndex = 60;
             // 
             // cbColumn
@@ -174,9 +176,9 @@
             this.cbColumn.Enabled = false;
             this.cbColumn.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cbColumn.FormattingEnabled = true;
-            this.cbColumn.Location = new System.Drawing.Point(414, 17);
+            this.cbColumn.Location = new System.Drawing.Point(386, 17);
             this.cbColumn.Name = "cbColumn";
-            this.cbColumn.Size = new System.Drawing.Size(57, 29);
+            this.cbColumn.Size = new System.Drawing.Size(48, 29);
             this.cbColumn.TabIndex = 59;
             this.cbColumn.SelectedIndexChanged += new System.EventHandler(this.cbColumn_SelectedIndexChanged);
             // 
@@ -199,7 +201,7 @@
             "010",
             "011",
             "012"});
-            this.cbRow.Location = new System.Drawing.Point(286, 17);
+            this.cbRow.Location = new System.Drawing.Point(262, 17);
             this.cbRow.Name = "cbRow";
             this.cbRow.Size = new System.Drawing.Size(85, 29);
             this.cbRow.TabIndex = 58;
@@ -209,7 +211,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(238, 21);
+            this.label8.Location = new System.Drawing.Point(214, 21);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(42, 21);
             this.label8.TabIndex = 57;
@@ -227,6 +229,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cmbDepth);
+            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.Controls.Add(this.radioButton2);
             this.groupBox1.Controls.Add(this.label8);
@@ -237,7 +241,7 @@
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Location = new System.Drawing.Point(83, 59);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(581, 56);
+            this.groupBox1.Size = new System.Drawing.Size(598, 56);
             this.groupBox1.TabIndex = 72;
             this.groupBox1.TabStop = false;
             // 
@@ -246,7 +250,7 @@
             this.txtBarcode.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtBarcode.Location = new System.Drawing.Point(430, 12);
             this.txtBarcode.Name = "txtBarcode";
-            this.txtBarcode.Size = new System.Drawing.Size(237, 29);
+            this.txtBarcode.Size = new System.Drawing.Size(251, 29);
             this.txtBarcode.TabIndex = 73;
             this.txtBarcode.TextChanged += new System.EventHandler(this.txtBarcode_TextChanged);
             this.txtBarcode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBarcode_KeyDown);
@@ -282,11 +286,32 @@
             this.label9.TabIndex = 78;
             this.label9.Text = "货位分配";
             // 
+            // cmbDepth
+            // 
+            this.cmbDepth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbDepth.Enabled = false;
+            this.cmbDepth.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cmbDepth.FormattingEnabled = true;
+            this.cmbDepth.Location = new System.Drawing.Point(552, 17);
+            this.cmbDepth.Name = "cmbDepth";
+            this.cmbDepth.Size = new System.Drawing.Size(40, 29);
+            this.cmbDepth.TabIndex = 63;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Location = new System.Drawing.Point(520, 21);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(26, 21);
+            this.label3.TabIndex = 64;
+            this.label3.Text = "深";
+            // 
             // frmInStockTask
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(670, 258);
+            this.ClientSize = new System.Drawing.Size(733, 258);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.cmbStationNo);
             this.Controls.Add(this.label13);
@@ -336,5 +361,7 @@
         private System.Windows.Forms.ComboBox cmbStationNo;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox cmbDepth;
+        private System.Windows.Forms.Label label3;
     }
 }

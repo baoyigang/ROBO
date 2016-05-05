@@ -16,15 +16,11 @@ using Util;
 
 public partial class WebUI_SysInfo_UserManage_UserList :BasePage
 {
-    int pageIndex = 1;
-    int pageSize = 15;
-    int totalCount = 0;
-    int pageCount = 0;
+ 
     string filter = "1=1";
-
-    string PrimaryKey = "UserID";
+ 
     string OrderByFields = "UserName";
-    string TableView = "sys_UserList";
+ 
     DataTable dtUser;
     BLL.BLLBase bll = new BLL.BLLBase();
     #region 窗体加载

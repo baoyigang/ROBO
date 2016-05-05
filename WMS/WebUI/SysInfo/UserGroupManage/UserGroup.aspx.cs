@@ -14,15 +14,15 @@ using Util;
 public partial class WebUI_SysInfo_UserGroupManage_UserGroup : BasePage
 {
     int pageIndex = 1;
-    int pageSize = 15;
+   
     int totalCount = 0;
     int pageCount = 0;
     string filter = "1=1";
     DataTable dtGroup;
-    string PrimaryKey = "GroupID";
+    
     string OrderByFields = "GroupName";
     string TableName = "v_sys_GroupList";
-    private string strQueryFields = "GroupID,GroupName,Memo,State";
+    
 
     BLL.BLLBase bll = new BLL.BLLBase();
 
@@ -31,6 +31,7 @@ public partial class WebUI_SysInfo_UserGroupManage_UserGroup : BasePage
     {
         if (!IsPostBack)
         {
+            pageSize = 15;
             ViewState["filter"] = "1=1";
             ViewState["CurrentPage"] = 1;
 

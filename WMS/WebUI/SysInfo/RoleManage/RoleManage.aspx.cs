@@ -13,11 +13,6 @@ using System.Drawing;
 
 public partial class WebUI_SysInfo_RoleManage_RoleManage : BasePage
 {
-    private string strTableView = "v_sys_GroupList";
-    private string strPrimaryKey = "GroupID";
-    //private string strOrderByFields = "GroupName ASC";
-    private string strQueryFields = "GroupID,GroupName,Memo,State";
-    bool PostBack = false;
     BLL.BLLBase bll = new BLL.BLLBase();
 
     #region 窗体加载

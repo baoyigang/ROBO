@@ -35,12 +35,14 @@ namespace App.View.Task
                 this.cbRow.Enabled = false;
                 this.cbColumn.Enabled = false;
                 this.cbHeight.Enabled = false;
+                this.cmbDepth.Enabled = false;
             }
             else
             {
                 this.cbRow.Enabled = true;
                 this.cbColumn.Enabled = true;
                 this.cbHeight.Enabled = true;
+                this.cmbDepth.Enabled = true;
             }
         }
 
@@ -70,6 +72,15 @@ namespace App.View.Task
             this.cbColumn.DataSource = dt.DefaultView;
             this.cbColumn.ValueMember = "CellColumn";
             this.cbColumn.DisplayMember = "CellColumn";
+
+            DataTable dtDepth = bll.FillDataTable("CMD.SelectDepth", param);
+
+            this.cmbDepth.DataSource = dtDepth.DefaultView;
+            this.cmbDepth.ValueMember = "Depth";
+            this.cmbDepth.DisplayMember = "Depth";
+
+
+
         }
 
         private void cbColumn_SelectedIndexChanged(object sender, EventArgs e)
@@ -136,7 +147,7 @@ namespace App.View.Task
                 }
                 else
                 {
-                    this.txtCellCode.Text = this.cbRow.Text.Substring(3, 3) + (1000 + int.Parse(this.cbColumn.Text)).ToString().Substring(1, 3) + (1000 + int.Parse(this.cbHeight.Text)).ToString().Substring(1, 3);
+                    this.txtCellCode.Text = this.cbRow.Text.Substring(3, 3) + (1000 + int.Parse(this.cbColumn.Text)).ToString().Substring(1, 3) + (1000 + int.Parse(this.cbHeight.Text)).ToString().Substring(1, 3) + this.cmbDepth.Text;
                 }
                 
 

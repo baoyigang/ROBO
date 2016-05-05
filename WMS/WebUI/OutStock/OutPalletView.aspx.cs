@@ -88,7 +88,7 @@ public partial class WebUI_OutStock_OutPalletView : BasePage
         bool blnCheck = false;
         bool blnTask = false;
         bool blnUnTask = false;
-        bool blnPrint = false;
+       
         DataTable dtOP = (DataTable)(Session["DT_UserOperation"]);
         DataRow[] drs = dtOP.Select(string.Format("SubModuleCode='{0}'", Session["SubModuleCode"].ToString()));
 
@@ -103,9 +103,7 @@ public partial class WebUI_OutStock_OutPalletView : BasePage
                 case 2: //修改
                     blnEdit = true;
                     break;
-                case 3:
-                    blnPrint = true;
-                    break;
+                
                 case 5:
                     blnCheck = true;
                     break;

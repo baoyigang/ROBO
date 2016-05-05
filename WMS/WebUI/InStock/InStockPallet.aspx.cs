@@ -19,6 +19,10 @@ public partial class WebUI_InStock_InStockPallet : BasePage
         if (!IsPostBack)
         {
             BindData("");
+            this.btnAddDetail.Enabled = false;
+            this.btnDelDetail.Enabled = false;
+            this.btnSave.Enabled = false;
+            this.btnReceiptDetail.Enabled = false;
         }
 
         ScriptManager.RegisterStartupScript(this.updatePanel1, this.updatePanel1.GetType(), "Resize", "resize();BindEvent();", true);
@@ -30,12 +34,7 @@ public partial class WebUI_InStock_InStockPallet : BasePage
     protected void btnSearch_Click(object sender, EventArgs e)
     {
         BindData(this.txtSearch.Text.Trim());
-    }
-
-
-    private void BindData(string PalletCode)
-    {
-        DataTable dt = bll.FillDataTable("WMS.SelectWmsPallet", new DataParameter[] { new DataParameter("{0}", string.Format("PalletCode='{0}'", PalletCode)) });
+        DataTable dt = (DataTable)ViewState[FormID + "_Edit_dgViewSub1"];
         if (dt.Rows.Count > 0)
         {
             this.txtCellCode.Text = dt.Rows[0]["CellCode"].ToString();
@@ -44,22 +43,21 @@ public partial class WebUI_InStock_InStockPallet : BasePage
                 this.btnAddDetail.Enabled = false;
                 this.btnDelDetail.Enabled = false;
                 this.btnSave.Enabled = false;
+                this.btnReceiptDetail.Enabled = false;
+                return;
             }
-            else
-            {
-                this.btnAddDetail.Enabled = true;
-                this.btnDelDetail.Enabled = true;
-                this.btnSave.Enabled = true;
-            }
-        }
-        else
-        {
-            this.txtCellCode.Text = "";
-            this.btnAddDetail.Enabled = true;
-            this.btnDelDetail.Enabled = true;
-            this.btnSave.Enabled = true;
         }
 
+        this.btnAddDetail.Enabled = true;
+        this.btnDelDetail.Enabled = true;
+        this.btnReceiptDetail.Enabled = true;
+        this.btnSave.Enabled = true;
+    }
+
+
+    private void BindData(string PalletCode)
+    {
+        DataTable dt = bll.FillDataTable("WMS.SelectWmsPallet", new DataParameter[] { new DataParameter("{0}", string.Format("PalletCode='{0}'", PalletCode)) });
         ViewState[FormID + "_Edit_dgViewSub1"] = dt;
         this.dgViewSub1.DataSource = dt;
         this.dgViewSub1.DataBind();
@@ -272,7 +270,26 @@ public partial class WebUI_InStock_InStockPallet : BasePage
         DataTable dt1 = (DataTable)ViewState[FormID + "_Edit_" + dgv.ID];
         if (dt1.Rows.Count == 0)
         {
-           
+
+            DataTable dt = bll.FillDataTable("WMS.SelectWmsPallet", new DataParameter[] { new DataParameter("{0}", string.Format("PalletCode='{0}'", this.txtSearch.Text)) });
+            if (dt.Rows.Count > 0)
+            {
+                this.txtCellCode.Text = dt.Rows[0]["CellCode"].ToString();
+                if (this.txtCellCode.Text.Length > 0)
+                {
+                    this.btnAddDetail.Enabled = false;
+                    this.btnDelDetail.Enabled = false;
+                    this.btnSave.Enabled = false;
+                    this.btnReceiptDetail.Enabled = false;
+                    ViewState[FormID + "_Edit_" + dgv.ID] = dt;
+                    return;
+                }
+                else
+                {
+                    ViewState[FormID + "_Edit_" + dgv.ID] = dt;
+ 
+                }
+            }
             return;
         }
         DataRow dr;
@@ -363,6 +380,10 @@ public partial class WebUI_InStock_InStockPallet : BasePage
             this.txtSearch.Text = "";
             this.txtSearch.Attributes.Remove("ReadOnly");
             BindData("");
+            this.btnAddDetail.Enabled = false;
+            this.btnDelDetail.Enabled = false;
+            this.btnSave.Enabled = false;
+            this.btnReceiptDetail.Enabled = false;
 
         }
         catch (Exception ex)
