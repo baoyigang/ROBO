@@ -291,7 +291,7 @@ public partial class WebUI_InStock_InStockPallet : BasePage
                 }
             }
             return;
-        }
+        } 
         DataRow dr;
         for (int i = 0; i < dgv.Rows.Count; i++)
         {
@@ -315,9 +315,9 @@ public partial class WebUI_InStock_InStockPallet : BasePage
     protected void btnSave_Click(object sender, EventArgs e)
     {
         UpdateTempSub(this.dgViewSub1);
-       
+
         DataTable dt = (DataTable)ViewState[FormID + "_Edit_dgViewSub1"];
-        DataTable dtProduct = dt.DefaultView.ToTable("Product", true, new string[] { "ProductCode","ProductName" });
+        DataTable dtProduct = dt.DefaultView.ToTable("Product", true, new string[] { "ProductCode", "ProductName" });
         for (int i = 0; i < dtProduct.Rows.Count; i++)
         {
             object o = dt.Compute("Count(ProductCode)", string.Format("ProductCode='{0}' and IsLock='0'", dtProduct.Rows[i]["ProductCode"]));
@@ -362,11 +362,11 @@ public partial class WebUI_InStock_InStockPallet : BasePage
                                                 new DataParameter("@RowID",dr["RowID"].ToString()),
                                                 new DataParameter("@ProductCode",dr["ProductCode"].ToString()), 
                                                 new DataParameter("@Quantity",dr["Quantity"].ToString()),
-                                                new DataParameter("@Weight",dr["Weight"].ToString()),
+                                                new DataParameter("@Weight",dr["Weight"].ToString().Trim().Length==0?"0":dr["Weight"].ToString()),
                                                 new DataParameter("@Memo",dr["Memo"].ToString()),
                                                 new DataParameter("@Creator", Session["EmployeeCode"].ToString()),
                                                 new DataParameter("@Updater", Session["EmployeeCode"].ToString())
-                                           };
+                                                };
 
             }
             paras.Add(para);

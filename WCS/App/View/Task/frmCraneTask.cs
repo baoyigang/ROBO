@@ -414,6 +414,23 @@ namespace App.View.Task
             BindShelf();
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            DataParameter[] paras = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_Task.TaskNo='{0}'", "1603140005")) };
+            DataTable dtTask = bll.FillDataTable("WCS.SelectTask", paras);
+            View.Dispatcher.frmScan frm = new Dispatcher.frmScan(6, dtTask);
+            frm.ShowDialog();
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            DataParameter[] paras = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_Task.TaskNo='{0}'", "1603140005")) };
+            DataTable dtTask = bll.FillDataTable("WCS.SelectTask", paras);
+            View.Dispatcher.frmScan frm = new Dispatcher.frmScan(6, dtTask);
+            frm.ShowDialog();
+        }
+
        
     }
 }

@@ -15,6 +15,7 @@ namespace App.View.Task
         BLL.BLLBase bll = new BLL.BLLBase();
         string CraneNo = "01";
         string AreaCode = "001";
+        string TaskType = "";
         public frmInStockTask()
         {
             InitializeComponent();
@@ -127,16 +128,17 @@ namespace App.View.Task
                 this.txtBarcode.Focus();
                 return;
             }
-            DataTable dt;
-            DataParameter[] param;
 
-            param = new DataParameter[] 
-            { 
-                new DataParameter("@AreaCode", this.cmbStationNo.SelectedValue.ToString()), 
+            if (TaskType == "11")
+            {
+                DataTable dt;
+                DataParameter[] param;
+
+                param = new DataParameter[] 
+                { 
+                    new DataParameter("@AreaCode", this.cmbStationNo.SelectedValue.ToString()), 
                 
-            };
-            
-
+                };
                 if (this.radioButton1.Checked)
                 {
                     dt = bll.FillDataTable("WCS.sp_GetCell", param);
@@ -149,8 +151,6 @@ namespace App.View.Task
                 {
                     this.txtCellCode.Text = this.cbRow.Text.Substring(3, 3) + (1000 + int.Parse(this.cbColumn.Text)).ToString().Substring(1, 3) + (1000 + int.Parse(this.cbHeight.Text)).ToString().Substring(1, 3) + this.cmbDepth.Text;
                 }
-                
-
                 //判断货位是否为空
                 param = new DataParameter[] 
                 { 
@@ -170,7 +170,12 @@ namespace App.View.Task
                     new DataParameter("@AreaCode", this.cmbStationNo.SelectedValue.ToString())
                 };
                 bll.ExecNonQueryTran("WCS.Sp_ExecuteInStockTask", param);
-            
+            }
+            else
+            {
+                bll.ExecNonQuery("WCS.UpdateTaskStateByTaskNo", new DataParameter[] { new DataParameter("@State", 5), new DataParameter("@TaskNo", this.txtTaskNo.Text) });
+            }
+
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
         }
 
@@ -194,6 +199,7 @@ namespace App.View.Task
                 if (dt.Rows.Count > 0)
                 {
                     this.txtTaskNo.Text = dt.Rows[0]["TaskNo"].ToString();
+                    TaskType = dt.Rows[0]["TaskType"].ToString();
                 }
                 else
                 {

@@ -23,7 +23,7 @@
   </Command>
   <Command ID="GetTaskByPallet">
     <CommandString>
-      SELECT * FROM WCS_TASK Where PalletCode=@PalletCode and TaskType='11' and State=0
+      SELECT * FROM WCS_TASK Where PalletCode=@PalletCode and ((TaskType='11' and State=0) or (TaskType='14' and State=4))
     </CommandString>
   </Command>
   
@@ -225,5 +225,48 @@
       where Task.TaskNo=@TaskNo
     </CommandString>
   </Command>
+  <Command ID="SelectCheckPalletDetail">
+    <CommandString>
+      select CAST(0 as bit) as chk, ROW_NUMBER() over (order by Pallet.ProductCode) as RowID,pallet.PalletCode,  pallet.ProductCode,SUM(Quantity) as Quantity, 0 as RealQty,MAX(Indate) as Indate,product.ProductName,product.ModelNo from WMS_Pallet pallet inner join CMD_Product product on pallet.ProductCode=product.ProductCode
+      where palletcode=@PalletCode
+      group by pallet.PalletCode,pallet.ProductCode,product.ProductName,product.ModelNo
+    </CommandString>
+  </Command>
+  <Command ID="DeletePalletDetail">
+    <CommandString>
+      delete from WMS_Pallet where PalletCode=@PalletCode
+    </CommandString>
+  </Command>
+  
+  <Command ID="InsertPallet">
+    <CommandString>
+      insert into WMS_Pallet(PalletCode,RowID,ProductCode,Quantity,InDate,IsLock,CellCode)
+      values(@PalletCode,@RowID,@ProductCode,@Quantity,@InDate,1,@CellCode)
+    </CommandString>
+  </Command>
 
+  <Command ID="InsertCheckDetail">
+    <CommandString>
+      insert into WMS_CheckDetail(BillID, PalletCode, RowID, CellCode, TaskNo, ProductCode, Quantity, RealQty, DiffQty)
+      values(@BillID,@PalletCode,@RowID,@CellCode,@TaskNo,@ProductCode,@Quantity,@RealQty,@DiffQty)
+    </CommandString>
+  </Command>
+  <Command ID="DeleteCheckDetail">
+    <CommandString>
+     delete from  WMS_CheckDetail where BillID=@BillID and PalletCode=@PalletCode
+    </CommandString>
+  </Command>
+
+  <Command ID="UpdateCheckWCSTaskError">
+    <CommandString>
+      update WCS_TASK set Barcode=@BarCode where TaskNo=@TaskNo
+    </CommandString>
+  </Command>
+
+  <Command ID="UpdateCheckCellError">
+    <CommandString>
+      update CMD_Cell set PalletBarCode=@PalletBarCode where CellCode=@CellCode
+    </CommandString>
+  </Command>
+  
 </SqlCommand>

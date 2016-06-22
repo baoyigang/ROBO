@@ -74,6 +74,11 @@ public partial class WebUI_SysInfo_RoleManage_RoleManage : BasePage
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             e.Row.Cells[0].Visible = false;
+            if (e.Row.Cells[1].Text == "admin")
+            {
+                ((Button)e.Row.FindControl("btnDeleteUser")).Enabled = false;
+            }
+
         }
         else if (e.Row.RowType == DataControlRowType.Header)
         {

@@ -82,14 +82,16 @@
   <!--获取所有用户-->
   <Command ID="SelectAllUser">
     <CommandString>
-      select UserName ,GroupName ,UserID from sys_UserList u left join sys_GroupList g on u.GroupID=g.GroupID 
+      select UserName ,GroupName ,UserID from sys_UserList u left join sys_GroupList g on u.GroupID=g.GroupID
+      where u.UserName!='admin'
       order by UserName
     </CommandString>
   </Command>
-  <!---->
+  
   <Command ID="SelectGroupUser">
     <CommandString>
-      select UserID, UserName ,GroupName  from sys_UserList u left join sys_GroupList g on u.GroupID=g.GroupID where userName != 'admin' and u.GroupID=@GroupID
+      select UserID, UserName ,GroupName  from sys_UserList u left join sys_GroupList g on u.GroupID=g.GroupID
+      where u.GroupID=@GroupID
       order by username
     </CommandString>
   </Command>
@@ -281,15 +283,6 @@
   </Command>
   
   <!---->
-  <Command ID="InsertGroupOperation">
-    <CommandString>
-      select UserID, UserName ,GroupName  from sys_UserList u left join sys_GroupList g on u.GroupID=g.GroupID where userName!= 'admin' and u.GroupID=GroupID
-    </CommandString>
-  </Command>
- 
-
-  
-  <!---->
   <Command ID="SelectFieldValue">
     <CommandString>
       select {1}  from {0} where {2}
@@ -319,6 +312,10 @@
       select *  from Sys_AutoCode where {0}
     </CommandString>
   </Command>
-  
+  <Command ID="SelectDataPage">
+    <CommandString>
+      Select  {0}  from {1} where {2} order by {3}
+    </CommandString>
+  </Command>
   
 </SqlCommand>

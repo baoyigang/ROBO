@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TABLE name="CMD_Cell" ChineseName="货位信息" PrimaryKey="CellCode" OrderBy="CellCode" ViewName="VMoveCMD_Cell">
+  <FIELD ShowInFieldQuery="1" ShowQueryIndex="1">
+    <FieldName>PalletBarCode</FieldName>
+    <FieldTitle>托盘编码</FieldTitle>
+    <DataType>string</DataType>
+  </FIELD>
+  <FIELD ShowInFieldQuery="1" ShowQueryIndex="2">
+    <FieldName>ShelfName</FieldName>
+    <FieldTitle>货架</FieldTitle>
+    <DataType>string</DataType>
+  </FIELD>
+  <FIELD ShowInFieldQuery="1" ShowQueryIndex="3">
+    <FieldName>CellCode</FieldName>
+    <FieldTitle>货位</FieldTitle>
+    <DataType>string</DataType>
+  </FIELD>
+  <FIELD ShowInFieldQuery="0" ShowQueryIndex="4">
+    <FieldName>BillNo</FieldName>
+    <FieldTitle>单号</FieldTitle>
+    <DataType>string</DataType>
+  </FIELD>
+  <FIELD ShowInFieldQuery="0" ShowQueryIndex="5">
+    <FieldName>InDate</FieldName>
+    <FieldTitle>入库时间</FieldTitle>
+    <DataType>string</DataType>
+  </FIELD>
+  
+  <FIELD ShowInFieldQuery="0" ShowQueryIndex="6">
+    <FieldName>Quantity</FieldName>
+    <FieldTitle>数量</FieldTitle>
+    <DataType>string</DataType>
+  </FIELD>
+</TABLE>

@@ -74,7 +74,7 @@ body
    position:relative;
   
  }
- td,tr { border-color:#ffffff }
+.maintable td{ border: 1px #ffffff solid;  }
  
  /*欄位普通項*/
 .smalltitle

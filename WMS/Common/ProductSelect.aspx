@@ -99,21 +99,27 @@
             <ContentTemplate>
                 <table id="tbSearch" class="maintable" width="100%" align="center" cellspacing="0" cellpadding="0" bordercolor="#ffffff" border="1">
 			        <tr> 
-				        <td class="smalltitle" align="center" width="8%" >产品类别</td>
-				        <td  width="15%" height="20">&nbsp;
+				        <td class="smalltitle" align="center" width="7%" >产品类别</td>
+				        <td  width="13%" height="20">&nbsp;
 					        <asp:dropdownlist id="ddlProductCategory" runat="server" Width="90%"></asp:dropdownlist>
                         </td>
-                         <td class="smalltitle" align="center" width="8%" >产品编码</td>
-				        <td  width="15%" height="20">&nbsp;
+                        <td class="smalltitle" align="center" width="7%" >产品编码</td>
+				        <td  width="13%" height="20">&nbsp;
 					         <asp:textbox id="txtProductCode" tabIndex="1" runat="server" Width="90%" 
                                 CssClass="TextBox" ></asp:textbox>
                         </td>
-				        <td class="smalltitle" align="center" width="8%">产品名称</td>
-				        <td  width="15%" height="20" valign="middle">&nbsp;
+                        <td class="smalltitle" align="center" width="7%">产品型号</td>
+				        <td  width="13%" height="20" valign="middle">&nbsp;
+                            <asp:textbox id="txtPartno" tabIndex="1" runat="server" Width="90%" 
+                                CssClass="TextBox" ></asp:textbox>
+                        </td>
+				        <td class="smalltitle" align="center" width="7%">产品名称</td>
+				        <td  width="13%" height="20" valign="middle">&nbsp;
                             <asp:textbox id="txtSearch" tabIndex="1" runat="server" Width="90%" 
                                 CssClass="TextBox" ></asp:textbox>
                         </td>
-                        <td width="25%" align="left">
+                        
+                        <td  align="left">
                             &nbsp;<asp:button id="btnSearch" tabIndex="2" runat="server" Width="60px" CssClass="ButtonQuery" Text="查询" OnClientClick="return SelectSearch()" onclick="btnSearch_Click"></asp:button>
                             &nbsp;<asp:button id="btnRefresh" tabIndex="2" runat="server" Width="60px" CssClass="ButtonRefresh" Text="刷新" onclick="btnRefresh_Click"></asp:button>
                         </td>
@@ -155,7 +161,8 @@
                 <tr>
                      <td align="left" style=" width:25%"  >
                         &nbsp;&nbsp;<asp:Button ID="btnSelect" runat="server" Text="确定" Width="60px" CssClass="ButtonOk" OnClientClick="return Select();" />
-                    &nbsp;<asp:Button ID="btnClose" runat="server" Text="关闭" Width="60px" CssClass="ButtonExit" OnClientClick="return Close();" /></td>
+                        &nbsp;<asp:Button ID="btnClose" runat="server" Text="关闭" Width="60px" CssClass="ButtonExit" OnClientClick="return Close();" />
+                     </td>
 
                     <td align= "right">
                         <asp:LinkButton ID="btnFirst" runat="server" OnClick="btnFirst_Click" >首页</asp:LinkButton>&nbsp;

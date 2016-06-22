@@ -94,6 +94,32 @@ namespace App.Dispatching.Process
                             DataParameter[] param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo) };
                             bll.ExecNonQueryTran("WCS.Sp_TaskProcess", param);
                         }
+                        DataParameter[] paras = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_Task.TaskNo='{0}'", TaskNo)) };
+                        DataTable dt = bll.FillDataTable("WCS.SelectTask", paras);
+
+                        string TaskType = "";
+                        string strState = "";
+                        if (dt.Rows.Count > 0)
+                        {
+                            TaskType = dt.Rows[0]["TaskType"].ToString();
+                            strState = dt.Rows[0]["State"].ToString();
+                           
+                        }
+                        string[] str = new string[3];
+                        str[0] = "6";
+                        string strValue = "";
+                        if (TaskType == "14" && strState == "4")
+                        {
+                            while ((strValue = FormDialog.ShowDialog(str, dt)) != "")
+                            {
+
+                                bll.ExecNonQuery("WCS.UpdateTaskStateByTaskNo", new DataParameter[] { new DataParameter("@State", 5), new DataParameter("@TaskNo", TaskNo) });
+                                //线程继续。
+                                break;
+                            }
+                        }
+
+
                     }
                     break;
                 case "CraneAlarmCode":

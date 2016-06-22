@@ -304,6 +304,10 @@ public partial class Common_ProductSelect : System.Web.UI.Page
             {
                 strWhere += " and ProductName like '%" + this.txtSearch.Text + "%'";
             }
+            if (this.txtPartno.Text.Trim() != "")
+            {
+                strWhere += " and ModelNo like '%" + this.txtPartno.Text + "%'";
+            }
             if (Request.QueryString["Where"] != "" && Request.QueryString["Where"] != null)
             {
                 filter = strWhere + " AND " + Microsoft.JScript.GlobalObject.unescape(Request.QueryString["Where"]);

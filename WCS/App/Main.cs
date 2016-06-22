@@ -37,6 +37,7 @@ namespace App
             {
                 lbLog.Scrollable = true;
                 Logger.OnLog += new LogEventHandler(Logger_OnLog);
+                FormDialog.OnDialog += new DialogEventHandler(FormDialog_OnDialog);
                 context = new Context();
 
                 ContextInitialize initialize = new ContextInitialize();
@@ -103,6 +104,26 @@ namespace App
                     WriteLoggerFile(msg1 + msg2 + msg3);
                 }
             }
+        }
+        string FormDialog_OnDialog(DialogEventArgs args)
+        {
+            string strValue = "";
+            if (InvokeRequired)
+            {
+                return (string)this.Invoke(new DialogEventHandler(FormDialog_OnDialog), args);
+            }
+            else
+            {
+                if (args.Message[0] == "6")//盘点
+                {
+                    //View.CheckScan frm = new View.CheckScan(int.Parse(args.Message[0]), args.dtInfo);
+                    //if (frm.ShowDialog() == DialogResult.OK)
+                    //{
+                    //    strValue = frm.strValue;
+                    //}
+                }
+            }
+            return strValue;
         }
 
         private void CreateDirectory(string directoryName)

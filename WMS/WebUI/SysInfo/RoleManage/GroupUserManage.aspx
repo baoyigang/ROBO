@@ -69,7 +69,7 @@
                             <asp:BoundField DataField="GroupName" HeaderText="所属用户组"></asp:BoundField>
                             <asp:TemplateField >
                                 <HeaderTemplate>
-                                    <input type="checkbox" onclick="selectAll('GridView1',this.checked);" />                    
+                                    <input type="checkbox" onclick="selectAll('gvGroupList',this.checked);" />                    
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <asp:CheckBox id="cbSelect" runat="server" ></asp:CheckBox>                   

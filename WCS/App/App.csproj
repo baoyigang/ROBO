@@ -89,6 +89,12 @@
   <ItemGroup>
     <Compile Include="BLL\BLLBase.cs" />
     <Compile Include="BLL\Server.cs" />
+    <Compile Include="Common\frmSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Common\frmSelect.Designer.cs">
+      <DependentUpon>frmSelect.cs</DependentUpon>
+    </Compile>
     <Compile Include="Crane.cs" />
     <Compile Include="Dispatching\Process\CraneProcess.cs" />
     <Compile Include="Dispatching\Process\ErpProcess.cs" />
@@ -118,6 +124,12 @@
     </Compile>
     <Compile Include="View\Dispatcher\frmCellInfo.Designer.cs">
       <DependentUpon>frmCellInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Dispatcher\frmScan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Dispatcher\frmScan.Designer.cs">
+      <DependentUpon>frmScan.cs</DependentUpon>
     </Compile>
     <Compile Include="View\TaskCarNo.cs">
       <SubType>Form</SubType>
@@ -235,6 +247,9 @@
     <Compile Include="View\Task\frmPalletInTask.Designer.cs">
       <DependentUpon>frmPalletInTask.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Common\frmSelect.resx">
+      <DependentUpon>frmSelect.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -248,6 +263,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\Dispatcher\frmCellInfo.resx">
       <DependentUpon>frmCellInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Dispatcher\frmScan.resx">
+      <DependentUpon>frmScan.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\TaskCarNo.resx">
       <DependentUpon>TaskCarNo.cs</DependentUpon>
@@ -364,10 +382,20 @@
     <None Include="Resources\process_remove.png" />
     <Content Include="Resources\remove.png" />
     <Content Include="Resources\up.png" />
+    <Content Include="TableXML\CMD_Cell.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TableXML\CMD_Product.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TableXML\CMD_ProductInStock.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="ViewConfig.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
