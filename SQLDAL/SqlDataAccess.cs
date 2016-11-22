@@ -339,7 +339,30 @@ namespace SQLDAL
             }
             return CommandType.StoredProcedure;
         }
-
+        public void BatchInsertTable(DataTable dt, string TableName)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                //SqlBulkCopy copy = new SqlBulkCopy((SqlConnection) this.connection) {
+                //    DestinationTableName = tableName
+                //};
+                SqlBulkCopy copy = new SqlBulkCopy((SqlConnection)connection);
+                copy.DestinationTableName = "dbo." + TableName;
+                foreach (DataColumn dc in dt.Columns)
+                {
+                    copy.ColumnMappings.Add(dc.ColumnName, dc.ColumnName);
+                }
+                try
+                {
+                    copy.WriteToServer(dt);
+                    copy.Close();
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+        }
         #endregion
     }
 }
