@@ -9,6 +9,7 @@
         <link href="~/Css/op.css" type="text/css" rel="stylesheet" /> 
         <script type="text/javascript" src="../../JQuery/jquery-1.8.3.min.js"></script>
          <script type="text/javascript" src="../../JScript/DataProcess.js"></script>
+
         <script type="text/javascript" language="javascript">
             var oldcell;
             $(document).ready(function () {
@@ -43,14 +44,6 @@
                 var json = eval(Ajax("GetCellInfo", row));
 
                 if (json) {
-                    document.getElementById("ProductTypeName").innerText = json[0].ProductTypeName == null ? "" : json[0].ProductTypeName;
-                    document.getElementById("ProductCode").innerText = json[0].ProductCode;
-                    document.getElementById("ProductName").innerText = json[0].ProductName == null ? "" : json[0].ProductName;
-
-                    document.getElementById("StateName").innerText = json[0].StateName == null ? "" : json[0].StateName;
-                    document.getElementById("BillNo").innerText = json[0].BillNo;
-
-                    document.getElementById("Indate").innerText = json[0].InDate == null ? "" : json[0].InDate;
                     document.getElementById("AreaName").innerText = json[0].AreaName;
                     document.getElementById("ShelfName").innerText = json[0].ShelfName;
                     document.getElementById("CellColumn").innerText = json[0].CellColumn;
@@ -63,12 +56,42 @@
                         document.getElementById("State").innerText = "锁定";
                     if (json[0].ErrorFlag == "1")
                         document.getElementById("State").innerText = "异常";
+
+                    if (json[0].PalletCode != "") {
+
+                        document.getElementById("tdProduct").innerHTML = "<b>产品信息--" + json[0].PalletCode + "</b>";
+                        $.each(json, function (idx, obj) {
+                            var table = document.getElementById("tbProduct");
+                            var newRow = table.insertRow(); //创建新行
+                            //var CellCatergory = newRow.insertCell(); //创建新单元格
+                            var CellProductCode = newRow.insertCell(); //创建新单元格
+                            var CellProductName = newRow.insertCell(); //创建新单元格
+                            var CellBatchNo = newRow.insertCell(); //创建新单元格
+                            var CellQty = newRow.insertCell(); //创建新单元格
+                            var CellUnit = newRow.insertCell(); //创建新单元格
+                            var CellInDate = newRow.insertCell(); //创建新单元格
+
+                           // CellCatergory.innerText = obj.CategoryName;
+                            CellProductCode.innerText = obj.ProductCode;
+                            CellProductName.innerText = obj.ProductName;
+                            CellBatchNo.innerText = obj.BatchNo;
+                            CellQty.innerText = obj.Quantity;
+                            CellUnit.innerText = obj.Unit;
+                            CellInDate.innerText = obj.Indate;
+                        });
+                    }
+
                     showinfo(obj);
                 }
                 else {
                     closeinfo();
                 }
             }
+
+
+ 
+
+
             function showinfo(cellobj) {
                 var obj = document.getElementById(cellobj);
                 var product = document.getElementById("productinfo");
@@ -87,7 +110,16 @@
                 product.style.display = "block";
             }
 
+
+
             function closeinfo() {
+
+                var tb = document.getElementById('tbProduct');
+                var rowNum = tb.rows.length;
+                for (i = rowNum - 1; i > 0; i--) {
+                    tb.deleteRow(i);
+                }
+
                 var product = document.getElementById("productinfo");
                 product.style.display = "none";
             }
@@ -109,119 +141,85 @@
     <form id="form1" runat="server">
     <asp:Panel ID="pnlCell" runat="server"  Width="100%" Height="450px"  style="overflow:auto;" >
     </asp:Panel>
-    <div id="productinfo"  style=" width:330px; height:180px; position:absolute; background-color:#dbe7fd;opacity:0.9; display:none; border:1px solid #000;">
+    <div id="productinfo"  style=" width:420px; height:230px; position:absolute; background-color:#dbe7fd; display:none; border:1px solid #000;">
         <div id="btclose" style=" width:100%; height:20px;">
-          <span id="cellcode" style="float:left"></span>
+          <span id="cellcode" style="float:left"><b>货架信息</b></span>
           <span onclick="closeinfo()"  style=" float:right; width:15px; height:20px;  cursor:pointer">X</span>
         </div>
         <div>
-             <table>
-                   <tr>
-                      <td colspan="4" class="cellinfo">
-                        <b>产品信息</b>
-                      </td>
-                   </tr>
-                   <tr>
-                      <td  class="cellinfo" style="width:20%;">
-                            &nbsp;产品类型:
-                      </td>
-                      <td id="ProductTypeName">
-                        
-                      </td>
-
-                       <td   class="cellinfo" style="width:20%;">
-                             &nbsp;产品编码:
-                      </td>
-                      <td id="ProductCode">
-                        
-                      </td>
-                      
-                     
-                   </tr>
-                   
-                   <tr>
-                      <td  class="cellinfo" style="width:20%;">
-                            &nbsp;品名:
-                      </td>
-                      <td id="ProductName">
-                        
-                      </td>
-                      <td   class="cellinfo"  style="width:20%;">
-                            
-                      </td>
-                      <td id="StateName" >
-                          
-                      </td>
-                   </tr>
-                    
+             <table class="maintable" style="width:100%;">
                     <tr>
-                        <td   class="cellinfo"  style="width:20%;">
-                             &nbsp;单据号:
-                      </td>
-                      <td id="BillNo">
-                           
-                      </td>
-                      <td   class="cellinfo"  style="width:20%;">
-                             &nbsp;入库时间:
-                      </td>
-                      <td id="Indate">
-                          
-                      </td>
-
-                     
-                   </tr>
-                    <tr>
-                      <td  colspan="4" class="cellinfo">
-                        <b>货架信息</b>
-                      </td>
-                   </tr>
-                    <tr>
-                      <td class="cellinfo" style="width:20%;" >
-                             &nbsp;库区名称:
+                      <td align="right" class=" musttitle" style="width:12%;" >
+                             &nbsp;库区:
                       </td>
                       <td id="AreaName">
                           
                       </td>
-                       <td   class="cellinfo"  style="width:20%;">
-                             &nbsp;货架名称:
+                       <td  align="right" class="musttitle"  style="width:12%;">
+                             &nbsp;货架:
                       </td>
                       <td id="ShelfName"> 
                           
                       </td>
-                   </tr>
-                    <tr>
-                      <td  class="cellinfo"  style="width:20%;">
+                       <td align="right"  class="musttitle"  style="width:12%;">
                              &nbsp;货位:
                       </td>
                       <td id="CellCode">
                           
                       </td>
-                      <td  class="cellinfo"  style="width:20%;">
+                   </tr>
+                     
+                    <tr>
+                      <td  align="right" class="musttitle"  style="width:12%;">
                              &nbsp;状态:
                       </td>
                       <td id="State">
                           
                       </td>
-                     
-                   </tr>
-                    
-                   <tr>
-                      <td   class="cellinfo" style="width:20%;">
-                             &nbsp;列:
-                      </td>
-                      <td id="CellColumn">
+                        <td  align="right" class="musttitle" style="width:12%;">
+                                &nbsp;列:
+                        </td>
+                        <td id="CellColumn">
                           
-                      </td>
-                      <td  class="cellinfo"  style="width:20%;">
-                             &nbsp;层:
-                      </td>
-                      <td id="CellRow">
+                        </td>
+                        <td align="right" class="musttitle"  style="width:12%;">
+                                &nbsp;层:
+                        </td>
+                        <td id="CellRow">
                           
+                        </td>
+                    </tr>
+                    <tr>
+                      <td id='tdProduct'  colspan="6">
+                        <b>产品信息</b>
                       </td>
                    </tr>
-                   
-                   
                </table>
+             <div style="overflow: auto; WIDTH: 100%; HEIGHT: 150px">
+                <table  class="maintable" style="width:100%" id="tbProduct">
+                    <tr>
+                         
+                        <td class="musttitle"  style="width:10%;">
+                            产品编码
+                        </td>
+                        <td class="musttitle"  style="width:15%;">
+                            品名
+                        </td>
+                        <td class="musttitle"  style="width:12%;">
+                            型号
+                        </td>
+                        <td class="musttitle"  style="width:7%;">
+                            数量
+                        </td>
+                        <td class="musttitle"  style="width:7%;">
+                            单位
+                        </td>
+                        <td class="musttitle"  style="width:15%;">
+                            入库日期
+                        </td>
+                    </tr>
+                </table>
+             </div>
         </div>
     </div>
 

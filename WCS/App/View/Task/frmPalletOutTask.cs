@@ -22,70 +22,85 @@ namespace App.View.Task
         }
 
         private void btnRequest_Click(object sender, EventArgs e)
-        {
-            DataTable dt;
+        {            
             DataParameter[] param;
+            int TaskCount = 0;
+            int.TryParse(this.txtTaskCount.Text.Trim(), out TaskCount);
+            this.txtCellCode.Text = this.cbRow.Text.Substring(3, 3) + (1000 + int.Parse(this.cbColumn.Text)).ToString().Substring(1, 3) + (1000 + int.Parse(this.cbHeight.Text)).ToString().Substring(1, 3);
+
             param = new DataParameter[] 
             { 
-                new DataParameter("@CraneNo", this.cmbCraneNo.Text), 
-                new DataParameter("@CarNo", this.cmbCarNo.Text) 
+                new DataParameter("@AreaCode", this.cmbAreaCode.SelectedValue.ToString()), 
+                new DataParameter("@TaskCount", TaskCount),
+                new DataParameter("@Barcode", this.txtBarcode.Text),
+                new DataParameter("@CellCode", this.txtCellCode.Text),
             };
 
             if (this.radioButton1.Checked)
             {
-                dt = bll.FillDataTable("WCS.sp_GetPalletCell", param);
-                if (dt.Rows.Count > 0)
-                    this.txtCellCode.Text = dt.Rows[0][0].ToString();
+                if(TaskCount<=0)
+                {
+                    MessageBox.Show("请输入正确的任务数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+                }
+                param = new DataParameter[] 
+                { 
+                    new DataParameter("@AreaCode", this.cmbAreaCode.SelectedValue.ToString()), 
+                    new DataParameter("@TaskCount", TaskCount),
+                    new DataParameter("@Barcode", ""),
+                    new DataParameter("@CellCode", ""),
+                };
+            }
+            else if(this.radioButton2.Checked)
+            {
+                if (this.txtBarcode.Text.Trim().Length <= 0)
+                {
+                    MessageBox.Show("请输入条码编号！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                param = new DataParameter[] 
+                { 
+                    new DataParameter("@AreaCode", this.cmbAreaCode.SelectedValue.ToString()), 
+                    new DataParameter("@TaskCount", 0),
+                    new DataParameter("@Barcode", this.txtBarcode.Text.Trim()),
+                    new DataParameter("@CellCode", ""),
+                };
+            }
+            else if (this.radioButton3.Checked)
+            {
+                this.txtCellCode.Text = this.cbRow.Text.Substring(3, 3) + (1000 + int.Parse(this.cbColumn.Text)).ToString().Substring(1, 3) + (1000 + int.Parse(this.cbHeight.Text)).ToString().Substring(1, 3) + this.cbToDepth.Text;
+                if (this.txtCellCode.Text.Trim().Length <= 0)
+                {
+                    MessageBox.Show("请选择正确的货位！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                param = new DataParameter[] 
+                { 
+                    new DataParameter("@AreaCode", this.cmbAreaCode.SelectedValue.ToString()), 
+                    new DataParameter("@TaskCount", 0),
+                    new DataParameter("@Barcode", this.txtBarcode.Text.Trim()),
+                    new DataParameter("@CellCode", ""),
+                };
+            }
+            DataTable dt = bll.FillDataTable("WCS.Sp_CreatePalletOutTask", param);
+            if (dt.Rows.Count > 0)
+            {
+                if (int.Parse(dt.Rows[0][0].ToString()) > 0)
+                    this.DialogResult = System.Windows.Forms.DialogResult.OK;
                 else
-                    this.txtCellCode.Text = "";
+                    MessageBox.Show("没有产生盘/箱出库任务，请确认！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
-            {
-                this.txtCellCode.Text = this.cbRow.Text.Substring(3, 3) + (1000 + int.Parse(this.cbColumn.Text)).ToString().Substring(1, 3) + (1000 + int.Parse(this.cbHeight.Text)).ToString().Substring(1, 3);
-            }
-            string ProductCode = "00" + this.cmbCraneNo.Text;
-            
-            //判断货位是否空闲，且只有空托盘
-            param = new DataParameter[] 
-            { 
-                new DataParameter("{0}", string.Format("ProductCode='{0}' and IsActive='1' and IsLock='0' and CellCode='{1}'", ProductCode,this.txtCellCode.Text))
-            };
-            dt = bll.FillDataTable("CMD.SelectCell", param);
-            if (dt.Rows.Count <= 0)
-            {
-                MessageBox.Show("自动获取或指定的货位非空托盘,请确认！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            //锁定货位
-            param = new DataParameter[] 
-            { 
-                new DataParameter("@CarNo", this.cmbCarNo.Text),     
-                new DataParameter("@CraneNo", this.cmbCraneNo.Text),                
-                new DataParameter("@CellCode", this.txtCellCode.Text)
-            };
-            bll.ExecNonQueryTran("WCS.Sp_CreatePalletOutTask2", param);
-            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+                MessageBox.Show("没有产生盘/箱出库任务，请确认！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void frmPalletOutTask_Load(object sender, EventArgs e)
         {
-            DataTable dt = bll.FillDataTable("CMD.SelectCrane", new DataParameter[] { new DataParameter("{0}", "CMD_Crane.State='1'") });
-            this.cmbCraneNo.DataSource = dt.DefaultView;
-            this.cmbCraneNo.ValueMember = "CraneNo";
-            this.cmbCraneNo.DisplayMember = "CraneNo";            
-        }
-
-        private void cmbCraneNo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string CraneNo = this.cmbCraneNo.Text;
-            DataTable dt = bll.FillDataTable("CMD.SelectCar", new DataParameter[] { new DataParameter("{0}", string.Format("CraneNo='{0}'", CraneNo)) });
-            this.cmbCarNo.DataSource = dt.DefaultView;
-            this.cmbCarNo.ValueMember = "CarNo";
-            this.cmbCarNo.DisplayMember = "CarNo";
-
-            this.txtProductCode.Text = "00" + this.cmbCraneNo.Text;
-            this.txtProductName.Text = "空托盘";
-        }
+            DataTable dt = bll.FillDataTable("CMD.SelectArea");
+            this.cmbAreaCode.DataSource = dt.DefaultView;
+            this.cmbAreaCode.ValueMember = "AreaCode";
+            this.cmbAreaCode.DisplayMember = "AreaName";           
+        }        
 
         private void btnClose_Click(object sender, EventArgs e)
         {
@@ -94,30 +109,49 @@ namespace App.View.Task
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.radioButton1.Checked)
-            {
-                this.cbRow.Enabled = false;
-                this.cbColumn.Enabled = false;
-                this.cbHeight.Enabled = false;
-            }
-            else
+            if (this.radioButton3.Checked)
             {
                 this.cbRow.Enabled = true;
                 this.cbColumn.Enabled = true;
                 this.cbHeight.Enabled = true;
             }
+            else
+            {
+                this.cbRow.Enabled = false;
+                this.cbColumn.Enabled = false;
+                this.cbHeight.Enabled = false;
+            }
         }
 
-        private void cmbCarNo_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmbAreaCode_SelectedIndexChanged(object sender, EventArgs e)
         {
             DataParameter[] param = new DataParameter[] 
             { 
-                new DataParameter("{0}", string.Format("CraneNo='{0}'", this.cmbCraneNo.Text))
+                new DataParameter("{0}", string.Format("AreaCode='{0}'", this.cmbAreaCode.SelectedValue.ToString()))
             };
             DataTable dt = bll.FillDataTable("CMD.SelectShelf", param);
             this.cbRow.DataSource = dt.DefaultView;
             this.cbRow.ValueMember = "shelfcode";
             this.cbRow.DisplayMember = "shelfcode";
+
+
+            DataTable dtDepth = new DataTable("dt");
+            dtDepth.Columns.Add("dtText");
+            dtDepth.Columns.Add("dtValue");
+            DataRow dr = dtDepth.NewRow();
+            dr["dtText"] = "1";
+            dr["dtValue"] = "1";
+            dtDepth.Rows.Add(dr);
+            if (this.cmbAreaCode.SelectedIndex == 2)
+            {
+                dr = dtDepth.NewRow();
+                dr["dtText"] = "2";
+                dr["dtValue"] = "2";
+                dtDepth.Rows.Add(dr);
+            }
+            this.cbToDepth.DataSource = dtDepth;
+            this.cbToDepth.DisplayMember = "dtText";
+            this.cbToDepth.ValueMember = "dtValue";
         }
         private void cbRow_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -146,12 +180,12 @@ namespace App.View.Task
             { 
                 new DataParameter("{0}", string.Format("ShelfCode='{0}' and CellColumn={1}",this.cbRow.Text,this.cbColumn.Text))
             };
-            DataTable dt = bll.FillDataTable("CMD.SelectCell", param);
+            DataTable dt = bll.FillDataTable("CMD.SelectCellHeight", param);
             DataView dv = dt.DefaultView;
             dv.Sort = "CellRow";
             this.cbHeight.DataSource = dv;
             this.cbHeight.ValueMember = "CellRow";
             this.cbHeight.DisplayMember = "CellRow";
-        }
+        }        
     }
 }

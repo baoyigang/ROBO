@@ -15,6 +15,7 @@ namespace App.View
         BLL.BLLBase bll = new BLL.BLLBase();
         DataRow dr;
         string CraneNo = "01";
+        int Layer = 0;
 
         public frmReassignEmptyCell()
         {
@@ -31,16 +32,16 @@ namespace App.View
             this.txtCellCode.Text = dr["CellCode"].ToString();
             this.txtAisleNo.Text = dr["AisleNo"].ToString();
             this.txtCraneNo.Text = dr["CraneNo"].ToString();
-            this.txtProductCode.Text = dr["ProductCode"].ToString();
-            this.txtProductName.Text = dr["ProductName"].ToString();
-            this.txtSpec.Text = dr["Spec"].ToString();
+            this.txtCarNo.Text = dr["CarNo"].ToString();
+            this.txtAreaName.Text = dr["AreaName"].ToString();
+            this.txtPalletCode.Text = dr["PalletCode"].ToString();
             this.txtAreaCode.Text = dr["AreaCode"].ToString();
-
-            CraneNo = dr["CraneNo"].ToString();
+            if (this.txtAreaCode.Text=="002")
+                Layer = int.Parse(this.txtCellCode.Text.Substring(6, 3));
 
             DataParameter[] param = new DataParameter[] 
             { 
-                new DataParameter("{0}", string.Format("CraneNo='{0}' and AreaCode='{1}' and AisleNo='{2}'", CraneNo,this.txtAreaCode.Text,this.txtAisleNo.Text))
+                new DataParameter("{0}", string.Format("AreaCode='{0}' and AisleNo='{1}'", this.txtAreaCode.Text,this.txtAisleNo.Text))
             };
             DataTable dt = bll.FillDataTable("CMD.SelectCellShelf", param);
             this.cbRow.DataSource = dt.DefaultView;
@@ -54,12 +55,14 @@ namespace App.View
                 this.cbRow.Enabled = false;
                 this.cbColumn.Enabled = false;
                 this.cbHeight.Enabled = false;
+                this.cbDepth.Enabled = false;
             }
             else
             {
                 this.cbRow.Enabled = true;
                 this.cbColumn.Enabled = true;
                 this.cbHeight.Enabled = true;
+                this.cbDepth.Enabled = true;
             }
         }
         private void btnSearch_Click(object sender, EventArgs e)
@@ -87,6 +90,24 @@ namespace App.View
             this.cbColumn.DataSource = dt.DefaultView;
             this.cbColumn.ValueMember = "CellColumn";
             this.cbColumn.DisplayMember = "CellColumn";
+
+            dt = new DataTable("dt");
+            dt.Columns.Add("dtText");
+            dt.Columns.Add("dtValue");
+            DataRow dr = dt.NewRow();
+            dr["dtText"] = "1";
+            dr["dtValue"] = "1";
+            dt.Rows.Add(dr);
+            if (cbRow.Text == "001005")
+            {
+                dr = dt.NewRow();
+                dr["dtText"] = "2";
+                dr["dtValue"] = "2";
+                dt.Rows.Add(dr);
+            }
+            this.cbDepth.DataSource = dt.DefaultView;
+            this.cbDepth.DisplayMember = "dtText";
+            this.cbDepth.ValueMember = "dtValue";
         }
 
         private void cbColumn_SelectedIndexChanged(object sender, EventArgs e)
@@ -96,11 +117,16 @@ namespace App.View
             if (this.cbColumn.Text == "System.Data.DataRowView")
                 return;
 
+            string filter = string.Format("ShelfCode='{0}' and CellColumn={1} and AreaCode='{2}'",this.cbRow.Text,this.cbColumn.Text,this.txtAreaCode.Text);
+            //如果是小车任务分配货位要与重入任务在同一层
+            if (this.txtAreaCode.Text=="002")
+                filter = string.Format("ShelfCode='{0}' and CellColumn={1} and AreaCode='{2}' and CellRow={3}", this.cbRow.Text, this.cbColumn.Text, this.txtAreaCode.Text, Layer);
             DataParameter[] param = new DataParameter[] 
             { 
-                new DataParameter("{0}", string.Format("ShelfCode='{0}' and CellColumn={1} and AreaCode='{2}'",this.cbRow.Text,this.cbColumn.Text,this.txtAreaCode.Text))
+                new DataParameter("{0}", filter)
             };
-            DataTable dt = bll.FillDataTable("CMD.SelectCell", param);
+
+            DataTable dt = bll.FillDataTable("CMD.SelectCellHeight", param);
             DataView dv = dt.DefaultView;
             dv.Sort = "CellRow";
             this.cbHeight.DataSource = dv;
@@ -122,7 +148,8 @@ namespace App.View
             param = new DataParameter[] 
             { 
                 new DataParameter("@AisleNo", this.txtCraneNo.Text), 
-                new DataParameter("@AreaCode", this.txtAreaCode.Text) 
+                new DataParameter("@AreaCode", this.txtAreaCode.Text), 
+                new DataParameter("@Layer", Layer) 
             };
             if (this.radioButton1.Checked)
             {
@@ -134,7 +161,7 @@ namespace App.View
             }
             else
             {
-                this.txtNewCellCode.Text = this.cbRow.Text.Substring(3, 3) + (1000 + int.Parse(this.cbColumn.Text)).ToString().Substring(1, 3) + (1000 + int.Parse(this.cbHeight.Text)).ToString().Substring(1, 3);
+                this.txtNewCellCode.Text = this.cbRow.Text.Substring(3, 3) + (1000 + int.Parse(this.cbColumn.Text)).ToString().Substring(1, 3) + (1000 + int.Parse(this.cbHeight.Text)).ToString().Substring(1, 3) + this.cbDepth.Text;
             }
 
             //判断货位是否空闲，且只有空托盘

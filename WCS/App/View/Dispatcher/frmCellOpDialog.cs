@@ -100,7 +100,7 @@ namespace App.View.Dispatcher
                 }
                 else if (this.radioButton2.Checked)
                 {
-                    param = new DataParameter[] { new DataParameter("{0}", "IsLock='0',ProductCode='',PalletCode='',Quantity=0,InDate=NULL,BillNo=''"), new DataParameter("{1}", string.Format("CellCode='{0}'", this.txtCellCode.Text)) };
+                    param = new DataParameter[] { new DataParameter("{0}", "IsLock='0',ProductCode='',PalletBarcode='',Quantity=0,InDate=NULL,BillNo=''"), new DataParameter("{1}", string.Format("CellCode='{0}'", this.txtCellCode.Text)) };
                     bll.ExecNonQuery("WCS.UpdateCellByFilter", param);
                 }
                 else if (this.radioButton3.Checked)
@@ -110,7 +110,7 @@ namespace App.View.Dispatcher
                 }
                 else if (this.radioButton4.Checked)
                 {
-                    param = new DataParameter[] { new DataParameter("{0}", "ErrorFlag='',ProductCode='',PalletCode='',Quantity=0,InDate=NULL,BillNo=''"), new DataParameter("{1}", string.Format("CellCode='{0}'", this.txtCellCode.Text)) };
+                    param = new DataParameter[] { new DataParameter("{0}", "ErrorFlag='',ProductCode='',PalletBarcode='',Quantity=0,InDate=NULL,BillNo=''"), new DataParameter("{1}", string.Format("CellCode='{0}'", this.txtCellCode.Text)) };
                     bll.ExecNonQuery("WCS.UpdateCellByFilter", param);
                 }
                 else if (this.radioButton6.Checked)

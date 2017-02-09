@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+  <Servers>
+    
+    <Server Name="TranLineServer" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[PLCTranLine]" UpdateRate="350">
+      <OPCItem ItemName="abc" ClientHandler="30" OPCItemName="DB1,INT100,1"  />
+      <OPCItem ItemName="Conveyor01" ClientHandler="31" OPCItemName="DB1,INT102,1"  />
+      <OPCItem ItemName="ConveyorTaskNo01" ClientHandler="32" OPCItemName="DB1,CHAR280,20"  />
+      <OPCItem ItemName="Conveyor02" ClientHandler="33" OPCItemName="DB1,INT104,1"  />
+      <OPCItem ItemName="ConveyorTaskNo02" ClientHandler="34" OPCItemName="DB1,CHAR300,20"  />
+      <OPCItem ItemName="Conveyor03" ClientHandler="35" OPCItemName="DB1,INT106,1"  />
+      <OPCItem ItemName="ConveyorTaskNo03" ClientHandler="36" OPCItemName="DB1,CHAR320,20"  />
+      <OPCItem ItemName="Conveyor04" ClientHandler="37" OPCItemName="DB1,INT108,1"  />
+      <OPCItem ItemName="ConveyorTaskNo04" ClientHandler="38" OPCItemName="DB1,CHAR340,20"  />
+      <OPCItem ItemName="Conveyor05" ClientHandler="39" OPCItemName="DB1,INT110,1"  />
+      <OPCItem ItemName="ConveyorTaskNo05" ClientHandler="40" OPCItemName="DB1,CHAR360,20"  />
+      <OPCItem ItemName="Conveyor06" ClientHandler="41" OPCItemName="DB1,INT112,1"  />
+      <OPCItem ItemName="ConveyorTaskNo06" ClientHandler="42" OPCItemName="DB1,CHAR370,20"  />
+      <OPCItem ItemName="Conveyor07" ClientHandler="43" OPCItemName="DB1,INT114,1"  />
+      <OPCItem ItemName="ConveyorTaskNo07" ClientHandler="44" OPCItemName="DB1,CHAR400,20"  />
+      <OPCItem ItemName="Conveyor08" ClientHandler="45" OPCItemName="DB1,INT116,1"  />
+      <OPCItem ItemName="ConveyorTaskNo08" ClientHandler="46" OPCItemName="DB1,CHAR420,20"  />
+      <OPCItem ItemName="Conveyor09" ClientHandler="47" OPCItemName="DB1,INT118,1"  />
+      <OPCItem ItemName="ConveyorTaskNo09" ClientHandler="48" OPCItemName="DB1,CHAR440,20"  />
+      <OPCItem ItemName="Conveyor10" ClientHandler="49" OPCItemName="DB1,INT120,1"  />
+      <OPCItem ItemName="ConveyorTaskNo10" ClientHandler="50" OPCItemName="DB1,CHAR460,20"  />
+      <OPCItem ItemName="Conveyor11" ClientHandler="51" OPCItemName="DB1,INT122,1"  />
+      <OPCItem ItemName="ConveyorTaskNo11" ClientHandler="52" OPCItemName="DB1,CHAR480,20"  />
+      <OPCItem ItemName="Conveyor12" ClientHandler="53" OPCItemName="DB1,INT124,1"  />
+      <OPCItem ItemName="ConveyorTaskNo12" ClientHandler="54" OPCItemName="DB1,CHAR500,20"  />
+      <OPCItem ItemName="Conveyor13" ClientHandler="55" OPCItemName="DB1,INT126,1"  />
+      <OPCItem ItemName="ConveyorTaskNo13" ClientHandler="56" OPCItemName="DB1,CHAR520,20"  />
+      <OPCItem ItemName="Conveyor14" ClientHandler="57" OPCItemName="DB1,INT128,1"  />
+      <OPCItem ItemName="ConveyorTaskNo14" ClientHandler="58" OPCItemName="DB1,CHAR540,20"  />
+      <OPCItem ItemName="Conveyor15" ClientHandler="59" OPCItemName="DB1,INT130,1"  />
+      <OPCItem ItemName="ConveyorTaskNo15" ClientHandler="60" OPCItemName="DB1,CHAR560,20"  />
+      <OPCItem ItemName="Conveyor16" ClientHandler="61" OPCItemName="DB1,INT132,1"  />
+      <OPCItem ItemName="ConveyorTaskNo16" ClientHandler="62" OPCItemName="DB1,CHAR580,20"  />
+      <OPCItem ItemName="Conveyor17" ClientHandler="63" OPCItemName="DB1,INT134,1"  />
+      <OPCItem ItemName="ConveyorTaskNo17" ClientHandler="64" OPCItemName="DB1,CHAR600,20"  />
+      <OPCItem ItemName="Conveyor18" ClientHandler="65" OPCItemName="DB1,INT136,1"  />
+      <OPCItem ItemName="ConveyorTaskNo18" ClientHandler="66" OPCItemName="DB1,CHAR620,20"  />
+      <OPCItem ItemName="Conveyor19" ClientHandler="67" OPCItemName="DB1,INT138,1"  />
+      <OPCItem ItemName="ConveyorTaskNo19" ClientHandler="68" OPCItemName="DB1,CHAR640,20"  />
+      <OPCItem ItemName="Conveyor20" ClientHandler="69" OPCItemName="DB1,INT140,1"  />
+      <OPCItem ItemName="ConveyorTaskNo20" ClientHandler="70" OPCItemName="DB1,CHAR660,20"  />
+      <OPCItem ItemName="Conveyor21" ClientHandler="71" OPCItemName="DB1,INT142,1"  />
+      <OPCItem ItemName="ConveyorTaskNo21" ClientHandler="72" OPCItemName="DB1,CHAR680,20"  />
+      <OPCItem ItemName="Conveyor22" ClientHandler="73" OPCItemName="DB1,INT144,1"  />
+      <OPCItem ItemName="ConveyorTaskNo22" ClientHandler="74" OPCItemName="DB1,CHAR700,20"  />
+
+      <OPCItem ItemName="UpDown01" ClientHandler="80" OPCItemName="DB1,INT146,1"  />
+      <OPCItem ItemName="UpDown02" ClientHandler="81" OPCItemName="DB1,INT148,1"  />
+      <OPCItem ItemName="UpDown03" ClientHandler="82" OPCItemName="DB1,INT150,1"  />
+      <OPCItem ItemName="UpDown04" ClientHandler="83" OPCItemName="DB1,INT152,1"  />
+      <OPCItem ItemName="UpDown05" ClientHandler="84" OPCItemName="DB1,INT154,1"  />
+      <OPCItem ItemName="UpDown06" ClientHandler="85" OPCItemName="DB1,INT156,1"  />
+      <OPCItem ItemName="UpDown07" ClientHandler="86" OPCItemName="DB1,INT158,1"  />
+      <OPCItem ItemName="UpDown08" ClientHandler="87" OPCItemName="DB1,INT176,1"  />
+      <OPCItem ItemName="UpDown09" ClientHandler="88" OPCItemName="DB1,INT178,1"  />
+
+      <OPCItem ItemName="Move01" ClientHandler="90" OPCItemName="DB1,INT180,1"  />
+      <OPCItem ItemName="Move02" ClientHandler="91" OPCItemName="DB1,INT182,1"  />
+      <OPCItem ItemName="Move03" ClientHandler="92" OPCItemName="DB1,INT184,1"  />
+      <OPCItem ItemName="Move04" ClientHandler="93" OPCItemName="DB1,INT186,1"  />
+      <OPCItem ItemName="Move05" ClientHandler="94" OPCItemName="DB1,INT188,1"  />
+      <OPCItem ItemName="Move06" ClientHandler="95" OPCItemName="DB1,INT190,1"  />
+      <OPCItem ItemName="Move07" ClientHandler="96" OPCItemName="DB1,INT192,1"  />
+      <OPCItem ItemName="Move08" ClientHandler="97" OPCItemName="DB1,INT194,1"  />
+      <OPCItem ItemName="Move09" ClientHandler="98" OPCItemName="DB1,INT196,1"  />
+    </Server>
+    <Server Name="Car0101Server" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[CarPLC0101]" UpdateRate="350">
+      <OPCItem ItemName="Status01" ClientHandler="3" OPCItemName="DB541,INT2,13"/>
+      <OPCItem ItemName="CarTaskNo01" ClientHandler="4" OPCItemName="DB541,DINT108,1"/>
+      <OPCItem ItemName="AlarmCode01" ClientHandler="5" OPCItemName="DB541,DINT104,1"/>
+    </Server>
+    <Server Name="Car0102Server" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[CarPLC0102]" UpdateRate="350">
+      <OPCItem ItemName="Status02" ClientHandler="7" OPCItemName="DB541,INT2,13"/>
+      <OPCItem ItemName="CarTaskNo02" ClientHandler="8" OPCItemName="DB541,DINT108,1"/>
+      <OPCItem ItemName="AlarmCode02" ClientHandler="9" OPCItemName="DB541,DINT104,1"/>
+    </Server>
+    <Server Name="MiniloadServer" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[PLC04]" UpdateRate="350">
+      <OPCItem ItemName="Mode" ClientHandler="10" OPCItemName="DB541,X0.7,1"/>
+      <OPCItem ItemName="ForkStatus" ClientHandler="11" OPCItemName="DB541,X1.6,1"/>
+      <OPCItem ItemName="AlarmCode" ClientHandler="12" OPCItemName="DB541,INT6,1"/>
+      <OPCItem ItemName="Status" ClientHandler="13" OPCItemName="DB541,INT8,3"/>
+      <OPCItem ItemName="TaskANo" ClientHandler="14" OPCItemName="DB541,DINT20,1"/>
+      <OPCItem ItemName="TaskBNo" ClientHandler="15" OPCItemName="DB541,DINT24,1"/>
+    </Server>
+    <!--<Server Name="MiniloadServer" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[PLC01]" UpdateRate="350">
+      <OPCItem ItemName="Mode" ClientHandler="10" OPCItemName="DB541,X0.7,1"/>
+      <OPCItem ItemName="ForkStatus" ClientHandler="11" OPCItemName="DB541,X1.4,1"/>
+      <OPCItem ItemName="AlarmCode" ClientHandler="12" OPCItemName="DB541,INT6,1"/>
+      <OPCItem ItemName="Status" ClientHandler="13" OPCItemName="DB541,INT8,3"/>
+      <OPCItem ItemName="TaskNo" ClientHandler="15" OPCItemName="DB541,CHAR20,10"/>
+    </Server>-->
+  </Servers>
+</Configuration>

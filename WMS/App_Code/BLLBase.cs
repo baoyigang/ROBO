@@ -88,7 +88,7 @@ namespace BLL
         {
             return bll.FillDataTable(commandID, parameters);
         }
-        public DataSet FillDataSet(string commandID, params object[] parameters)
+        public DataSet FillDataSet(string commandID, params DataParameter[] parameters)
         {
             return bll.FillDataSet(commandID, parameters);
         }

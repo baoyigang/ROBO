@@ -45,7 +45,7 @@ namespace App.Dispatching.Process
                 dtCraneErr = bll.FillDataTable("WCS.SelectCraneError");
 
                 //获取堆垛机信息
-                DataTable dt = bll.FillDataTable("CMD.SelectCrane", new DataParameter[] { new DataParameter("{0}", "1=1") });
+                DataTable dt = bll.FillDataTable("CMD.SelectCrane", new DataParameter[] { new DataParameter("{0}", "CraneNo='01'") });
                 for (int i = 1; i <= dt.Rows.Count; i++)
                 {
                     if (!dCrnStatus.ContainsKey(i))
@@ -69,7 +69,7 @@ namespace App.Dispatching.Process
             }
             catch (Exception ex)
             {
-                Logger.Error("THOK.XC.Process.Process_Crane.CraneProcess堆垛机初始化出错，原因：" + ex.Message);
+                Logger.Error("CraneProcess堆垛机初始化出错，原因：" + ex.Message);
             }
         }
         protected override void StateChanged(StateItem stateItem, IProcessDispatcher dispatcher)
@@ -86,16 +86,9 @@ namespace App.Dispatching.Process
                         sbyte[] taskNo = new sbyte[10];
                         Util.ConvertStringChar.stringToBytes("", 10).CopyTo(taskNo, 0);
                         WriteToService(stateItem.Name, "TaskNo", taskNo);
-                        //存储过程处理
-                        if (TaskNo != "")
-                        {
-                            Logger.Info(stateItem.ItemName + "完成标志,任务号:" + TaskNo);
-                            //更新任务状态
-                            DataParameter[] param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo) };
-                            bll.ExecNonQueryTran("WCS.Sp_TaskProcess", param);
-                        }
-                        DataParameter[] paras = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_Task.TaskNo='{0}'", TaskNo)) };
-                        DataTable dt = bll.FillDataTable("WCS.SelectTask", paras);
+
+                        DataParameter[] para = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_Task.TaskNo='{0}'", TaskNo)) };
+                        DataTable dt = bll.FillDataTable("WCS.SelectTask", para);
 
                         string TaskType = "";
                         string strState = "";
@@ -103,23 +96,54 @@ namespace App.Dispatching.Process
                         {
                             TaskType = dt.Rows[0]["TaskType"].ToString();
                             strState = dt.Rows[0]["State"].ToString();
-                           
+
                         }
-                        string[] str = new string[3];
-                        str[0] = "6";
-                        string strValue = "";
-                        if (TaskType == "14" && strState == "4")
+                        //存储过程处理
+                        if (TaskNo != "")
                         {
+                            Logger.Info(stateItem.ItemName + "完成标志,任务号:" + TaskNo);
+                            //更新任务状态
+
+                            List<string> comds = new List<string>();
+                            List<DataParameter[]> paras = new List<DataParameter[]>();
+                            if (TaskType == "12" || TaskType == "15" || TaskType == "14")  //输送线处理程序
+                            {
+                                comds.Add("WCS.Sp_TaskProcess"); //更新为出库任务完成
+                                para = new DataParameter[] { new DataParameter("@TaskNo", TaskNo) };
+                                paras.Add(para);
+
+
+                                comds.Add("WCS.UpdateTaskStateByTaskNo"); //更新到达出库站台
+                                para = new DataParameter[] { new DataParameter("@TaskNo", TaskNo), new DataParameter("@State", 6) };
+                                paras.Add(para);
+                            }
+
+                            comds.Add("WCS.Sp_TaskProcess");
+
+                            para = new DataParameter[] { new DataParameter("@TaskNo", TaskNo) };
+                            paras.Add(para);
+
+
+                            bll.ExecTran(comds.ToArray(), paras);
+                        }
+
+                        string strValue = "";
+                        string[] str = new string[3];
+                        if (TaskType == "12" || (TaskType == "14" && strState == "4"))//显示拣货信息.
+                        {
+                            str[0] = "1";
+                            if (TaskType == "14")
+                                str[0] = "2";
+
                             while ((strValue = FormDialog.ShowDialog(str, dt)) != "")
                             {
-
-                                bll.ExecNonQuery("WCS.UpdateTaskStateByTaskNo", new DataParameter[] { new DataParameter("@State", 5), new DataParameter("@TaskNo", TaskNo) });
-                                //线程继续。
+                                if (TaskType == "14")
+                                {
+                                    bll.ExecNonQuery("WCS.UpdateTaskStateByTaskNo", new DataParameter[] { new DataParameter("@TaskNo", TaskNo), new DataParameter("@State", 2) });
+                                }
                                 break;
                             }
                         }
-
-
                     }
                     break;
                 case "CraneAlarmCode":
@@ -306,7 +330,7 @@ namespace App.Dispatching.Process
                     if (WriteToService(serviceName, "WriteFinished", 1))
                     {
                         //更新任务状态为执行中
-                        bll.ExecNonQuery("WCS.UpdateTaskTimeByTaskNo", new DataParameter[] { new DataParameter("@State", 3), new DataParameter("@TaskNo", TaskNo) });
+                        bll.ExecNonQuery("WCS.UpdateTaskTimeByTaskNo", new DataParameter[] { new DataParameter("@State", 4), new DataParameter("@TaskNo", TaskNo) });
                         bll.ExecNonQuery("WCS.UpdateBillStateByBillID", new DataParameter[] { new DataParameter("@State", 3), new DataParameter("@BillID", BillID) });
                     }
                     Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + craneNo + "堆垛机;起始地址:" + fromStation + ",目标地址:" + toStation);
@@ -349,7 +373,7 @@ namespace App.Dispatching.Process
 
                 string CraneNo = "0" + craneNo.ToString();
                 //获取任务，排序优先等级、任务时间
-                DataParameter[] parameter = new DataParameter[] { new DataParameter("{0}", string.Format("((WCS_Task.TaskType='11' and WCS_Task.State='1') or (WCS_Task.TaskType='14' and WCS_Task.State='5')) and WCS_Task.CraneNo='{0}'", CraneNo)) };
+                DataParameter[] parameter = new DataParameter[] { new DataParameter("{0}", string.Format("(WCS_Task.TaskType in ('11','14') and WCS_Task.State='2') and WCS_Task.CraneNo='{0}'", CraneNo)) };
                 DataTable dt = bll.FillDataTable("WCS.SelectTask", parameter);
 
                 //出库
@@ -383,11 +407,9 @@ namespace App.Dispatching.Process
                     WriteToService(serviceName, "TaskNo", taskNo);
                     if (WriteToService(serviceName, "WriteFinished", 1))
                     {
-                        string State = "3";
-                        if (taskType == 4)
-                            State = "6";
+                      
                         //更新任务状态为执行中
-                        bll.ExecNonQuery("WCS.UpdateTaskTimeByTaskNo", new DataParameter[] { new DataParameter("@State", State), new DataParameter("@TaskNo", TaskNo) });
+                        bll.ExecNonQuery("WCS.UpdateTaskTimeByTaskNo", new DataParameter[] { new DataParameter("@State", 3), new DataParameter("@TaskNo", TaskNo) });
                         bll.ExecNonQuery("WCS.UpdateBillStateByBillID", new DataParameter[] { new DataParameter("@State", 3), new DataParameter("@BillID", BillID) });
                     }
                     Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + craneNo + "堆垛机;起始地址:" + fromStation + ",目标地址:" + toStation);

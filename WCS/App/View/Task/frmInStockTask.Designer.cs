@@ -44,18 +44,20 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtBarcode = new System.Windows.Forms.TextBox();
-            this.cmbStationNo = new System.Windows.Forms.ComboBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.cmbDepth = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.txtBarcode = new System.Windows.Forms.TextBox();
+            this.cmbAreaCode = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cbStationNo = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnClose
             // 
-            this.btnClose.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnClose.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btnClose.Location = new System.Drawing.Point(398, 187);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 38);
@@ -66,7 +68,7 @@
             // 
             // btnRequest
             // 
-            this.btnRequest.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnRequest.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btnRequest.Location = new System.Drawing.Point(223, 187);
             this.btnRequest.Name = "btnRequest";
             this.btnRequest.Size = new System.Drawing.Size(101, 38);
@@ -78,7 +80,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.Location = new System.Drawing.Point(3, 123);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(74, 21);
@@ -87,7 +89,7 @@
             // 
             // txtTaskNo
             // 
-            this.txtTaskNo.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtTaskNo.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtTaskNo.Location = new System.Drawing.Point(422, 124);
             this.txtTaskNo.Name = "txtTaskNo";
             this.txtTaskNo.ReadOnly = true;
@@ -97,7 +99,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(347, 128);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(73, 21);
@@ -108,7 +110,7 @@
             // 
             this.radioButton1.AutoSize = true;
             this.radioButton1.Checked = true;
-            this.radioButton1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.radioButton1.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.radioButton1.Location = new System.Drawing.Point(17, 19);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(92, 25);
@@ -121,7 +123,7 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.radioButton2.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.radioButton2.Location = new System.Drawing.Point(116, 19);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(92, 25);
@@ -131,18 +133,18 @@
             // 
             // txtCellCode
             // 
-            this.txtCellCode.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtCellCode.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtCellCode.Location = new System.Drawing.Point(83, 124);
             this.txtCellCode.MaxLength = 10;
             this.txtCellCode.Name = "txtCellCode";
             this.txtCellCode.ReadOnly = true;
-            this.txtCellCode.Size = new System.Drawing.Size(237, 29);
+            this.txtCellCode.Size = new System.Drawing.Size(196, 29);
             this.txtCellCode.TabIndex = 42;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label6.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label6.Location = new System.Drawing.Point(438, 21);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(26, 21);
@@ -152,7 +154,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label7.Location = new System.Drawing.Point(350, 21);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(26, 21);
@@ -163,7 +165,7 @@
             // 
             this.cbHeight.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbHeight.Enabled = false;
-            this.cbHeight.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cbHeight.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cbHeight.FormattingEnabled = true;
             this.cbHeight.Location = new System.Drawing.Point(470, 17);
             this.cbHeight.Name = "cbHeight";
@@ -174,7 +176,7 @@
             // 
             this.cbColumn.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbColumn.Enabled = false;
-            this.cbColumn.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cbColumn.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cbColumn.FormattingEnabled = true;
             this.cbColumn.Location = new System.Drawing.Point(386, 17);
             this.cbColumn.Name = "cbColumn";
@@ -186,7 +188,7 @@
             // 
             this.cbRow.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbRow.Enabled = false;
-            this.cbRow.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cbRow.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cbRow.FormattingEnabled = true;
             this.cbRow.Items.AddRange(new object[] {
             "001",
@@ -210,7 +212,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label8.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label8.Location = new System.Drawing.Point(214, 21);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(42, 21);
@@ -220,12 +222,12 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label12.Location = new System.Drawing.Point(347, 15);
+            this.label12.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label12.Location = new System.Drawing.Point(288, 15);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(74, 21);
+            this.label12.Size = new System.Drawing.Size(81, 21);
             this.label12.TabIndex = 71;
-            this.label12.Text = "托盘编号";
+            this.label12.Text = "盘/箱条码";
             // 
             // groupBox1
             // 
@@ -245,52 +247,11 @@
             this.groupBox1.TabIndex = 72;
             this.groupBox1.TabStop = false;
             // 
-            // txtBarcode
-            // 
-            this.txtBarcode.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtBarcode.Location = new System.Drawing.Point(430, 12);
-            this.txtBarcode.Name = "txtBarcode";
-            this.txtBarcode.Size = new System.Drawing.Size(251, 29);
-            this.txtBarcode.TabIndex = 73;
-            this.txtBarcode.TextChanged += new System.EventHandler(this.txtBarcode_TextChanged);
-            this.txtBarcode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBarcode_KeyDown);
-            // 
-            // cmbStationNo
-            // 
-            this.cmbStationNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbStationNo.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cmbStationNo.FormattingEnabled = true;
-            this.cmbStationNo.Location = new System.Drawing.Point(83, 12);
-            this.cmbStationNo.Name = "cmbStationNo";
-            this.cmbStationNo.Size = new System.Drawing.Size(237, 29);
-            this.cmbStationNo.TabIndex = 75;
-            this.cmbStationNo.SelectedIndexChanged += new System.EventHandler(this.cmbStation_SelectedIndexChanged);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label13.Location = new System.Drawing.Point(3, 15);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(74, 21);
-            this.label13.TabIndex = 74;
-            this.label13.Text = "库区编号";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label9.Location = new System.Drawing.Point(3, 72);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(74, 21);
-            this.label9.TabIndex = 78;
-            this.label9.Text = "货位分配";
-            // 
             // cmbDepth
             // 
             this.cmbDepth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDepth.Enabled = false;
-            this.cmbDepth.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cmbDepth.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cmbDepth.FormattingEnabled = true;
             this.cmbDepth.Location = new System.Drawing.Point(552, 17);
             this.cmbDepth.Name = "cmbDepth";
@@ -300,20 +261,83 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.Location = new System.Drawing.Point(520, 21);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(26, 21);
             this.label3.TabIndex = 64;
             this.label3.Text = "深";
             // 
+            // txtBarcode
+            // 
+            this.txtBarcode.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtBarcode.Location = new System.Drawing.Point(375, 11);
+            this.txtBarcode.Name = "txtBarcode";
+            this.txtBarcode.Size = new System.Drawing.Size(138, 29);
+            this.txtBarcode.TabIndex = 73;
+            this.txtBarcode.TextChanged += new System.EventHandler(this.txtBarcode_TextChanged);
+            this.txtBarcode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBarcode_KeyDown);
+            // 
+            // cmbAreaCode
+            // 
+            this.cmbAreaCode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbAreaCode.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cmbAreaCode.FormattingEnabled = true;
+            this.cmbAreaCode.Location = new System.Drawing.Point(83, 11);
+            this.cmbAreaCode.Name = "cmbAreaCode";
+            this.cmbAreaCode.Size = new System.Drawing.Size(196, 29);
+            this.cmbAreaCode.TabIndex = 75;
+            this.cmbAreaCode.SelectedIndexChanged += new System.EventHandler(this.cmbAreaCode_SelectedIndexChanged);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label13.Location = new System.Drawing.Point(3, 15);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(74, 21);
+            this.label13.TabIndex = 74;
+            this.label13.Text = "库区编号";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label9.Location = new System.Drawing.Point(3, 72);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(74, 21);
+            this.label9.TabIndex = 78;
+            this.label9.Text = "货位分配";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label4.Location = new System.Drawing.Point(519, 15);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(74, 21);
+            this.label4.TabIndex = 79;
+            this.label4.Text = "入库站台";
+            // 
+            // cbStationNo
+            // 
+            this.cbStationNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbStationNo.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cbStationNo.FormattingEnabled = true;
+            this.cbStationNo.Location = new System.Drawing.Point(608, 11);
+            this.cbStationNo.Name = "cbStationNo";
+            this.cbStationNo.Size = new System.Drawing.Size(68, 29);
+            this.cbStationNo.TabIndex = 65;
+            // 
             // frmInStockTask
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(733, 258);
+            this.Controls.Add(this.cbStationNo);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.cmbStationNo);
+            this.Controls.Add(this.cmbAreaCode);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.txtBarcode);
             this.Controls.Add(this.groupBox1);
@@ -358,10 +382,12 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox txtBarcode;
-        private System.Windows.Forms.ComboBox cmbStationNo;
+        private System.Windows.Forms.ComboBox cmbAreaCode;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox cmbDepth;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cbStationNo;
     }
 }

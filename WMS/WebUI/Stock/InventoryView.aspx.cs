@@ -91,6 +91,8 @@ public partial class WebUI_Stock_InventoryView : BasePage
         bool blnDelete = false;
         bool blnEdit = false;
         bool blnCheck = false;
+        bool blnTask = false;
+        bool blnUnTask = false;
         DataTable dtOP = (DataTable)(Session["DT_UserOperation"]);
         DataRow[] drs = dtOP.Select(string.Format("SubModuleCode='{0}'", Session["SubModuleCode"].ToString()));
 
@@ -108,18 +110,33 @@ public partial class WebUI_Stock_InventoryView : BasePage
                 case 5:
                     blnCheck = true;
                     break;
+                case 6:
+                    blnTask = true;
+                    break;
+                case 7:
+                    blnUnTask = true;
+                    break;
             }
         }
         this.btnDelete.Enabled = blnDelete;
         this.btnEdit.Enabled = blnEdit;
         this.btnCheck.Enabled = blnCheck;
+        this.btnTask.Enabled = false;
+        this.btnUnTask.Enabled = false;
 
 
         int State = int.Parse(hdnState.Value);
+
         if (State == 1)
         {
             this.btnDelete.Enabled = false;
             this.btnEdit.Enabled = false;
+            this.btnTask.Enabled = blnTask;
+
+        }
+        if (State == 2)
+        {
+            this.btnUnTask.Enabled = blnUnTask;
         }
         if (State > 1)
         {
@@ -127,7 +144,6 @@ public partial class WebUI_Stock_InventoryView : BasePage
             this.btnEdit.Enabled = false;
             this.btnCheck.Enabled = false;
         }
-
 
     }
     private void BindDataSub()
@@ -291,6 +307,59 @@ public partial class WebUI_Stock_InventoryView : BasePage
 
         DataTable dt = bll.FillDataTable("WMS.SelectBillMaster", new DataParameter[] { new DataParameter("{0}", string.Format("BillID='{0}'", strID)) });
         BindData(dt);
+    }
+    protected void btnTask_Click(object sender, EventArgs e)
+    {
+        BLL.BLLBase bll = new BLL.BLLBase();
+        int State = int.Parse(bll.GetFieldValue("WMS_BillMaster", "State", string.Format("BillID='{0}'", this.txtID.Text)));
+        if (State == 0)
+        {
+            JScript.ShowMessage(this.updatePanel, this.txtID.Text + "单号还未审核不能作业，请审核后，再进行盘库作业。");
+            return;
+        }
+        if (State > 1)
+        {
+            JScript.ShowMessage(this.updatePanel, this.txtID.Text + "单号已经作业，不能再进行盘库作业。");
+            return;
+        }
+        try
+        {
+            bll.ExecNonQueryTran("WMS.SpInventoryStockTask", new DataParameter[] { new DataParameter("@strWhere", "'" + this.txtID.Text + "'"), new DataParameter("@UserName", Session["EmployeeCode"].ToString()) });
+            AddOperateLog("盘库单", "盘库作业单号：" + this.txtID.Text);
+            DataTable dt = bll.FillDataTable("WMS.SelectBillMaster", new DataParameter[] { new DataParameter("{0}", string.Format("BillID='{0}'", strID)) });
+            BindData(dt);
+        }
+        catch (Exception ex)
+        {
+            JScript.ShowMessage(this.updatePanel, ex.Message);
+        }
+    }
+    protected void btnUnTask_Click(object sender, EventArgs e)
+    {
+
+        BLL.BLLBase bll = new BLL.BLLBase();
+        int State = int.Parse(bll.GetFieldValue("WMS_BillMaster", "State", string.Format("BillID='{0}'", this.txtID.Text)));
+        if (State < 2)
+        {
+            JScript.ShowMessage(this.updatePanel, this.txtID.Text + "单号还未作业，不能进行取消作业。");
+            return;
+        }
+        if (State > 2)
+        {
+            JScript.ShowMessage(this.updatePanel, this.txtID.Text + "单号已经执行，不能再进行取消作业。");
+            return;
+        }
+        try
+        {
+            bll.ExecNonQueryTran("WMS.SpCancelInventoryStockTask", new DataParameter[] { new DataParameter("@strWhere", "'" + this.txtID.Text + "'"), new DataParameter("@UserName", Session["EmployeeCode"].ToString()) });
+            AddOperateLog("入库单", "入库取消作业单号：" + this.txtID.Text);
+            DataTable dt = bll.FillDataTable("WMS.SelectBillMaster", new DataParameter[] { new DataParameter("{0}", string.Format("BillID='{0}'", strID)) });
+            BindData(dt);
+        }
+        catch (Exception ex)
+        {
+            JScript.ShowMessage(this.updatePanel, ex.Message);
+        }
     }
 }
  

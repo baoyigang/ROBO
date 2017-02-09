@@ -331,6 +331,13 @@ public partial class WebUI_InStock_InStockPallet : BasePage
                 }
             }
         }
+        if (bll.GetRowCount("WMS_Pallet", string.Format("PalletCode='{0}' and CellCode<>''", txtSearch.Text)) > 0)
+        {
+            JScript.ShowMessage(this.updatePanel1, "托盘已经入库,无法保存！");
+            return;
+        }
+
+
 
         DataRow[] drs = dt.Select("IsLock='0'");
         string[] Comds = new string[drs.Length + 1];

@@ -47,7 +47,12 @@
       update CMD_Area set AreaName=@AreaName,Memo=@Memo where AreaCode={0}
     </CommandString>
   </Command>
-  
+  <!--托盘信息-->
+  <Command ID="SelectPallet">
+    <CommandString>
+      SELECT * FROM VCMD_PalletBarcode where {0} order by WarehouseCode,AreaCode,PalletBarcode
+    </CommandString>
+  </Command>
 
   <!--货架信息-->
   <Command ID="SelectStation">
@@ -105,6 +110,11 @@
   <Command ID="SelectCell">
     <CommandString>
       select * from CMD_Cell WHERE {0} ORDER BY AreaCode,ShelfCode,CellCode
+    </CommandString>
+  </Command>
+  <Command ID="SelectCellHeight">
+    <CommandString>
+      select distinct CellRow from CMD_Cell WHERE {0} ORDER BY CellRow
     </CommandString>
   </Command>
   <!--货位信息-->
@@ -206,8 +216,46 @@
       Delete from CMD_Crane where {0}
     </CommandString>
   </Command>
-  
-  
+  <!--提升机信息-->
+  <Command ID="SelectElevator">
+    <CommandString>
+      Select CMD_Elevator.*,StateDesc from CMD_Elevator inner join Sys_TableState on CMD_Elevator.State=Sys_TableState.State and Sys_TableState.FieldName='State' and Sys_TableState.TableName='CMD_Elevator'  where {0} order by ElevatorNo
+    </CommandString>
+  </Command>
+  <Command ID="SelectDistinctElevator">
+    <CommandString>
+      Select distinct CMD_Elevator.ElevatorNo, CMD_Elevator.ElevatorName, CMD_Elevator.State,StateDesc
+      from CMD_Elevator
+      inner join Sys_TableState on CMD_Elevator.State=Sys_TableState.State and Sys_TableState.FieldName='State' and Sys_TableState.TableName='CMD_Elevator'
+      where {0}
+      order by ElevatorNo
+    </CommandString>
+  </Command>
+  <Command ID="UpdateElevator">
+    <CommandString>
+      Update CMD_Elevator set ElevatorName=@ElevatorName,State=@State,CarState=@CarState,Memo=@Memo where ElevatorNo=@ElevatorNo and CarNo=@CarNo
+    </CommandString>
+  </Command>
+
+  <Command ID="InsertElevator">
+    <CommandString>
+      Insert into CMD_Elevator(ElevatorNo,ElevatorName,Memo,State,CarNo,CarState)
+      values(@ElevatorNo,@ElevatorName,@Memo,@State,@CarNo,@CarState)
+    </CommandString>
+  </Command>
+
+  <Command ID="DeleteElevator">
+    <CommandString>
+      Delete from CMD_Elevator where {0}
+    </CommandString>
+  </Command>
+  <Command ID="SelectElevatorCar">
+    <CommandString>
+      Select CMD_Elevator.*,StateDesc from CMD_Elevator 
+      inner join Sys_TableState on CMD_Elevator.CarState=Sys_TableState.State and Sys_TableState.FieldName='State' and Sys_TableState.TableName='CMD_Elevator'  
+      where {0} order by CarNo
+    </CommandString>
+  </Command>
   <!--小车信息-->
   <Command ID="SelectCar">
     <CommandString>
@@ -447,7 +495,12 @@
 
   <Command ID="SelectWareHouseCellInfoByCell">
     <CommandString>
-      SELECT * FROM View_CMD_CELL_ALL WHERE CellCode = @CellCode
+      select cell.WarehouseCode, WarehouseName,cell.AreaCode,cell.AreaName,cell.ShelfCode,cell.ShelfName,cell.CellCode,cell.CellColumn,cell.CellName,cell.CellRow,Depth,cell.IsLock,
+      cell.IsActive,cell.PalletBarCode as PalletCode,pallet.ProductCode,product.ProductName,Product.ModelNo as BatchNo,Pallet.Quantity,pallet.Indate,product.CategoryName,product.Spec,product.Unit
+      from View_CMD_CELL_ALL Cell
+      left join WMS_Pallet Pallet on Cell.PalletBarCode=Pallet.PalletCode
+      left join VCMD_Product Product on product.ProductCode=Pallet.ProductCode
+      where cell.CellCode=@CellCode
     </CommandString>
   </Command>
 

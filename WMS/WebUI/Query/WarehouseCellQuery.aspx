@@ -30,12 +30,8 @@
     </style>
     <script language="javascript" type="text/javascript">
         var ShowCellTag = "<td style=\"width:30px; height:20px; background-color:Red\"></td><td>异常货位</td>" +
-                          "<td style=\"width:30px; height:20px; background-color:Blue\"></td><td>有货且未锁定</td>" +
-                          "<td style=\"width:30px; height:20px; background-color:Green\"></td><td>有货且锁定</td>" +
+                          "<td style=\"width:30px; height:20px; background-color:Blue\"></td><td>有货</td>" +
                           "<td style=\"width:30px; height:20px; background-color:Gray\"></td><td>禁用货位</td>" +
-                          "<td style=\"width:30px; height:20px; background-color:Yellow\"></td><td>锁定的空货位</td>" +
-                          "<td style=\"width:30px; height:20px; background-color:Orange\"></td><td>未锁定的托盘</td>" +
-                          "<td style=\"width:30px; height:20px; background-color:Gold\"></td><td>锁定的托盘</td>" +
                           "</tr></table>";
         Ext.onReady(function () {
             var blnReload = false;
@@ -96,16 +92,16 @@
                             var sAreaCode = "";
                             var sWareHouse = "";
 
-                            centerPanel.setTitle("<table style=\"width:100%;\" valign=\"middle\"><tr><td style=\"width:20%;\">当前选中的节点：" + text + " </td>" + ShowCellTag);
+                            centerPanel.setTitle("<table style=\"width:100%;\" valign=\"middle\"><tr><td style=\"width:20%;\">当前选中的节点：" + text + " </td> <td style=\"width:50%;\"></td>" + ShowCellTag);
                             $("#hdnNodeID").val(tNodeID);
-                            if (tNodeIDLen == 2) {
+                            if (tNodeIDLen <= 2) {
                                 sWareHouse = tNodeID;
                             }
                             if (tNodeIDLen == 3) {
                                 sWareHouse = record.parentNode.id;
                                 sAreaCode = tNodeID;
                             }
-                            if (tNodeIDLen == 6) {
+                            if (tNodeIDLen < 6 && tNodeIDLen > 3) {
                                 sAreaCode = record.parentNode.id;
                                 sShelfCode = tNodeID;
                             }
@@ -160,7 +156,7 @@
             });
             if (typeof (tree) != "undefined") {
                 var root = tree.getRootNode().firstChild;
-                centerPanel.setTitle("<table style=\"width:100%;\" valign=\"middle\"><tr><td style=\"width:20%;\">当前选中的节点：" + root.data.text + " </td>" + ShowCellTag);
+                centerPanel.setTitle("<table style=\"width:100%;\" valign=\"middle\"><tr><td style=\"width:20%;\">当前选中的节点：" + root.data.text + " </td><td style=\"width:50%;\"></td>" + ShowCellTag);
                 $("#frmMain_warehouse").attr("src", " WarehouseCell.aspx?WareHouse=" + root.id + "&AreaCode=&ShelfCode=");
             }
 

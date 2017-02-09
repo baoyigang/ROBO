@@ -37,7 +37,7 @@
             <ContentTemplate>
                  <table  style="width: 100%; height: 25px;" class="OperationBar">
                     <tr>
-                        <td align="right" style="width:60%">
+                        <td align="right" style="width:40%">
                             <asp:Button ID="btnFirst" runat="server" Text="首笔" CssClass="ButtonFirst" 
                                 onclick="btnFirst_Click"  />
                             <asp:Button ID="btnPre" runat="server" Text="上一笔" CssClass="ButtonPre" 
@@ -50,12 +50,15 @@
                         <td align="right">
                            <%-- <asp:Button ID="btnPrint" runat="server" Text="导出" CssClass="ButtonPrint" 
                                 OnClientClick="return print();" />--%>
-                            <asp:Button ID="btnCheck" runat="server" Text="审核" CssClass="ButtonAudit" onclick="btnCheck_Click"  />
+                            
                             <asp:Button ID="btnAdd" runat="server" Text="新增" CssClass="ButtonCreate" OnClientClick="return Add();"  />
                             <asp:Button ID="btnDelete" runat="server" Text="刪除" CssClass="ButtonDel" OnClientClick="return ViewDelete();"
                                 onclick="btnDelete_Click"  />
                             <asp:Button ID="btnEdit" runat="server" Text="修改" CssClass="ButtonModify" 
                                 OnClientClick="return ViewEdit();" />
+                            <asp:Button ID="btnCheck" runat="server" Text="审核" CssClass="ButtonAudit" onclick="btnCheck_Click"  />
+                            <asp:Button ID="btnTask" runat="server" Text="盘库作业" CssClass="ButtonTask" onclick="btnTask_Click"  />
+                            <asp:Button ID="btnUnTask" runat="server" Text="取消作业" CssClass="ButtonUnTask" onclick="btnUnTask_Click"  />
                             <asp:Button ID="btnBack" runat="server" Text="返回" OnClientClick="return Back();" 
                                 CssClass="ButtonBack" />
                             <asp:Button ID="btnExit" runat="server" Text="离开" OnClientClick="return Exit();" 

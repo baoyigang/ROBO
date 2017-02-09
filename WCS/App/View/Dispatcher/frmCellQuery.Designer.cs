@@ -74,6 +74,7 @@
             this.btnExit = new System.Windows.Forms.Button();
             this.btnChart = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
+            this.ToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsMain)).BeginInit();
             this.pnlMain.SuspendLayout();
@@ -89,14 +90,15 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItem1});
+            this.ToolStripMenuItem1,
+            this.ToolStripMenuItem2});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(125, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 70);
             // 
             // ToolStripMenuItem1
             // 
             this.ToolStripMenuItem1.Name = "ToolStripMenuItem1";
-            this.ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
+            this.ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItem1.Text = "货位编辑";
             this.ToolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1_Click);
             // 
@@ -308,7 +310,6 @@
             this.pnlChart.TabIndex = 2;
             this.pnlChart.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlChart_Paint);
             this.pnlChart.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnlChart_MouseClick);
-            this.pnlChart.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.pnlChart_MouseDoubleClick);
             this.pnlChart.MouseEnter += new System.EventHandler(this.pnlChart_MouseEnter);
             this.pnlChart.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlChart_MouseMove);
             this.pnlChart.Resize += new System.EventHandler(this.pnlChart_Resize);
@@ -529,6 +530,13 @@
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
+            // ToolStripMenuItem2
+            // 
+            this.ToolStripMenuItem2.Name = "ToolStripMenuItem2";
+            this.ToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItem2.Text = "货位刷新";
+            this.ToolStripMenuItem2.Click += new System.EventHandler(this.ToolStripMenuItem2_Click);
+            // 
             // frmCellQuery
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -597,5 +605,6 @@
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column10;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column11;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column12;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem2;
     }
 }

@@ -53,9 +53,6 @@
             this.colTaskNo = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column1 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.colState = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.Column6 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.Column7 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.Column8 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column4 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column3 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column5 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
@@ -117,9 +114,6 @@
             this.colTaskNo,
             this.Column1,
             this.colState,
-            this.Column6,
-            this.Column7,
-            this.Column8,
             this.Column4,
             this.Column3,
             this.Column5,
@@ -300,33 +294,6 @@
             this.colState.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.colState.Width = 80;
             // 
-            // Column6
-            // 
-            this.Column6.DataPropertyName = "ProductCode";
-            this.Column6.FilteringEnabled = false;
-            this.Column6.HeaderText = "产品编号";
-            this.Column6.Name = "Column6";
-            this.Column6.ReadOnly = true;
-            this.Column6.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // Column7
-            // 
-            this.Column7.DataPropertyName = "ProductName";
-            this.Column7.FilteringEnabled = false;
-            this.Column7.HeaderText = "产品名称";
-            this.Column7.Name = "Column7";
-            this.Column7.ReadOnly = true;
-            this.Column7.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column7.Width = 120;
-            // 
-            // Column8
-            // 
-            this.Column8.DataPropertyName = "Spec";
-            this.Column8.FilteringEnabled = false;
-            this.Column8.HeaderText = "产品规格";
-            this.Column8.Name = "Column8";
-            this.Column8.ReadOnly = true;
-            // 
             // Column4
             // 
             this.Column4.DataPropertyName = "CellCode";
@@ -462,9 +429,6 @@
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colTaskNo;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column1;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colState;
-        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column6;
-        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column7;
-        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column8;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column4;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column3;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column5;

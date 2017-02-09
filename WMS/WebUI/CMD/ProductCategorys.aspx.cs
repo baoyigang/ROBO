@@ -75,7 +75,7 @@ public partial class WebUI_CMD_ProductCategorys : BasePage
             {
                 HyperLink hk = (HyperLink)(this.GridView1.Rows[i].FindControl("HyperLink1"));
                 //判断能否删除
-                int Count = bll.GetRowCount("VUsed_CMD_ProductType", string.Format("ProductTypeCode='{0}'", hk.Text));
+                int Count = bll.GetRowCount("VUsed_CMD_ProductCategory", string.Format("CategoryCode='{0}'", hk.Text));
                 if (Count > 0)
                 {
                     JScript.ShowMessage(this.UpdatePanel1, GridView1.Rows[i].Cells[2].Text + "产品类别被其它单据使用，请调整后再删除！");
@@ -88,7 +88,7 @@ public partial class WebUI_CMD_ProductCategorys : BasePage
         strColorCode += "'-1'";
 
 
-        bll.ExecNonQuery("Cmd.DeleteProductType", new DataParameter[] { new DataParameter("{0}", strColorCode) });
+        bll.ExecNonQuery("Cmd.DeleteProductCategory", new DataParameter[] { new DataParameter("{0}", strColorCode) });
         AddOperateLog("产品类别", "删除单号：" + strColorCode.Replace("'-1',", "").Replace(",'-1'", ""));
         SetBtnEnabled(int.Parse(ViewState["CurrentPage"].ToString()), SqlCmd, ViewState["filter"].ToString(), pageSize, GridView1, btnFirst, btnPre, btnNext, btnLast, btnToPage, lblCurrentPage, this.UpdatePanel1);
 

@@ -26,7 +26,7 @@
       left join sys_GroupList g on g.GroupID=o.GroupID
       left join sys_UserLIst  u on u.GroupID=g.GroupID 
       left join sys_Menu      n on n.MenuCode=m.SubModuleCode
-      left join sys_Menu      n2 on n2.MenuCode=substring(n.MenuCode,1,8)
+      left join sys_Menu      n2 on n2.MenuCode=substring(n.MenuCode,1,8)   
       where g.GroupID=@GroupID and n.SystemName=@SystemName and n.IsHide='0'
       order by n.OrderIndex, SubModuleCode
 

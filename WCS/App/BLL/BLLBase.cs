@@ -89,7 +89,7 @@ namespace BLL
         {
             return bll.FillDataTable(commandID, parameters);
         }
-        public DataSet FillDataSet(string commandID, params object[] parameters)
+        public DataSet FillDataSet(string commandID, params DataParameter[] parameters)
         {
             return bll.FillDataSet(commandID, parameters);
         }
@@ -191,6 +191,11 @@ namespace BLL
         public int ExecTran(string[] commandIDs, string PrimaryKey, DataTable[] dtSub)
         {
             return bll.ExecTranTable(commandIDs, PrimaryKey, dtSub);
+        }
+
+        public void BatchInsertTable(DataTable dt, string TableName)
+        {
+            bll.BatchInsertTable(dt, TableName);
         }
     }
 }

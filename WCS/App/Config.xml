@@ -2,18 +2,56 @@
 <Configuration>
   <LogLevel>DEBUG</LogLevel>
   <Attributes>
-    <Attribute Name="ScanPortName" Value="COM2" />
-    <Attribute Name="ScanBaudRate" Value="19200" />
+    <Attribute Name="PortName" Value="COM3" />
+    <Attribute Name="BaudRate" Value="57600" />
     <Attribute Name="IsShowFlag" Value="1" />
   </Attributes>
   <Services>
-    <Service Name="CranePLC1" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="CranePLC1.xml" />
+    <!--<Service Name="CranePLC1" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="CranePLC1.xml" />-->
+    <Service Name="CarPLC0101" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="CarPLC0101.xml" />
+    <Service Name="CarPLC0102" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="CarPLC0102.xml" />
+    <Service Name="TranLine" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="TranLine.xml" />
+    <Service Name="MiniLoad02" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="MiniLoad02.xml" />
   </Services>
   <Processes>
     <!--堆垛机Process-->
-    <Process Name="CraneProcess" Type="App.exe, App.Dispatching.Process.CraneProcess">
-      <Item ServiceName="CranePLC1" ItemName="CraneTaskFinished" />
-      <Item ServiceName="CranePLC1" ItemName="CraneAlarmCode" />
+    <Process Name="CarProcess" Type="App.exe, App.Dispatching.Process.CarProcess">
+      <Item ServiceName="CarPLC0101" ItemName="TaskFinished" />
+      <Item ServiceName="CarPLC0102" ItemName="TaskFinished" />
+      <Item ServiceName="CarPLC0101" ItemName="AlarmCode" />
+      <Item ServiceName="CarPLC0102" ItemName="AlarmCode" />
     </Process>
+    <!--MiniLoadProcess-->
+    <Process Name="MiniLoadProcess" Type="App.exe, App.Dispatching.Process.MiniLoadProcess">
+      <Item ServiceName="MiniLoad02" ItemName="TaskFinished1" />
+      <Item ServiceName="MiniLoad02" ItemName="TaskFinished2" />
+      <Item ServiceName="MiniLoad02" ItemName="AlarmCode" />
+    </Process>
+    <!--小车Process-->
+    <!--<Process Name="ElevatorProcess" Type="App.exe, App.Dispatching.Process.ElevatorProcess">
+      <Item ServiceName="Elevator" ItemName="TaskFinished01" />
+      <Item ServiceName="Elevator" ItemName="TaskFinished02" />
+    </Process>-->
+    <!--输送线Process,读码请求-->
+    <Process Name="ReadProcess" Type="App.exe, App.Dispatching.Process.ReadProcess">
+      <Item ServiceName="TranLine" ItemName="ReadBarcode" />
+    </Process>
+    
+    <!--输送线Process,入库请求-->
+    <Process Name="StockRequestProcess" Type="App.exe, App.Dispatching.Process.StockRequestProcess">
+      <Item ServiceName="TranLine" ItemName="StockRequest" />
+    </Process>
+    
+    <!--输送线Process,到达入库口-->
+    <Process Name="InStockToStationProcess" Type="App.exe, App.Dispatching.Process.InStockToStationProcess">
+      <Item ServiceName="TranLine" ItemName="InFinish1" />
+      <Item ServiceName="TranLine" ItemName="InFinish2" />
+      <Item ServiceName="TranLine" ItemName="InFinish3" />
+    </Process>
+    <!--输送线Process,到达拣货口-->
+    <Process Name="OutStockFinishProcess" Type="App.exe, App.Dispatching.Process.OutStockFinishProcess">
+      <Item ServiceName="TranLine" ItemName="OutFinish" />
+    </Process>   
+    
   </Processes>
 </Configuration>

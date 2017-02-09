@@ -25,6 +25,7 @@ namespace App.View.Dispatcher
 
         private int[] Columns = new int[3];
         private int[] Rows = new int[3];
+        private int[] Depth = new int[3];
         private int cellWidth = 0;
         private int cellHeight = 0;
         private int currentPage = 1;
@@ -75,6 +76,7 @@ namespace App.View.Dispatcher
                 {
                     ShelfCode.Add(i + 1, dtShelf.Rows[i]["ShelfCode"].ToString());
                 }
+                ShelfCode.Add(6, "001005");
 
                 btnRefresh.Enabled = false;
                 btnChart.Enabled = false;
@@ -160,8 +162,14 @@ namespace App.View.Dispatcher
 
                         for (int j = 0; j < Rows[currentPage-1]; j++)
                         {
-                            string s = string.Format("第{0}排第{1}层", key, Convert.ToString( ShelfRow[key] - j).PadLeft(2, '0'));
-                            e.Graphics.DrawString(s, font, Brushes.DarkCyan, tmpLeft, top[i] + (j + 1) * cellHeight);
+                            int rowKey = key;
+                            if (key == 6)
+                                rowKey = 5;
+                            int Layer = 1;
+                            if (currentPage == 3)
+                                Layer = i + 1;
+                            string s = string.Format("第{0}排第{1}层深{2}", rowKey, Convert.ToString(ShelfRow[key] - j).PadLeft(2, '0'), Layer);
+                            e.Graphics.DrawString(s, font, Brushes.DarkCyan, tmpLeft, top[i] + (j + 1) * cellHeight);                            
                         }
                     }
 
@@ -171,12 +179,20 @@ namespace App.View.Dispatcher
                         foreach (DataGridViewRow gridRow in dgvMain.Rows)
                         {
                             DataRowView cellRow = (DataRowView)gridRow.DataBoundItem;
+                            string depth = cellRow["CellCode"].ToString().Substring(9, 1);
+                               
                             int shelf = 0;
                             for (int j = 1; j <= ShelfCode.Count; j++)
                             {
-                                if (ShelfCode[j].CompareTo(cellRow["ShelfCode"].ToString()) >= 0)
+
+                                if (ShelfCode[j].CompareTo(cellRow["ShelfCode"].ToString()) >= 0 && depth=="1")
                                 {
                                     shelf = j;
+                                    break;
+                                }
+                                if (ShelfCode[j].CompareTo(cellRow["ShelfCode"].ToString()) >= 0 && depth=="2")
+                                {
+                                    shelf = 6;
                                     break;
                                 }
                             }
@@ -282,6 +298,9 @@ namespace App.View.Dispatcher
             Rows[0] = 5;
             Rows[1] = 10;
             Rows[2] = 10;
+            Depth[0] = 1;
+            Depth[1] = 1;
+            Depth[2] = 2;
 
             SetCellSize(Columns[currentPage - 1], Rows[currentPage - 1]);
             top[0] = 0;
@@ -305,7 +324,11 @@ namespace App.View.Dispatcher
 
             if (column <= Columns[currentPage - 1] && row <= Rows[currentPage - 1])
             {
-                DataRow[] cellRows = cellTable.Select(string.Format("ShelfCode='{0}' AND CellColumn='{1}' AND CellRow='{2}'", ShelfCode[shelf], column, row));
+                string filter = string.Format("ShelfCode='{0}' AND CellColumn='{1}' AND CellRow='{2}'", ShelfCode[shelf], column, row);
+                int depth = 1;
+                if (shelf == 6)
+                    depth = 2;
+                DataRow[] cellRows = cellTable.Select(string.Format("ShelfCode='{0}' AND CellColumn='{1}' AND CellRow='{2}' AND Depth={3}", ShelfCode[shelf], column, row, depth));
                 if (cellRows.Length != 0)
                     CellCode = cellRows[0]["CellCode"].ToString();
                 if (e.Button == System.Windows.Forms.MouseButtons.Left)
@@ -314,7 +337,7 @@ namespace App.View.Dispatcher
                     {
                         if (cellRows[0]["PalletBarCode"].ToString() != "")
                         {
-                            frmCellInfo f = new frmCellInfo(cellRows[0]["PalletBarCode"].ToString());
+                            frmCellInfo f = new frmCellInfo(cellRows[0]["PalletBarCode"].ToString(), CellCode);
                             f.ShowDialog();
                         }
                         //Dictionary<string, Dictionary<string, object>> properties = new Dictionary<string, Dictionary<string, object>>();
@@ -362,57 +385,7 @@ namespace App.View.Dispatcher
                 }
             }
 
-        }
-        private void pnlChart_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            int i = e.Y < top[1] ? 0 : 1;
-            int shelf = currentPage * 2 + i - 1;
-
-            int column = Columns[currentPage - 1] - (e.X - left) / cellWidth;
-            int row = Rows[currentPage - 1] - (e.Y - top[i]) / cellHeight + 1;
-
-            if (column <= Columns[currentPage - 1] && row <= Rows[currentPage - 1])
-            {
-                DataRow[] cellRows = cellTable.Select(string.Format("ShelfCode='{0}' AND CellColumn='{1}' AND CellRow='{2}'", ShelfCode[shelf], column, row));
-                if (cellRows.Length != 0)
-                {
-                    if (cellRows[0]["PalletBarCode"].ToString() != "")
-                    {
-                        frmCellInfo f = new frmCellInfo(cellRows[0]["PalletBarCode"].ToString());
-                        f.ShowDialog();
-                    }
-                    //Dictionary<string, Dictionary<string, object>> properties = new Dictionary<string, Dictionary<string, object>>();
-                    //Dictionary<string, object> property = new Dictionary<string, object>();
-                    //property.Add("产品名称", cellRows[0]["ProductName"]);
-                    //property.Add("产品状态", cellRows[0]["StateName"]);
-                    ////property.Add("条码", cellRows[0]["PalletBarcode"]);
-                    //property.Add("托盘条码", cellRows[0]["PalletCode"]);
-
-                    //property.Add("单据号", cellRows[0]["BillNo"]);
-                    //property.Add("入库时间", cellRows[0]["InDate"]);
-                    //properties.Add("产品信息", property);
-
-                    //property = new Dictionary<string, object>();
-                    //property.Add("库区名称", cellRows[0]["AreaName"]);
-                    //property.Add("货架名称", cellRows[0]["ShelfName"]);
-                    //property.Add("列", column);
-                    //property.Add("层", row);
-                    //string strState = "正常";
-                    //if (cellRows[0]["IsLock"].ToString() == "0")
-                    //    strState = "正常";
-                    //else
-                    //    strState = "锁定";
-                    //if (cellRows[0]["ErrorFlag"].ToString() == "1")
-                    //    strState = "异常";
-
-                    //property.Add("状态", strState);
-                    //properties.Add("货位信息", property);
-
-                    //CellDialog cellDialog = new CellDialog(properties);
-                    //cellDialog.ShowDialog();
-                }
-            }
-        }
+        }        
         private void pnlChart_MouseEnter(object sender, EventArgs e)
         {
             pnlChart.Focus();
@@ -488,7 +461,12 @@ namespace App.View.Dispatcher
             {
                 DataRow dr = drs[0];
                 frmCellOpDialog cellDialog = new frmCellOpDialog(dr);
-                cellDialog.ShowDialog();
+                if (cellDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    cellTable = bll.FillDataTable("WCS.SelectCell");
+                    bsMain.DataSource = cellTable;
+                    pnlChart.Invalidate();
+                }
             }
         }
 
@@ -500,13 +478,16 @@ namespace App.View.Dispatcher
             if (X != e.X || Y != e.Y)
             {
                 int i = e.Y < top[1] ? 0 : 1;
+                
                 int shelf = currentPage * 2 + i - 1;
+                if (shelf == 6)
+                    shelf = 5;
 
                 int column =  (e.X - left) / cellWidth + 1;
                 int row = Rows[currentPage - 1] - (e.Y - top[i]) / cellHeight + 1;
                 if (column <= Columns[currentPage - 1] && row <= Rows[currentPage - 1] && row > 0 && column > 0)
                 {
-                    string tip = "货架:" + shelf.ToString() + ";列:" + column.ToString() + ";层:" + row.ToString();
+                    string tip = "货架:" + shelf.ToString() + ";列:" + column.ToString() + ";层:" + row.ToString() + ",深:" + (i + 1);
                     toolTip1.SetToolTip(pnlChart, tip);
                 }
                 else
@@ -515,6 +496,13 @@ namespace App.View.Dispatcher
                 X = e.X;
                 Y = e.Y;
             }
+        }
+
+        private void ToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            cellTable = bll.FillDataTable("WCS.SelectCell");
+            bsMain.DataSource = cellTable;
+            pnlChart.Invalidate();
         }       
     }
 }

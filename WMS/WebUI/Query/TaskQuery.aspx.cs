@@ -172,7 +172,7 @@ public partial class WebUI_Query_TaskQuery : BasePage
         if (this.HdnProduct.Value.Length == 0)
         {
             if (this.txtProductCode.Text.Trim().Length > 0)
-                strWhere += string.Format(" and Task.ProductCode='{0}'", this.txtProductCode.Text);
+                strWhere += string.Format(" and ProductDetail.ProductCode='{0}'", this.txtProductCode.Text);
         }
         else
         {

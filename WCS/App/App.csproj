@@ -14,6 +14,21 @@
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -38,6 +53,9 @@
     <ApplicationIcon>App.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BarCode">
+      <HintPath>..\..\..\Lib\BarCode.dll</HintPath>
+    </Reference>
     <Reference Include="DataGridViewAutoFilter">
       <HintPath>..\..\..\Lib\DataGridViewAutoFilter.dll</HintPath>
     </Reference>
@@ -71,8 +89,11 @@
       <HintPath>..\..\..\Lib\OpcRcw.Da.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -87,8 +108,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account\frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Account\frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="BLL\BLLBase.cs" />
     <Compile Include="BLL\Server.cs" />
+    <Compile Include="BLL\UserBll.cs" />
     <Compile Include="Common\frmSelect.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,8 +124,15 @@
       <DependentUpon>frmSelect.cs</DependentUpon>
     </Compile>
     <Compile Include="Crane.cs" />
+    <Compile Include="Dispatching\Process\CarInProcess.cs" />
+    <Compile Include="Dispatching\Process\Elevator2Process.cs" />
+    <Compile Include="Dispatching\Process\ElevatorProcess.cs" />
     <Compile Include="Dispatching\Process\CraneProcess.cs" />
-    <Compile Include="Dispatching\Process\ErpProcess.cs" />
+    <Compile Include="Dispatching\Process\CarProcess.cs" />
+    <Compile Include="Dispatching\Process\InStockToStationProcess.cs" />
+    <Compile Include="Dispatching\Process\OutStockFinishProcess.cs" />
+    <Compile Include="Dispatching\Process\ReadProcess.cs" />
+    <Compile Include="Dispatching\Process\StockRequestProcess.cs" />
     <Compile Include="Dispatching\TCPMessageParse.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
@@ -119,17 +154,35 @@
     <Compile Include="View\BaseForm.Designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Base\frmBarcode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Base\frmBarcode.Designer.cs">
+      <DependentUpon>frmBarcode.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\Dispatcher\frmCellInfo.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="View\Dispatcher\frmCellInfo.Designer.cs">
       <DependentUpon>frmCellInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Dispatcher\frmOutView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Dispatcher\frmOutView.Designer.cs">
+      <DependentUpon>frmOutView.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\Dispatcher\frmScan.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="View\Dispatcher\frmScan.Designer.cs">
       <DependentUpon>frmScan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\frmTaskInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\frmTaskInfo.Designer.cs">
+      <DependentUpon>frmTaskInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="View\TaskCarNo.cs">
       <SubType>Form</SubType>
@@ -199,6 +252,18 @@
     <Compile Include="View\SelectDialog.designer.cs">
       <DependentUpon>SelectDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Task\frmMiniLoadTask.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Task\frmMiniLoadTask.Designer.cs">
+      <DependentUpon>frmMiniLoadTask.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Task\frmCarTask.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Task\frmCarTask.Designer.cs">
+      <DependentUpon>frmCarTask.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\Task\frmInventor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -247,6 +312,9 @@
     <Compile Include="View\Task\frmPalletInTask.Designer.cs">
       <DependentUpon>frmPalletInTask.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Account\frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Common\frmSelect.resx">
       <DependentUpon>frmSelect.cs</DependentUpon>
     </EmbeddedResource>
@@ -261,8 +329,14 @@
     <EmbeddedResource Include="View\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\Base\frmBarcode.resx">
+      <DependentUpon>frmBarcode.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\Dispatcher\frmCellInfo.resx">
       <DependentUpon>frmCellInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Dispatcher\frmOutView.resx">
+      <DependentUpon>frmOutView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Dispatcher\frmScan.resx">
       <DependentUpon>frmScan.cs</DependentUpon>
@@ -300,6 +374,12 @@
     <EmbeddedResource Include="View\SelectDialog.resx">
       <DependentUpon>SelectDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\Task\frmMiniLoadTask.resx">
+      <DependentUpon>frmMiniLoadTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Task\frmCarTask.resx">
+      <DependentUpon>frmCarTask.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\Task\frmInventor.resx">
       <DependentUpon>frmInventor.cs</DependentUpon>
     </EmbeddedResource>
@@ -326,7 +406,9 @@
     </EmbeddedResource>
     <None Include="app.config">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Compile Include="Dispatching\Process\MiniLoadProcess.cs" />
     <None Include="Help.chm" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -344,7 +426,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="CarPLC.xml">
+    <Content Include="CarPLC0101.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CarPLC0102.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Elevator.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -352,35 +442,50 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\Shelf.png" />
-    <None Include="Resources\Crane11.png" />
-    <None Include="Resources\Crane2.png" />
     <Content Include="CranePLC1.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Resources\Crane12.png" />
     <None Include="Resources\zoom.png" />
     <None Include="Resources\report.png" />
     <None Include="Resources\close.png" />
     <None Include="Resources\calculator.png" />
-    <None Include="Resources\1234.png" />
-    <None Include="Resources\123.png" />
-    <None Include="Resources\12.png" />
-    <None Include="Resources\111.png" />
-    <None Include="Resources\1111.png" />
-    <None Include="Resources\551fb5a24da28a97739ca06c843ac6ff.png" />
     <None Include="Resources\Barcode_32.png" />
     <Content Include="ERP.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="MiniLoad02.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Monitor.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\Crane1.png" />
+    <None Include="Resources\Car.png" />
+    <None Include="Resources\car1.png" />
+    <None Include="Resources\Crane3.png" />
+    <None Include="Resources\Crane4.png" />
+    <None Include="Resources\Crane2.png" />
+    <None Include="Resources\car11.png" />
+    <None Include="Resources\car12.png" />
+    <None Include="Resources\Barcode.png" />
     <Content Include="Resources\down.png" />
     <None Include="Resources\monitor.png" />
+    <None Include="Resources\Elevator.png" />
     <Content Include="Resources\next.png" />
     <None Include="Resources\process.png" />
     <None Include="Resources\process_accept.png" />
     <None Include="Resources\process_remove.png" />
+    <None Include="Resources\PalletIn.png" />
+    <None Include="Resources\Printer.png" />
     <Content Include="Resources\remove.png" />
+    <None Include="Resources\Shelf.png" />
+    <None Include="Resources\shuttlecar.png" />
+    <None Include="Resources\RoboShelf.png" />
+    <None Include="Resources\Shelf2.png" />
+    <None Include="Resources\Shelf21.png" />
     <Content Include="Resources\up.png" />
     <Content Include="TableXML\CMD_Cell.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -391,9 +496,35 @@
     <Content Include="TableXML\CMD_ProductInStock.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="TranLine.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="ViewConfig.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

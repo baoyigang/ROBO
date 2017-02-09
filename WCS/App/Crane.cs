@@ -8,18 +8,13 @@ namespace App
 {
     public class Crane
     {
-        public int CraneNo { get; set; }
-        public string TaskNo { get; set;}
-        public string PalletCode { get; set; }
-        public int TaskType { get; set;}
-        public int Action { get; set; }
-        public int Row { get; set; }
-        public int Column { get; set; }
-        public int Height { get; set; }
-        public int ForkStatus { get; set; }
-        public int ErrCode { get; set; }
-        public int WalkCode { get; set; }
-        public int UpDownCode { get; set; }
+        public string CraneNo { get; set; }
+        public string TaskNo { get; set; }
+        public object[] Status { get; set; }
+
+        public bool Mode { get; set; }
+        public bool ForkStatus { get; set; }
+        public int AlarmCode { get; set; }
     }
 
     public delegate void CraneEventHandler(CraneEventArgs args);
@@ -53,13 +48,10 @@ namespace App
 
     public class Car
     {
-        public int CarNo { get; set; }
+        public string CarNo { get; set; }
+        public object[] Status { get; set; }
         public string TaskNo { get; set; }
-        public int Position { get; set; }
-        public int Action { get; set; }
-        public int Load { get; set; }
-        public int Status { get; set; }
-        public int ErrCode { get; set; }
+        public int AlarmCode { get; set; }
     }
 
     public delegate void CarEventHandler(CarEventArgs args);
@@ -87,6 +79,81 @@ namespace App
             if (OnCar != null)
             {
                 OnCar(new CarEventArgs(car));
+            }
+        }
+    }
+    public class Conveyor
+    {
+        public string ctlName { get; set; }
+        public string ID { get; set; }
+        public string value { get; set; }
+        public string BarCode { get; set; }
+    }
+
+    public delegate void ConveyorEventHandler(ConveyorEventArgs args);
+    public class ConveyorEventArgs
+    {
+        private Conveyor _conveyor;
+        public Conveyor conveyor
+        {
+            get
+            {
+                return _conveyor;
+            }
+        }
+        public ConveyorEventArgs(Conveyor conveyor)
+        {
+            this._conveyor = conveyor;
+        }
+    }
+    public class Conveyors
+    {
+        public static event ConveyorEventHandler OnConveyor = null;
+
+        public static void ConveyorInfo(Conveyor conveyor)
+        {
+            if (OnConveyor != null)
+            {
+                OnConveyor(new ConveyorEventArgs(conveyor));
+            }
+        }
+    }
+    public class Miniload
+    {
+        public string MiniloadNo { get; set; }
+        public object[] Status { get; set; }
+        public bool Mode { get; set; }
+        public bool ForkStatus { get; set; }
+        public string TaskANo { get; set; }
+        public string TaskBNo { get; set; }
+        public int AlarmCode { get; set; }
+    }
+
+    public delegate void MiniloadEventHandler(MiniloadEventArgs args);
+    public class MiniloadEventArgs
+    {
+        private Miniload _miniload;
+        public Miniload miniload
+        {
+            get
+            {
+                return _miniload;
+            }
+        }
+        public MiniloadEventArgs(Miniload miniload)
+        {
+            this._miniload = miniload;
+        }
+    }
+    public class Miniloads
+    {
+        public static event MiniloadEventHandler OnMiniload = null;
+
+        public static void MiniloadInfo(Miniload miniload)
+        {
+            if (OnMiniload != null)
+            {
+                OnMiniload(new MiniloadEventArgs(miniload));
             }
         }
     }

@@ -12,7 +12,7 @@ using DataGridViewAutoFilter;
 
 namespace App
 {
-    public partial class Main : Form
+    public partial class Main : App.View.BaseForm
     {
         private bool IsActiveForm = false;
         public bool IsActiveTab = false;
@@ -43,8 +43,8 @@ namespace App
                 ContextInitialize initialize = new ContextInitialize();
                 initialize.InitializeContext(context);
 
-                //View.frmMonitor f = new View.frmMonitor();
-                //ShowForm(f);
+                View.frmMonitor f = new View.frmMonitor();
+                ShowForm(f);
                 MainData.OnTask += new TaskEventHandler(Data_OnTask);
                 this.BindData();
                 for (int i = 0; i < this.dgvMain.Columns.Count - 1; i++)
@@ -54,7 +54,7 @@ namespace App
                 tmWorkTimer.Elapsed += new System.Timers.ElapsedEventHandler(tmWorker);
                 tmWorkTimer.Start();
 
-               
+
             }
             catch (Exception ee)
             {
@@ -77,7 +77,7 @@ namespace App
             {
                 tmWorkTimer.Start();
             }
-        }      
+        }
         void Logger_OnLog(MCP.LogEventArgs args)
         {
             if (InvokeRequired)
@@ -93,7 +93,7 @@ namespace App
                     string msg3 = string.Format("{0} ", args.Message);
                     this.lbLog.BeginUpdate();
                     ListViewItem item = new ListViewItem(new string[] { msg1, msg2, msg3 });
-                    
+
                     if (msg1.Contains("[ERROR]"))
                     {
                         //item.ForeColor = Color.Red;
@@ -107,6 +107,7 @@ namespace App
         }
         string FormDialog_OnDialog(DialogEventArgs args)
         {
+
             string strValue = "";
             if (InvokeRequired)
             {
@@ -114,13 +115,23 @@ namespace App
             }
             else
             {
-                if (args.Message[0] == "6")//盘点
+                if (args.Message[0] == "1")//出库
                 {
-                    //View.CheckScan frm = new View.CheckScan(int.Parse(args.Message[0]), args.dtInfo);
-                    //if (frm.ShowDialog() == DialogResult.OK)
-                    //{
-                    //    strValue = frm.strValue;
-                    //}
+                    View.Dispatcher.frmOutView frm = new View.Dispatcher.frmOutView(int.Parse(args.Message[0]), args.dtInfo, context);
+                    if (frm.ShowDialog() == DialogResult.OK)
+                    {
+                        strValue = frm.strValue;
+                        //bool tt = context.ProcessDispatcher.WriteToService("CarPLC2", "PickFinished", 1);
+                    }
+                }
+                if (args.Message[0] == "2")//盘点
+                {
+                    View.Dispatcher.frmScan frm = new View.Dispatcher.frmScan(int.Parse(args.Message[0]), args.dtInfo);
+                    if (frm.ShowDialog() == DialogResult.OK)
+                    {
+                        strValue = frm.strValue;
+
+                    }
                 }
             }
             return strValue;
@@ -199,7 +210,7 @@ namespace App
             return true;
 
         }
-        
+
         private void AddTabPage(string strKey, string strText)
         {
             IsActiveForm = true;
@@ -211,7 +222,7 @@ namespace App
             this.pnlTab.Visible = true;
             IsActiveForm = false;
         }
-        
+
         public void SetActiveTab(string strKey, bool blnActive)
         {
             foreach (TabPage tab in this.tabForm.TabPages)
@@ -253,8 +264,8 @@ namespace App
 
         private void Main_Load(object sender, EventArgs e)
         {
-           
-                
+
+
         }
 
         private void ToolStripMenuItem_Cell_Click(object sender, EventArgs e)
@@ -321,18 +332,22 @@ namespace App
 
         private void toolStripButton_StartCrane_Click(object sender, EventArgs e)
         {
-            if (this.toolStripButton_StartCrane.Text == "堆垛机联机")
+            if (this.toolStripButton_StartCrane.Text == "联机自动")
             {
-                context.ProcessDispatcher.WriteToProcess("CraneProcess", "Run", 1);
+                //context.ProcessDispatcher.WriteToProcess("CraneProcess", "Run", 1);
+                context.ProcessDispatcher.WriteToProcess("CarProcess", "Run", 1);
+                context.ProcessDispatcher.WriteToProcess("MiniLoadProcess", "Run", 1);
                 this.toolStripButton_StartCrane.Image = App.Properties.Resources.process_accept;
-                this.toolStripButton_StartCrane.Text = "堆垛机脱机";
+                this.toolStripButton_StartCrane.Text = "脱机";
             }
             else
             {
-                context.ProcessDispatcher.WriteToProcess("CraneProcess", "Run", 0);
+                //context.ProcessDispatcher.WriteToProcess("CraneProcess", "Run", 0);
+                context.ProcessDispatcher.WriteToProcess("CarProcess", "Run", 0);
+                context.ProcessDispatcher.WriteToProcess("MiniLoadProcess", "Run", 0);
                 this.toolStripButton_StartCrane.Image = App.Properties.Resources.process_remove;
-                this.toolStripButton_StartCrane.Text = "堆垛机联机";
-            }            
+                this.toolStripButton_StartCrane.Text = "联机自动";
+            }
         }
 
         private void toolStripButton_Inventor_Click(object sender, EventArgs e)
@@ -402,7 +417,7 @@ namespace App
         }
         private DataTable GetMonitorData()
         {
-            DataTable dt = bll.FillDataTable("WCS.SelectTask", new DataParameter[] { new DataParameter("{0}", "(WCS_TASK.TaskType='11' and WCS_TASK.State in('1','2','3')) OR (WCS_TASK.TaskType in('12','13','15') and WCS_TASK.State in('0','2','3')) OR (WCS_TASK.TaskType in('14') and WCS_TASK.State in('0','2','3','4','5','6'))") });
+            DataTable dt = bll.FillDataTable("WCS.SelectTask", new DataParameter[] { new DataParameter("{0}", "(WCS_TASK.State not in('7','9'))") });
             return dt;
         }
 
@@ -424,33 +439,54 @@ namespace App
                         dgvMain.CurrentCell = dgvMain.Rows[e.RowIndex].Cells[e.ColumnIndex];
                     }
                     string TaskType = this.dgvMain.Rows[this.dgvMain.CurrentCell.RowIndex].Cells["colTaskType"].Value.ToString();
-                    if (TaskType == "11")
+                    if (TaskType == "11" || TaskType == "16")
                     {
                         this.ToolStripMenuItem11.Visible = true;
-                        this.ToolStripMenuItem12.Visible = false;
+                        this.ToolStripMenuItem12.Visible = true;
                         this.ToolStripMenuItem13.Visible = true;
                         this.ToolStripMenuItem14.Visible = false;
                         this.ToolStripMenuItem15.Visible = false;
                         this.ToolStripMenuItem16.Visible = false;
+                        this.ToolStripMenuItem17.Visible = true;
+                        this.ToolStripMenuItem18.Visible = false;
+                        this.ToolStripMenuItem19.Visible = true;
                     }
-                    else if (TaskType == "12" || TaskType == "13")
+                    else if (TaskType == "12" || TaskType == "15")
                     {
                         this.ToolStripMenuItem11.Visible = false;
                         this.ToolStripMenuItem12.Visible = false;
-                        this.ToolStripMenuItem13.Visible = true;
-                        this.ToolStripMenuItem14.Visible = false;
+                        this.ToolStripMenuItem13.Visible = false;
+                        this.ToolStripMenuItem14.Visible = true;
+                        this.ToolStripMenuItem15.Visible = true;
+                        this.ToolStripMenuItem16.Visible = true;
+                        this.ToolStripMenuItem17.Visible = true;
+                        this.ToolStripMenuItem18.Visible = false;
+                        this.ToolStripMenuItem19.Visible = true;
+                    }
+                    else if (TaskType == "13")
+                    {
+                        this.ToolStripMenuItem11.Visible = false;
+                        this.ToolStripMenuItem12.Visible = false;
+                        this.ToolStripMenuItem13.Visible = false;
+                        this.ToolStripMenuItem14.Visible = true;
                         this.ToolStripMenuItem15.Visible = false;
                         this.ToolStripMenuItem16.Visible = false;
+                        this.ToolStripMenuItem17.Visible = true;
+                        this.ToolStripMenuItem18.Visible = false;
+                        this.ToolStripMenuItem19.Visible = true;
                     }
                     else if (TaskType == "14")
                     {
                         this.ToolStripMenuItem10.Visible = true;
-                        this.ToolStripMenuItem11.Visible = false;
-                        this.ToolStripMenuItem12.Visible = false;
+                        this.ToolStripMenuItem11.Visible = true;
+                        this.ToolStripMenuItem12.Visible = true;
                         this.ToolStripMenuItem13.Visible = true;
-                        this.ToolStripMenuItem14.Visible = false;
+                        this.ToolStripMenuItem14.Visible = true;
                         this.ToolStripMenuItem15.Visible = true;
                         this.ToolStripMenuItem16.Visible = true;
+                        this.ToolStripMenuItem17.Visible = true;
+                        this.ToolStripMenuItem18.Visible = true;
+                        this.ToolStripMenuItem19.Visible = true;
                     }
                     //弹出操作菜单
                     contextMenuStrip1.Show(MousePosition.X, MousePosition.Y);
@@ -467,7 +503,7 @@ namespace App
                 string TaskType = this.dgvMain.Rows[this.dgvMain.CurrentCell.RowIndex].Cells["colTaskType"].Value.ToString();
                 string ErrCode = this.dgvMain.Rows[this.dgvMain.CurrentCell.RowIndex].Cells["colErrCode"].ToString();
 
-                if (TaskType == "11")
+                if (TaskType == "11" || TaskType == "16")
                 {
                     DataGridViewSelectedRowCollection rowColl = dgvMain.SelectedRows;
                     if (rowColl == null)
@@ -477,7 +513,7 @@ namespace App
                     if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                         this.BindData();
                 }
-                else if (TaskType == "12" || TaskType == "14")
+                else if (TaskType == "12" || TaskType == "14" || TaskType == "15")
                 {
                     DataGridViewSelectedRowCollection rowColl = dgvMain.SelectedRows;
                     if (rowColl == null)
@@ -518,25 +554,25 @@ namespace App
         {
             if (this.dgvMain.CurrentCell != null)
             {
-                BLL.BLLBase bll = new BLL.BLLBase();
-                string TaskNo = this.dgvMain.Rows[this.dgvMain.CurrentCell.RowIndex].Cells[0].Value.ToString();
-                string TaskType = this.dgvMain.Rows[this.dgvMain.CurrentCell.RowIndex].Cells["colTaskType"].Value.ToString();
+                DataRowView drv = dgvMain.SelectedRows[0].DataBoundItem as DataRowView;
+                DataRow dr = drv.Row;
+                string State = dr["State"].ToString(); ;
+                string TaskNo = dr["TaskNo"].ToString();
 
-                if (TaskType == "11")
-                    bll.ExecNonQuery("WCS.UpdateTaskStateByTaskNo", new DataParameter[] { new DataParameter("@State", 1), new DataParameter("@TaskNo", TaskNo) });
-                else if (TaskType == "12" || TaskType == "13")
-                    bll.ExecNonQuery("WCS.UpdateTaskStateByTaskNo", new DataParameter[] { new DataParameter("@State", 0), new DataParameter("@TaskNo", TaskNo) });
-                else if (TaskType == "14")
+                string fromStation = dr["FromStation"].ToString();
+                string toStation = dr["ToStation"].ToString();
+
+                if (fromStation.Trim() == "" || toStation.Trim() == "")
                 {
-                    App.View.frmTaskOption f = new App.View.frmTaskOption();
-                    if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    {
-                        if (f.option == 0)
-                            bll.ExecNonQuery("WCS.UpdateTaskStateByTaskNo", new DataParameter[] { new DataParameter("@State", 1), new DataParameter("@TaskNo", TaskNo) });
-                        else
-                            bll.ExecNonQuery("WCS.UpdateTaskStateByTaskNo", new DataParameter[] { new DataParameter("@State", 5), new DataParameter("@TaskNo", TaskNo) });
-
-                    }
+                    Logger.Info(TaskNo + "目标位置或者起始位置错误,无法重新下达任务！");
+                    return;
+                }
+                if (State == "3" || State == "4")
+                    Send2PLC(dr);
+                else
+                {
+                    Logger.Info("非正在上下架的任务无法重新下发");
+                    return;
                 }
                 this.BindData();
             }
@@ -569,25 +605,189 @@ namespace App
 
         private void ToolStripMenuItemDelCraneTask_Click(object sender, EventArgs e)
         {
-            string serviceName = "CranePLC1";
+            string CraneNo = this.dgvMain.Rows[this.dgvMain.CurrentCell.RowIndex].Cells["colCraneNo"].Value.ToString();
+            string CarNo = this.dgvMain.Rows[this.dgvMain.CurrentCell.RowIndex].Cells["colCarNo"].Value.ToString();
+
+            string serviceName = "";
             int[] cellAddr = new int[9];
+            if (CraneNo == "01")
+            {
+                serviceName = "CranePLC1";
+            }
+            else if (CraneNo == "02")
+            {
+                serviceName = "MiniLoad02";
+                cellAddr = new int[19];
+            }
+            else if (CraneNo.Trim().Length <= 0)
+            {
+                cellAddr = new int[10];
+                if (CarNo.Length > 0)
+                    serviceName = "CarPLC01" + CarNo;
+            }
+
             cellAddr[0] = 0;
             cellAddr[1] = 1;
 
             context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
-            context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 0);
+            context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 1);
 
-            MCP.Logger.Info("已给堆垛机下发取消任务指令");
-        }        
+            MCP.Logger.Info("已下发取消任务指令");
+        }
 
 
         #endregion
 
-       
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            View.Task.frmCarTask f = new View.Task.frmCarTask();
+            ShowForm(f);
+        }
 
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            View.Task.frmMiniLoadTask f = new View.Task.frmMiniLoadTask();
+            ShowForm(f);
+        }
 
+        private void toolStripButton_Barcode_Click(object sender, EventArgs e)
+        {
+            View.Base.frmBarcode f = new View.Base.frmBarcode();
+            ShowForm(f);
+        }
+        private int getTaskType(string TaskType, string State)
+        {
+            int taskType = 10;
+            if (TaskType == "11" || TaskType == "16")
+                taskType = 10;
+            else if (TaskType == "12" || TaskType == "15")
+                taskType = 11;
+            else if (TaskType == "13")
+                taskType = 9;
+            else if (TaskType == "14" && State == "4")
+                taskType = 11;
+            else if (TaskType == "14" && State == "3")
+                taskType = 10;
+            return taskType;
+        }
+        private void Send2PLC(DataRow dr)
+        {
+            string AreaCode = dr["AreaCode"].ToString();
+            if (AreaCode == "001")
+                Send2PLC1(dr);
+            else if (AreaCode == "002")
+                Send2PLC2(dr);
+            else if (AreaCode == "003")
+                Send2PLC3(dr);
+        }
+        private void Send2PLC1(DataRow dr)
+        {
+            string serviceName = "CranePLC1";
+            string TaskNo = dr["TaskNo"].ToString();
 
+            int taskType = getTaskType(dr["TaskType"].ToString(), dr["State"].ToString());
 
-         
+            string fromStation = dr["FromStation"].ToString();
+            string toStation = dr["ToStation"].ToString();
+
+            int[] cellAddr = new int[10];
+
+            cellAddr[0] = 0;
+            cellAddr[1] = 0;
+            cellAddr[2] = 0;
+
+            cellAddr[3] = byte.Parse(fromStation.Substring(0, 3));
+            cellAddr[4] = byte.Parse(fromStation.Substring(3, 3));
+            cellAddr[5] = byte.Parse(fromStation.Substring(6, 3));
+            cellAddr[6] = byte.Parse(toStation.Substring(0, 3));
+            cellAddr[7] = byte.Parse(toStation.Substring(3, 3));
+            cellAddr[8] = byte.Parse(toStation.Substring(6, 3));
+            cellAddr[9] = taskType;
+
+            int taskNo = int.Parse(TaskNo);
+
+            Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+            Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+            Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 2);
+
+            //Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + carNo + "穿梭车;起始地址:" + fromStation + ",目标地址:" + toStation);
+        }
+        private void Send2PLC2(DataRow dr)
+        {
+            string CarNo = dr["CarNo"].ToString();
+            string serviceName = "CarPLC01" + CarNo;
+            string TaskNo = dr["TaskNo"].ToString();
+            int taskType = getTaskType(dr["TaskType"].ToString(), dr["State"].ToString());
+
+            string fromStation = dr["FromStation"].ToString();
+            string toStation = dr["ToStation"].ToString();
+
+            int[] cellAddr = new int[10];
+
+            cellAddr[0] = 0;
+            cellAddr[1] = 0;
+            cellAddr[2] = 0;
+
+            cellAddr[3] = byte.Parse(fromStation.Substring(0, 3));
+            cellAddr[4] = byte.Parse(fromStation.Substring(3, 3));
+            cellAddr[5] = byte.Parse(fromStation.Substring(6, 3));
+            cellAddr[6] = byte.Parse(toStation.Substring(0, 3));
+            cellAddr[7] = byte.Parse(toStation.Substring(3, 3));
+            cellAddr[8] = byte.Parse(toStation.Substring(6, 3));
+            cellAddr[9] = taskType;
+
+            int taskNo = int.Parse(TaskNo);
+
+            Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+            Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+            Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 2);
+
+            Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + CarNo + "穿梭车;起始地址:" + fromStation + ",目标地址:" + toStation);
+        }
+        private void Send2PLC3(DataRow dr)
+        {
+            string serviceName = "MiniLoad02";
+            string TaskNo = dr["TaskNo"].ToString();
+            string TaskType = dr["TaskType"].ToString();
+            string state = dr["State"].ToString();
+            int taskType = 10;
+
+            if (state == "0")
+            {
+                if (TaskType == "13")
+                {
+                    taskType = 9;
+                }
+                else
+                {
+                    taskType = 11;
+                }
+            }
+
+            string fromStation = dr["FromStation"].ToString();
+            string toStation = dr["ToStation"].ToString();
+
+            int[] cellAddr = new int[10];
+
+            cellAddr[0] = 0;
+            cellAddr[1] = 0;
+            cellAddr[2] = 0;
+
+            cellAddr[3] = byte.Parse(fromStation.Substring(0, 3));
+            cellAddr[4] = byte.Parse(fromStation.Substring(3, 3));
+            cellAddr[5] = byte.Parse(fromStation.Substring(6, 3));
+            cellAddr[6] = byte.Parse(toStation.Substring(0, 3));
+            cellAddr[7] = byte.Parse(toStation.Substring(3, 3));
+            cellAddr[8] = byte.Parse(toStation.Substring(6, 3));
+            cellAddr[9] = taskType;
+
+            int taskNo = int.Parse(TaskNo);
+
+            Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+            Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+            Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 2);
+
+            //Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + carNo + "穿梭车;起始地址:" + fromStation + ",目标地址:" + toStation);
+        }
     }
 }

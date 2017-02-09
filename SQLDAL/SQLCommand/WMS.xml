@@ -278,15 +278,18 @@
 
   <Command ID="SelectTaskQuery">
     <CommandString>
-      SELECT Task.*,BillType.BillTypeName,Product.ProductName,Product.CategoryName,Product.Unit,TableState.StateDesc,crane.CraneName,
+      SELECT task.TaskNo,task.BillTypeCode,task.TaskType,task.TaskLevel,task.PalletCode,task.CraneNo,task.cellcode,task.State,
+      task.TaskDate,task.RequestDate,task.StartDate,task.FinishDate,task.AreaCode,
+      BillType.BillTypeName,ProductDetail.ProductCode, Product.ProductName,Product.CategoryName,productDetail.Quantity, Product.Unit,ProductDetail.BillID,TableState.StateDesc,crane.CraneName,
       (case when Task.TaskType='11' then TASK.StationNo when Task.TaskType in('12','13','14') then Task.CellCode end) FromStation,
       (case when Task.TaskType in ('11','14') then Task.CellCode when Task.TaskType='12' then TASK.StationNo when Task.TaskType='13' then Task.ToCellCode end) ToStation
       FROM WCS_TASK  Task
+      left join WCS_TaskProductDetail ProductDetail on Task.TaskNo=task.TaskNo
       left join CMD_Crane Crane on Task.CraneNo=crane.CraneNo
-      left join VCMD_Product Product on task.ProductCode=Product.ProductCode
+      left join VCMD_Product Product on ProductDetail.ProductCode=Product.ProductCode
       left join CMD_BillType BillType on task.BillTypeCode=billtype.BillTypeCode
       LEFT JOIN  Sys_TableState TableState on TableState.TableName='WCS_TASK' and TableState.FieldName='State' and Task.State=TableState.State
-      where  Task.ProductCode not in ('0001') and {0}
+      where  ProductDetail.ProductCode not in ('0001') and {0}
     </CommandString>
   </Command>
 </SqlCommand>

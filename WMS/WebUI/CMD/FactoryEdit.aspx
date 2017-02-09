@@ -71,8 +71,7 @@
                                   CssClass="TextBox" Width="42%" ></asp:TextBox>
                         </td>
                          <td  align="center" class="smalltitle" style="width:8%;" >
-                            联系人
-                        </td>
+                            联系电话</td>
                         <td style="width:30%;">
                             &nbsp;<asp:TextBox 
                                 ID="txtLinkPhone" runat="server"  
@@ -82,15 +81,14 @@
                     
                     <tr>
                         <td align="center" class="smalltitle" style="width:8%;"  >
-                             联系电话 
+                             传真 
                         </td>
                         <td style=" width:30%">
                             &nbsp;<asp:TextBox ID="txtFax" runat="server"   
                                   CssClass="TextBox" Width="42%"></asp:TextBox> 
                         </td>
                         <td  align="center"  style=" width: 8%;" class="smalltitle"  >
-                           传真  
-                        </td>
+                            &nbsp;</td>
                         <td  style="width:30%;">
                              </td>
                          
@@ -135,7 +133,7 @@
                   </td> 
                   <td style="width:30%;">
                      &nbsp;<asp:TextBox ID="txtUpdater" runat="server"  
-                          CssClass="TextRead" Width="42%" Height="16px"  ></asp:TextBox> 
+                          CssClass="TextRead" Width="42%"  ></asp:TextBox> 
                   </td>
                   <td align="center"  class="smalltitle" style="width:8%;">
                         修改日期

@@ -25,9 +25,9 @@ namespace App.View.Task
         {
 
             DataTable dt = bll.FillDataTable("CMD.SelectArea");
-            this.cmbStationNo.DataSource = dt.DefaultView;
-            this.cmbStationNo.ValueMember = "AreaCode";
-            this.cmbStationNo.DisplayMember = "AreaName";
+            this.cmbAreaCode.DataSource = dt.DefaultView;
+            this.cmbAreaCode.ValueMember = "AreaCode";
+            this.cmbAreaCode.DisplayMember = "AreaName";
         }
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
@@ -47,16 +47,37 @@ namespace App.View.Task
             }
         }
 
-        private void cmbStation_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmbAreaCode_SelectedIndexChanged(object sender, EventArgs e)
         {
             DataParameter[] param = new DataParameter[] 
             { 
-                new DataParameter("{0}", string.Format("AreaCode='{0}'", this.cmbStationNo.SelectedValue))
+                new DataParameter("{0}", string.Format("AreaCode='{0}'", this.cmbAreaCode.SelectedValue))
             };
             DataTable dt = bll.FillDataTable("CMD.SelectCellShelf", param);
             this.cbRow.DataSource = dt.DefaultView;
             this.cbRow.ValueMember = "shelfcode";
             this.cbRow.DisplayMember = "shelfcode";
+
+            DataTable dtStation = new DataTable("dtStation");
+            dtStation.Columns.Add("dtText");
+            dtStation.Columns.Add("dtValue");
+            DataRow dr = dtStation.NewRow();
+
+            dr["dtText"] = "01";
+            dr["dtValue"] = "01";
+            dtStation.Rows.Add(dr);
+
+            if (this.cmbAreaCode.SelectedValue.ToString() == "003")
+            {
+                dr = dtStation.NewRow();
+
+                dr["dtText"] = "03";
+                dr["dtValue"] = "03";
+                dtStation.Rows.Add(dr);
+            }
+            this.cbStationNo.DataSource = dtStation;
+            this.cbStationNo.DisplayMember = "dtText";
+            this.cbStationNo.ValueMember = "dtValue";
         }
 
         private void cbRow_SelectedIndexChanged(object sender, EventArgs e)
@@ -117,13 +138,13 @@ namespace App.View.Task
         {
             if (this.txtBarcode.Text.Trim().Length <= 0)
             {
-                MessageBox.Show("托盘编号不能为空,请扫码或输入！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("托盘条码/箱条码不能为空,请扫码或输入！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.txtBarcode.Focus();
                 return;
             }
             if (this.txtTaskNo.Text.Length <= 0)
             {
-                MessageBox.Show("此托盘编号找不到对应的等待状态的入库任务,请确认！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("此托盘条码/箱条码找不到对应的等待状态的入库任务,请确认！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.txtBarcode.SelectAll();
                 this.txtBarcode.Focus();
                 return;
@@ -135,9 +156,8 @@ namespace App.View.Task
                 DataParameter[] param;
 
                 param = new DataParameter[] 
-                { 
-                    new DataParameter("@AreaCode", this.cmbStationNo.SelectedValue.ToString()), 
-                
+                {
+                    new DataParameter("@AreaCode", this.cmbAreaCode.SelectedValue.ToString())                
                 };
                 if (this.radioButton1.Checked)
                 {
@@ -154,7 +174,7 @@ namespace App.View.Task
                 //判断货位是否为空
                 param = new DataParameter[] 
                 { 
-                    new DataParameter("{0}", string.Format("CellCode='{0}' and PalletBarCode='' and IsActive='1' and IsLock='0' and AreaCode='{1}'", this.txtCellCode.Text,this.cmbStationNo.SelectedValue.ToString()))
+                    new DataParameter("{0}", string.Format("CellCode='{0}' and PalletBarCode='' and IsActive='1' and IsLock='0' and AreaCode='{1}'", this.txtCellCode.Text,this.cmbAreaCode.SelectedValue.ToString()))
                 };
                 dt = bll.FillDataTable("CMD.SelectCell", param);
                 if (dt.Rows.Count <= 0)
@@ -167,13 +187,13 @@ namespace App.View.Task
                 {             
                     new DataParameter("@CellCode", this.txtCellCode.Text),                    
                     new DataParameter("@TaskNo", this.txtTaskNo.Text),
-                    new DataParameter("@AreaCode", this.cmbStationNo.SelectedValue.ToString())
+                    new DataParameter("@AreaCode", this.cmbAreaCode.SelectedValue.ToString())
                 };
                 bll.ExecNonQueryTran("WCS.Sp_ExecuteInStockTask", param);
             }
             else
             {
-                bll.ExecNonQuery("WCS.UpdateTaskStateByTaskNo", new DataParameter[] { new DataParameter("@State", 5), new DataParameter("@TaskNo", this.txtTaskNo.Text) });
+                bll.ExecNonQuery("WCS.UpdateTaskStateByTaskNo", new DataParameter[] { new DataParameter("@State", 2), new DataParameter("@TaskNo", this.txtTaskNo.Text) });
             }
 
             this.DialogResult = System.Windows.Forms.DialogResult.OK;

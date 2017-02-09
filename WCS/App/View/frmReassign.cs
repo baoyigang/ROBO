@@ -14,6 +14,7 @@ namespace App.View
         BLL.BLLBase bll = new BLL.BLLBase();
         DataRow dr;
         string CraneNo = "01";
+        int Layer = 0;
 
         public frmReassign()
         {
@@ -41,7 +42,7 @@ namespace App.View
             DataParameter[] param;
             param = new DataParameter[] 
             { 
-                new DataParameter("{0}", string.Format("CellCode='{0}' and ProductCode='{1}' and IsActive='1' and IsLock='0' and ErrorFlag!='1'",CellCode,this.txtProductCode.Text))
+                new DataParameter("{0}", string.Format("AreaCode='{0}' and CellCode='{0}' and IsActive='1' and IsLock='0' and ErrorFlag!='1'",this.txtAreaCode.Text,CellCode))
             };
             DataTable dt = bll.FillDataTable("CMD.SelectCell", param);
             if (dt.Rows.Count <= 0)
@@ -68,14 +69,20 @@ namespace App.View
             this.txtCellCode.Text = dr["CellCode"].ToString();
             this.txtAisleNo.Text = dr["AisleNo"].ToString();
             this.txtCraneNo.Text = dr["CraneNo"].ToString();
-            this.txtProductCode.Text = dr["ProductCode"].ToString();
-            this.txtProductName.Text = dr["ProductName"].ToString();
-            this.txtSpec.Text = dr["Spec"].ToString();
+            this.txtCarNo.Text = dr["CarNo"].ToString();
+            this.txtAreaCode.Text = dr["AreaCode"].ToString();
+            this.txtAreaName.Text = dr["AreaName"].ToString();
+            this.txtAreaCode.Text = dr["AreaCode"].ToString();
+            this.txtPalletCode.Text = dr["PalletCode"].ToString();
             
-            CraneNo = dr["CraneNo"].ToString();
 
-            string filter = string.Format("CMD_Cell.ProductCode='{0}' and CMD_Cell.IsLock='0' and CMD_Cell.IsActive='1' and CMD_Cell.ErrorFlag!='1' and CMD_Shelf.CraneNo='{1}' and CMD_Shelf.AisleNo='{2}' and CMD_Cell.AreaCode='{3}'", this.txtProductCode.Text,CraneNo,this.txtAisleNo.Text,dr["AreaCode"].ToString());
+            string filter = string.Format("CMD_Cell.IsLock='0' and CMD_Cell.IsActive='1' and CMD_Cell.ErrorFlag!='1' and PalletBarcode!='' and CMD_Shelf.AisleNo='{0}' and CMD_Cell.AreaCode='{1}'", this.txtAisleNo.Text, this.txtAreaCode.Text);
 
+            if (this.txtAreaCode.Text == "002")
+            {
+                Layer = int.Parse(this.txtCellCode.Text.Substring(6, 3));
+                filter = string.Format("CMD_Cell.IsLock='0' and CMD_Cell.IsActive='1' and CMD_Cell.ErrorFlag!='1' and PalletBarcode!='' and CMD_Shelf.AisleNo='{0}' and CMD_Cell.AreaCode='{1}' and CMD_Cell.CellRow={2}", this.txtAisleNo.Text, this.txtAreaCode.Text,Layer);
+            }
             DataTable dt = bll.FillDataTable("WCS.SelectCellByFilter", new DataParameter[] { new DataParameter("{0}", filter) });
 
             this.bsMain.DataSource = dt;
@@ -93,7 +100,14 @@ namespace App.View
         {
             this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
         }
-        
-    }
-    
+
+        private void dgvMain_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvMain.Rows[e.RowIndex].Cells[1].Value == null)
+                return;
+            string PalletBarcode = dgvMain.Rows[e.RowIndex].Cells[1].Value.ToString();
+            DataTable dt = bll.FillDataTable("WMS.SelectWmsPallet", new DataParameter[] { new DataParameter("{0}", string.Format("PalletCode='{0}'", PalletBarcode)) });
+            this.bsDetail.DataSource = dt;  
+        }        
+    }    
 }

@@ -13,6 +13,7 @@ namespace App.View.Dispatcher
     public partial class frmCellInfo : Form
     {
         private string PalletBarcode;
+        private string CellCode;
         public frmCellInfo()
         {
             InitializeComponent();
@@ -22,7 +23,12 @@ namespace App.View.Dispatcher
             InitializeComponent();
             this.PalletBarcode = PalletBarcode;
         }
-
+        public frmCellInfo(string PalletBarcode, string CellCode)
+        {
+            InitializeComponent();
+            this.PalletBarcode = PalletBarcode;
+            this.CellCode = CellCode;
+        }
         private void frmCellInfo_Load(object sender, EventArgs e)
         {
             BLL.BLLBase bll = new BLL.BLLBase();
@@ -32,6 +38,11 @@ namespace App.View.Dispatcher
             {
                 this.txtCellCode.Text = dt.Rows[0]["CellCode"].ToString();
                 this.txtPalletBarcode.Text = dt.Rows[0]["PalletCode"].ToString();
+            }
+            else
+            {
+                this.txtCellCode.Text = CellCode;
+                this.txtPalletBarcode.Text = PalletBarcode;
             }
         }
     }
