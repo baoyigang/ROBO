@@ -21,17 +21,17 @@
       <Item ServiceName="CarPLC0101" ItemName="AlarmCode" />
       <Item ServiceName="CarPLC0102" ItemName="AlarmCode" />
     </Process>
-    <!--MiniLoadProcess-->
+   <!--MiniLoadProcess-->
     <Process Name="MiniLoadProcess" Type="App.exe, App.Dispatching.Process.MiniLoadProcess">
       <Item ServiceName="MiniLoad02" ItemName="TaskFinished1" />
       <Item ServiceName="MiniLoad02" ItemName="TaskFinished2" />
       <Item ServiceName="MiniLoad02" ItemName="AlarmCode" />
     </Process>
     <!--小车Process-->
-    <!--<Process Name="ElevatorProcess" Type="App.exe, App.Dispatching.Process.ElevatorProcess">
+    <Process Name="ElevatorProcess" Type="App.exe, App.Dispatching.Process.ElevatorProcess">
       <Item ServiceName="Elevator" ItemName="TaskFinished01" />
       <Item ServiceName="Elevator" ItemName="TaskFinished02" />
-    </Process>-->
+    </Process>
     <!--输送线Process,读码请求-->
     <Process Name="ReadProcess" Type="App.exe, App.Dispatching.Process.ReadProcess">
       <Item ServiceName="TranLine" ItemName="ReadBarcode" />
@@ -48,10 +48,13 @@
       <Item ServiceName="TranLine" ItemName="InFinish2" />
       <Item ServiceName="TranLine" ItemName="InFinish3" />
     </Process>
-    <!--输送线Process,到达拣货口-->
+    <!--//输送线Process,到达拣货口-->
     <Process Name="OutStockFinishProcess" Type="App.exe, App.Dispatching.Process.OutStockFinishProcess">
       <Item ServiceName="TranLine" ItemName="OutFinish" />
-    </Process>   
-    
+    </Process>
+    <!--<Process Name="CraneProcess" Type="App.exe,App.Dispatching.Process.CraneProcess">
+      <Item ServiceName="CranePLC1" ItemName="CraneAlarmCode"/>
+      <Item ServiceName="CranePLC1" ItemName="CraneTaskFinished"/>
+    </Process>-->
   </Processes>
 </Configuration>

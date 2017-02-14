@@ -87,11 +87,11 @@
       <OPCItem ItemName="TaskANo" ClientHandler="14" OPCItemName="DB541,DINT20,1"/>
       <OPCItem ItemName="TaskBNo" ClientHandler="15" OPCItemName="DB541,DINT24,1"/>
     </Server>
-    <!--<Server Name="MiniloadServer" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[PLC01]" UpdateRate="350">
+    <!--<Server Name="CraneServer" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[PLC01]" UpdateRate="350">
       <OPCItem ItemName="Mode" ClientHandler="10" OPCItemName="DB541,X0.7,1"/>
       <OPCItem ItemName="ForkStatus" ClientHandler="11" OPCItemName="DB541,X1.4,1"/>
       <OPCItem ItemName="AlarmCode" ClientHandler="12" OPCItemName="DB541,INT6,1"/>
-      <OPCItem ItemName="Status" ClientHandler="13" OPCItemName="DB541,INT8,3"/>
+      <OPCItem ItemName="Status" ClientHandler="13" OPCItemName="DB541,INT8,5"/>
       <OPCItem ItemName="TaskNo" ClientHandler="15" OPCItemName="DB541,CHAR20,10"/>
     </Server>-->
   </Servers>

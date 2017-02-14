@@ -42,7 +42,7 @@ namespace App.Dispatching.Process
         {
             try
             {
-                dtCraneErr = bll.FillDataTable("WCS.SelectCraneError");
+                dtCraneErr = bll.FillDataTable("WCS.SelectDeviceAlarm", new DataParameter("{0}", "1=1"));
 
                 //获取堆垛机信息
                 DataTable dt = bll.FillDataTable("CMD.SelectCrane", new DataParameter[] { new DataParameter("{0}", "CraneNo='01'") });
@@ -153,9 +153,9 @@ namespace App.Dispatching.Process
                     if (obj1.ToString() != "0")
                     {
                         string strError = "";
-                        DataRow[] drs = dtCraneErr.Select(string.Format("CraneErrCode={0}", obj1.ToString()));
+                        DataRow[] drs = dtCraneErr.Select(string.Format("AlarmCode={0}", obj1.ToString()));
                         if (drs.Length > 0)
-                            strError = drs[0]["CraneErrDesc"].ToString();
+                            strError = drs[0]["AlarmDesc"].ToString();
                         else
                             strError = "堆垛机未知错误！";
                         Logger.Error(strError);

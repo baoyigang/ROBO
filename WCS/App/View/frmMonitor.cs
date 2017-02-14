@@ -448,7 +448,7 @@ namespace App.View
 
             else if (e.ItemName.IndexOf("AlarmCode") >= 0)
                 dicCrane[CraneNo].AlarmCode = int.Parse(e.State.ToString());
-            Miniloads.MiniloadInfo(dicMiniload[CraneNo]);
+            Cranes.CraneInfo(dicCrane[CraneNo]);
         }
 
         void Monitor_OnCrane(CraneEventArgs args)
@@ -459,39 +459,55 @@ namespace App.View
             }
             else
             {
-                Crane crane = args.crane;
-
-                this.txtTaskNo1.Text = crane.TaskNo;
-                this.txtStatus4.Text = dicCraneStatus[int.Parse(crane.Status[0].ToString())];
-                this.txtActionMode4.Text = crane.Mode ? dicCraneAction[1] : dicCraneAction[0];
-                this.txtRow4.Text = "001";
-                int CraneColumn = int.Parse(crane.Status[1].ToString());
-                Point p = InitialP1;
-                if (CraneColumn < 19)
+                try
                 {
-                    if (CraneColumn == 0)
-                        this.picCrane1.Location = p;
-                    else
-                        this.picCrane1.Location = new Point(p.X + 5 + CraneColumn * 40 + (int)((CraneColumn - 1) / 2 * 3.1f), p.Y);
+                     Crane crane = args.crane;
+                     Point p = InitialP1;
+                     if (crane.CraneNo=="01")
+                     {
+                         if (crane.Status == null)
+                             return;
+                         if (crane.Status.Length < 3)
+                             return;
+                         int CraneColumn = int.Parse(crane.Status[2].ToString());
+                         if (CraneColumn < 19)
+                         {
+                             if (CraneColumn == 0)
+                                 this.picCrane1.Location = p;
+                             else
+                                 this.picCrane1.Location = new Point(p.X + 5 + CraneColumn * 40 + (int)((CraneColumn - 1) / 2 * 3.1f), p.Y);
+
+
+                         }
+                     this.txtTaskNo1.Text = crane.TaskNo;
+                     this.txtStatus1.Text = dicCraneStatus[int.Parse(crane.Status[0].ToString())];
+                     this.txtActionMode1.Text = crane.Mode ? dicCraneAction[1] : dicCraneAction[0];
+                     this.txtRow1.Text = "001";
                      
-                    
+                
+               
+                     this.txtColumn1.Text = (int.Parse(crane.Status[2].ToString())-1).ToString();
+                     this.txtLayer1.Text = crane.Status[4].ToString();
+                     this.txtForkStatus1.Text = crane.ForkStatus ? dicCraneFork[0] : dicCraneFork[1];
+                     this.txtAlarmCode1.Text = crane.AlarmCode.ToString();
+                     
+
+                      if (crane.AlarmCode > 0)
+                      {
+                           DataRow[] drs = dtDeviceAlarm.Select(string.Format("Flag=1 and AlarmCode={0}", crane.AlarmCode));
+                            if (drs.Length > 0)
+                                this.txtAlarmDesc1.Text = drs[0]["AlarmDesc"].ToString();
+                           else
+                                this.txtAlarmDesc1.Text = "设备未知错误！";
+                      }
+                      else
+                          this.txtAlarmDesc1.Text = "";
+                     }
                 }
-                this.txtColumn4.Text = crane.Status[1].ToString();
-                this.txtLayer4.Text = crane.Status[2].ToString();
-                this.txtForkStatus4.Text = crane.ForkStatus ? dicCraneFork[0] : dicCraneFork[1];
-                this.txtAlarmCode4.Text = crane.AlarmCode.ToString();
-
-
-                if (crane.AlarmCode > 0)
+                catch (Exception ex)
                 {
-                    DataRow[] drs = dtDeviceAlarm.Select(string.Format("Flag=1 and AlarmCode={0}", crane.AlarmCode));
-                    if (drs.Length > 0)
-                        this.txtAlarmDesc4.Text = drs[0]["AlarmDesc"].ToString();
-                    else
-                        this.txtAlarmDesc4.Text = "设备未知错误！";
+                    MCP.Logger.Error("监控界面中Monitor_OnCrane出现异常" + ex.Message);
                 }
-                else
-                    this.txtAlarmDesc2.Text = "";
             }
         }
         private Dictionary<string, Crane> dicCrane = new Dictionary<string, Crane>();
@@ -624,7 +640,7 @@ namespace App.View
             dicMiniloadLocation.Add(35, new Point(777, P.Y));
             dicMiniloadLocation.Add(36, new Point(796, P.Y));
             
-            dtDeviceAlarm = bll.FillDataTable("WCS.SelectDeviceAlarm", new DataParameter[] { new DataParameter("{0}", "1=1") });
+            dtDeviceAlarm = bll.FillDataTable("WCS.SelectDeviceAlarm", new DataParameter[] { new DataParameter("{0}", "DeviceType='01'") });
         }
 
        
@@ -697,17 +713,17 @@ namespace App.View
 
         private void btnConveyor_MouseEnter(object sender, EventArgs e)
         {
-            try
-            {
-                Button btn = (Button)sender;
-                string Number = btn.Name.Substring(btn.Name.Length - 2, 2);
-                string Barcode = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService("TranLine", "ConveyorInfo" + Number)));
-                this.toolTip1.SetToolTip(btn, Barcode);
-            }
-            catch(Exception ex)
-            {
-                Logger.Error(ex.Message);
-            }
+            //try
+            //{
+            //    Button btn = (Button)sender;
+            //    string Number = btn.Name.Substring(btn.Name.Length - 2, 2);
+            //    string Barcode = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService("TranLine", "ConveyorInfo" + Number)));
+            //    this.toolTip1.SetToolTip(btn, Barcode);
+            //}
+            //catch(Exception ex)
+            //{
+            //    Logger.Error(ex.Message);
+            //}
         }        
     }
 }
