@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <publishData>
-  <publishProfile publishUrl="C:\Users\Administrator\Desktop\Web" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="配置文件1" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
-    <file relUrl="bin/IDAL.dll" publishTime="10/27/2016 15:15:57" />
-    <file relUrl="bin/ServiceHost.dll" publishTime="01/20/2017 07:58:15" />
-    <file relUrl="DB.xml" publishTime="01/14/2017 13:27:40" />
-    <file relUrl="SecurityService.svc" publishTime="05/05/2016 16:10:08" />
-    <file relUrl="BLLBaseService.svc" publishTime="05/05/2016 16:10:08" />
-    <file relUrl="bin/Services.dll" publishTime="01/11/2017 09:01:38" />
-    <file relUrl="Web.config" publishTime="01/20/2017 07:58:16" />
-    <file relUrl="bin/SQLDAL.dll" publishTime="01/20/2017 07:57:59" />
-    <file relUrl="bin/IServices.dll" publishTime="01/11/2017 11:36:32" />
-    <file relUrl="bin/Util.dll" publishTime="10/28/2016 16:03:13" />
-    <file relUrl="bin/BLL.dll" publishTime="08/05/2016 07:49:50" />
+  <publishProfile publishUrl="C:\Users\b\Desktop\baobao" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="配置文件1" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+    <file relUrl="bin/ServiceHost.dll" publishTime="02/25/2017 18:23:29" />
+    <file relUrl="DB.xml" publishTime="02/17/2017 11:20:35" />
+    <file relUrl="SecurityService.svc" publishTime="02/13/2017 17:01:00" />
+    <file relUrl="BLLBaseService.svc" publishTime="02/13/2017 17:01:00" />
+    <file relUrl="bin/BLL.dll" publishTime="10/14/2016 15:09:59" />
+    <file relUrl="Web.config" publishTime="02/25/2017 18:26:08" />
+    <file relUrl="bin/SQLDAL.dll" publishTime="02/25/2017 18:23:28" />
+    <file relUrl="bin/IServices.dll" publishTime="02/13/2017 17:23:58" />
+    <file relUrl="bin/Services.dll" publishTime="02/13/2017 17:23:58" />
+    <file relUrl="bin/Util.dll" publishTime="10/14/2016 15:09:59" />
+    <file relUrl="bin/IDAL.dll" publishTime="11/22/2016 09:52:27" />
   </publishProfile>
 </publishData>

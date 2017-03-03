@@ -41,5 +41,14 @@ namespace BLL
                 throw ex;
             }
         }
+
+        public static string GetAreaCode()
+        {
+            MCP.Config.Configuration confg = new MCP.Config.Configuration();
+            confg.Load("Config.xml");
+            string AreaCode = confg.Attributes["AreaCode"];
+            confg.Release();
+            return AreaCode;
+        }
     }
 }

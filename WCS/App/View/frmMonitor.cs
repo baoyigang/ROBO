@@ -713,17 +713,27 @@ namespace App.View
 
         private void btnConveyor_MouseEnter(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    Button btn = (Button)sender;
-            //    string Number = btn.Name.Substring(btn.Name.Length - 2, 2);
-            //    string Barcode = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService("TranLine", "ConveyorInfo" + Number)));
-            //    this.toolTip1.SetToolTip(btn, Barcode);
-            //}
-            //catch(Exception ex)
-            //{
-            //    Logger.Error(ex.Message);
-            //}
+            try
+            {
+                Button btn = (Button)sender;
+                string Number = btn.Name.Substring(btn.Name.Length - 2, 2);
+
+                string AreaCode = BLL.Server.GetAreaCode();
+                if (AreaCode!="001")
+                {
+                    string Barcode = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService("TranLine", "ConveyorInfo" + Number)));
+                }
+                this.toolTip1.SetToolTip(btn, Barcode);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message);
+            }
+        }
+
+        private void x1(object sender, EventArgs e)
+        {
+
         }        
     }
 }
