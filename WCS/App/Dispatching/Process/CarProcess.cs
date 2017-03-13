@@ -117,7 +117,7 @@ namespace App.Dispatching.Process
                         {
                             //输送线出库
                             sbyte[] OutTaskNo = new sbyte[20];
-                            Util.ConvertStringChar.stringToBytes(TaskNo + PalletCode, 10).CopyTo(OutTaskNo, 0);
+                            Util.ConvertStringChar.stringToBytes(TaskNo + PalletCode, 20).CopyTo(OutTaskNo, 0);
                             WriteToService("TranLine", "OutTaskNo2", OutTaskNo);
                             if (WriteToService("TranLine", "OutFinish2", 1))
                             {

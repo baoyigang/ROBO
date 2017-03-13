@@ -417,7 +417,17 @@ namespace App
         }
         private DataTable GetMonitorData()
         {
-            DataTable dt = bll.FillDataTable("WCS.SelectTask", new DataParameter[] { new DataParameter("{0}", "(WCS_TASK.State not in('7','9'))") });
+            string AreaCode = BLL.Server.GetAreaCode();
+            string PalletCodeSub = "";
+            if (AreaCode!="001")
+            {
+                 PalletCodeSub = "!=";
+            }
+            else
+            {
+                PalletCodeSub = " = ";
+            }
+            DataTable dt = bll.FillDataTable("WCS.SelectTask", new DataParameter[] { new DataParameter("{0}", string.Format("(WCS_TASK.State not in('7','9')) and SUBSTRING(palletCode,1,1){0} 'a'",PalletCodeSub)) });
             return dt;
         }
 
@@ -789,5 +799,7 @@ namespace App
 
             //Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + carNo + "穿梭车;起始地址:" + fromStation + ",目标地址:" + toStation);
         }
+
+
     }
 }

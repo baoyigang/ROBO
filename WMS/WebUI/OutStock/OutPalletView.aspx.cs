@@ -1,6 +1,4 @@
-﻿ 
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -270,7 +268,7 @@ public partial class WebUI_OutStock_OutPalletView : BasePage
             for (int i = 0; i < dtSub.Rows.Count; i++)
             {
                 int count = 0;
-                count = bll.GetRowCount("Cmd_Cell", string.Format("CellCode='{0}' and (IsLock=1 or ProductCode!='{1}')", dtSub.Rows[i]["CellCode"], dtSub.Rows[i]["ProductCode"]));
+                count = bll.GetRowCount("Cmd_Cell", string.Format("CellCode='{0}' and (IsLock=1 )", dtSub.Rows[i]["CellCode"], dtSub.Rows[i]["ProductCode"]));
                 if (count > 0)
                 {
                     JScript.ShowMessage(this.updatePanel, "货位 " + dtSub.Rows[i]["CellCode"].ToString() + "已经被其它单据锁定，不能移库！");

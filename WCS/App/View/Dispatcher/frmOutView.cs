@@ -67,34 +67,38 @@ namespace App.View.Dispatcher
 
             dtPallet = bll.FillDataTable("WCS.SelectTaskProductDetail", new DataParameter[] { new DataParameter("@TaskNo", this.txtTaskNo.Text) });
             this.bsMain.DataSource = dtPallet;
-
-            //tmWorkTimer.Interval = 1000;
-            //tmWorkTimer.Elapsed += new System.Timers.ElapsedEventHandler(tmWorker);
-            //tmWorkTimer.Start();
+            string AreaCode = BLL.Server.GetAreaCode();
+            if (AreaCode!="001")
+            {
+                tmWorkTimer.Interval = 1000;
+                tmWorkTimer.Elapsed += new System.Timers.ElapsedEventHandler(tmWorker);
+                tmWorkTimer.Start();
+            }
+            
         }
 
-        //private void tmWorker(object sender, System.Timers.ElapsedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        tmWorkTimer.Stop();
-        //        object obj = ObjectUtil.GetObject(context.ProcessDispatcher.WriteToService("TranLine", "StockRequest"));
-        //        if (obj == null)
-        //            return;
-        //        string TaskFinish = obj.ToString();
-        //        Logger.Info(TaskFinish);
-        //        if (TaskFinish.Equals("True") || TaskFinish.Equals("1"))
-        //            this.DialogResult = DialogResult.OK;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logger.Error(ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        tmWorkTimer.Start();
-        //    }
-        //}     
+        private void tmWorker(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            try
+            {
+                tmWorkTimer.Stop();
+                object obj = ObjectUtil.GetObject(context.ProcessDispatcher.WriteToService("TranLine", "StockRequest"));
+                if (obj == null)
+                    return;
+                string TaskFinish = obj.ToString();
+                Logger.Info(TaskFinish);
+                if (TaskFinish.Equals("True") || TaskFinish.Equals("1"))
+                    this.DialogResult = DialogResult.OK;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message);
+            }
+            finally
+            {
+                tmWorkTimer.Start();
+            }
+        }     
 
         private void btnGetBack_Click(object sender, EventArgs e)
         {

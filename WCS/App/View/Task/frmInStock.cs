@@ -78,7 +78,17 @@ namespace App.View.Task
         }
         private void BindData()
         {
-            DataTable dt = bll.FillDataTable("WCS.SelectTask", new DataParameter[] { new DataParameter("{0}", "WCS_TASK.State in('0','1','2','3') and WCS_TASK.TaskType='11'") });
+            string AreaCode = BLL.Server.GetAreaCode();
+            string PalletCodeSub = "";
+            if (AreaCode != "001")
+            {
+                PalletCodeSub = "!=";
+            }
+            else
+            {
+                PalletCodeSub = " = ";
+            }
+            DataTable dt = bll.FillDataTable("WCS.SelectTask", new DataParameter[] { new DataParameter("{0}", string.Format("WCS_TASK.State in('0','1','2','3') and WCS_TASK.TaskType='11' and SUBSTRING(palletCode,1,1){0}'a'",PalletCodeSub)) });
             bsMain.DataSource = dt;
         }
 

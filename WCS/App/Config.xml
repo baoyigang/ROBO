@@ -5,6 +5,7 @@
     <Attribute Name="PortName" Value="COM3" />
     <Attribute Name="BaudRate" Value="57600" />
     <Attribute Name="IsShowFlag" Value="1" />
+    <Attribute Name="AreaCode" Value="002"/>
   </Attributes>
   <Services>
     <!--<Service Name="CranePLC1" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="CranePLC1.xml" />-->
