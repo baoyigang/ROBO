@@ -264,7 +264,20 @@ namespace App
 
         private void Main_Load(object sender, EventArgs e)
         {
-
+            if (BLL.Server.GetAreaCode() == "001")
+            {
+                this.toolStripButton1.Visible = true;
+                this.toolStripButton2.Visible = false;
+                this.toolStripButton3.Visible = false;
+                toolStripButton_Scan.Visible = true;
+            }
+            else
+            {
+                this.toolStripButton1.Visible = false;
+                this.toolStripButton2.Visible = false;
+                this.toolStripButton3.Visible = false;
+                toolStripButton_Scan.Visible = false;
+            }
 
         }
 
@@ -332,19 +345,28 @@ namespace App
 
         private void toolStripButton_StartCrane_Click(object sender, EventArgs e)
         {
+
             if (this.toolStripButton_StartCrane.Text == "联机自动")
             {
-                //context.ProcessDispatcher.WriteToProcess("CraneProcess", "Run", 1);
-                context.ProcessDispatcher.WriteToProcess("CarProcess", "Run", 1);
-                context.ProcessDispatcher.WriteToProcess("MiniLoadProcess", "Run", 1);
+                if (BLL.Server.GetAreaCode() == "001")
+                    context.ProcessDispatcher.WriteToProcess("CraneProcess", "Run", 1);
+                else
+                {
+                    context.ProcessDispatcher.WriteToProcess("CarProcess", "Run", 1);
+                    context.ProcessDispatcher.WriteToProcess("MiniLoadProcess", "Run", 1);
+                }
                 this.toolStripButton_StartCrane.Image = App.Properties.Resources.process_accept;
                 this.toolStripButton_StartCrane.Text = "脱机";
             }
             else
             {
-                //context.ProcessDispatcher.WriteToProcess("CraneProcess", "Run", 0);
-                context.ProcessDispatcher.WriteToProcess("CarProcess", "Run", 0);
-                context.ProcessDispatcher.WriteToProcess("MiniLoadProcess", "Run", 0);
+                if (BLL.Server.GetAreaCode() == "001")
+                    context.ProcessDispatcher.WriteToProcess("CraneProcess", "Run", 0);
+                else
+                {
+                    context.ProcessDispatcher.WriteToProcess("CarProcess", "Run", 0);
+                    context.ProcessDispatcher.WriteToProcess("MiniLoadProcess", "Run", 0);
+                }
                 this.toolStripButton_StartCrane.Image = App.Properties.Resources.process_remove;
                 this.toolStripButton_StartCrane.Text = "联机自动";
             }

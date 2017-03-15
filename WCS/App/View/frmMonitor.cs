@@ -722,8 +722,9 @@ namespace App.View
                 if (AreaCode!="001")
                 {
                     string Barcode = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService("TranLine", "ConveyorInfo" + Number)));
+                    this.toolTip1.SetToolTip(btn, Barcode);
                 }
-                this.toolTip1.SetToolTip(btn, Barcode);
+                
             }
             catch (Exception ex)
             {
