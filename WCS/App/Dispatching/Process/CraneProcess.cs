@@ -42,7 +42,7 @@ namespace App.Dispatching.Process
         {
             try
             {
-                dtCraneErr = bll.FillDataTable("WCS.SelectDeviceAlarm", new DataParameter("{0}", "1=1"));
+                dtCraneErr = bll.FillDataTable("WCS.SelectDeviceAlarm", new DataParameter("{0}", "DeviceType='01'"));
 
                 //获取堆垛机信息
                 DataTable dt = bll.FillDataTable("CMD.SelectCrane", new DataParameter[] { new DataParameter("{0}", "CraneNo='01'") });
@@ -192,10 +192,10 @@ namespace App.Dispatching.Process
             {
                 tmWorkTimer.Stop();
 
-                DataTable dt = bll.FillDataTable("CMD.SelectCrane", new DataParameter[] { new DataParameter("{0}", "1=1") });
+                DataTable dt = bll.FillDataTable("CMD.SelectCrane", new DataParameter[] { new DataParameter("{0}", "CraneNo='01'") });
                 for (int i = 1; i <= dt.Rows.Count; i++)
                 {
-                    if (!dCrnStatus.ContainsKey(i))
+                    if (dCrnStatus.ContainsKey(i))
                     {
                         dCrnStatus[i].Status = int.Parse(dt.Rows[i - 1]["State"].ToString());
                     }
