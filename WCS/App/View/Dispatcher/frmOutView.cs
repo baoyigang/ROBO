@@ -86,7 +86,7 @@ namespace App.View.Dispatcher
                 if (obj == null)
                     return;
                 string TaskFinish = obj.ToString();
-                Logger.Info(TaskFinish);
+                //Logger.Info(TaskFinish);
                 if (TaskFinish.Equals("True") || TaskFinish.Equals("1"))
                     this.DialogResult = DialogResult.OK;
             }
