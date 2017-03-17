@@ -717,11 +717,11 @@ namespace App.View
             {
                 Button btn = (Button)sender;
                 string Number = btn.Name.Substring(btn.Name.Length - 2, 2);
-
+                string Barcode = "";
                 string AreaCode = BLL.Server.GetAreaCode();
                 if (AreaCode!="001")
                 {
-                    string Barcode = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService("TranLine", "ConveyorInfo" + Number)));
+                    Barcode = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService("TranLine", "ConveyorInfo" + Number)));
                 }
                 this.toolTip1.SetToolTip(btn, Barcode);
             }

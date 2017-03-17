@@ -26,8 +26,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLDAL", "..\SQLDAL\SQLDAL.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceHost", "..\ServiceHost\ServiceHost.csproj", "{ABD63901-876D-4F98-8B47-A3EC620DFAE0}"
 EndProject
-Project("{2CFEAB61-6A3B-4EB8-B523-560B4BEEF521}") = "WMS_deploy", "C:\Users\b\Documents\Visual Studio 2010\Projects\WMS_deploy\WMS_deploy.wdproj", "{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Basic|Any CPU = Basic|Any CPU
@@ -122,31 +120,6 @@ Global
 		{ABD63901-876D-4F98-8B47-A3EC620DFAE0}.WinForms|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{ABD63901-876D-4F98-8B47-A3EC620DFAE0}.WinForms|Mixed Platforms.Build.0 = Release|Any CPU
 		{ABD63901-876D-4F98-8B47-A3EC620DFAE0}.WinForms|x86.ActiveCfg = Release|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.Basic|Any CPU.ActiveCfg = Release|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.Basic|Any CPU.Build.0 = Release|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.Basic|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.Basic|Mixed Platforms.Build.0 = Release|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.Basic|x86.ActiveCfg = Release|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.Demo|Any CPU.ActiveCfg = Debug|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.Demo|Any CPU.Build.0 = Debug|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.Demo|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.Demo|Mixed Platforms.Build.0 = Debug|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.Demo|x86.ActiveCfg = Debug|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.Release|x86.ActiveCfg = Release|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.WinForms|Any CPU.ActiveCfg = Release|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.WinForms|Any CPU.Build.0 = Release|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.WinForms|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.WinForms|Mixed Platforms.Build.0 = Release|Any CPU
-		{54ABEB02-F23E-4B75-A3A6-E88BF88313DD}.WinForms|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
