@@ -83,10 +83,13 @@ namespace App.View.Task
             if (AreaCode != "001")
             {
                 PalletCodeSub = "!=";
+                toolStripButton_Request.Visible = false;
             }
             else
             {
                 PalletCodeSub = " = ";
+                toolStripButton_Request.Visible = true;
+
             }
             DataTable dt = bll.FillDataTable("WCS.SelectTask", new DataParameter[] { new DataParameter("{0}", string.Format("WCS_TASK.State in('0','1','2','3') and WCS_TASK.TaskType='11' and SUBSTRING(palletCode,1,1){0}'a'",PalletCodeSub)) });
             bsMain.DataSource = dt;

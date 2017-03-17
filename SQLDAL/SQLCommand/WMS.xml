@@ -284,7 +284,7 @@
       (case when Task.TaskType='11' then TASK.StationNo when Task.TaskType in('12','13','14') then Task.CellCode end) FromStation,
       (case when Task.TaskType in ('11','14') then Task.CellCode when Task.TaskType='12' then TASK.StationNo when Task.TaskType='13' then Task.ToCellCode end) ToStation
       FROM WCS_TASK  Task
-      left join WCS_TaskProductDetail ProductDetail on Task.TaskNo=task.TaskNo
+      left join WCS_TaskProductDetail ProductDetail on ProductDetail.TaskNo=task.TaskNo
       left join CMD_Crane Crane on Task.CraneNo=crane.CraneNo
       left join VCMD_Product Product on ProductDetail.ProductCode=Product.ProductCode
       left join CMD_BillType BillType on task.BillTypeCode=billtype.BillTypeCode
