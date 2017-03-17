@@ -70,8 +70,11 @@ namespace App.View
             {
                 ServerInfo[] Servers = new MonitorConfig("Monitor.xml").Servers;
                 Conveyors.OnConveyor += new ConveyorEventHandler(Monitor_OnConveyor);
+                System.Threading.Thread.Sleep(300);
                 Cars.OnCar += new CarEventHandler(Monitor_OnCar);
+                System.Threading.Thread.Sleep(300);
                 Miniloads.OnMiniload += new MiniloadEventHandler(Monitor_OnMiniload);
+                System.Threading.Thread.Sleep(300);
                 Cranes.OnCrane += new CraneEventHandler(Monitor_OnCrane);
                 for (int i = 0; i < Servers.Length; i++)
                 {
