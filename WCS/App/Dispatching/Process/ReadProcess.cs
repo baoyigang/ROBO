@@ -45,7 +45,7 @@ namespace App.Dispatching.Process
                     isRead = true;
                     Barcode = "";
                     string TaskNo = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(WriteToService(stateItem.Name, "ConveyorInfo04")));
-                    string A4Barcode = TaskNo.PadRight(20, ' ').Substring(0, 10).Trim(); 
+                    string A4Barcode = TaskNo.PadRight(20, ' ').Substring(10).Trim(); 
                     
                     while (isRead)
                     {
