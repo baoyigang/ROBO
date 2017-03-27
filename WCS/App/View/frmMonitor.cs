@@ -245,7 +245,7 @@ namespace App.View
             }
             catch (Exception ex)
             {
-                MCP.Logger.Error("输送线监控界面中Conveyor_OnDataChanged出现异常" + ex.Message);
+                MCP.Logger.Error("监控界面中Car_OnDataChanged出现异常" + ex.Message);
             }
         }
 
@@ -276,6 +276,11 @@ namespace App.View
                 try
                 {
                     Car car = args.car;
+
+                    if (car.Status == null)
+                        return;
+                    if (car.Status.Length < 1)
+                        return;
 
                     if (car.CarNo == "01")
                     {
