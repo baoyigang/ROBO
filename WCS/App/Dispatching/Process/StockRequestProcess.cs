@@ -72,9 +72,9 @@ namespace App.Dispatching.Process
                         }                        
                     }
                     //入库请求时,判断是否存在输送线出库的任务,如果存在,则等待出库完成!
-                    int count = bll.GetRowCount("WCS_Task", string.Format("PalletCode='{0}' and WCS_TASK.TaskType in ('12','14','15') and  WCS_TASK.State='6'", Barcode));
-                    if (count > 0)
-                        return;
+                    //int count = bll.GetRowCount("WCS_Task", string.Format("PalletCode='{0}' and WCS_TASK.TaskType in ('12','14','15') and  WCS_TASK.State='6'", Barcode));
+                    //if (count > 0)
+                    //    return;
 
 
                     

@@ -278,7 +278,7 @@ namespace App.View.Dispatcher
             if (quantity == 1)  //空货位锁定
                 g.FillRectangle(Brushes.Yellow, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
             else if (quantity == 2) //有货未锁定
-                g.FillRectangle(Brushes.Blue, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
+                g.FillRectangle(Brushes.Black, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
             else if (quantity == 3) //有货且锁定
                 g.FillRectangle(Brushes.Green, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
             else if (quantity == 4) //禁用
