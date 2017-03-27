@@ -503,7 +503,16 @@
       where cell.CellCode=@CellCode
     </CommandString>
   </Command>
-
- 
+  <Command ID="SelectProductColor">
+    <CommandString>
+      select cmd_cell.cellcode,count(wms_pallet.ProductCode) productCode from cmd_cell left join WMS_Pallet on cmd_cell.cellcode = wms_pallet.CellCode
+      where cmd_cell.cellcode ='{0}'  group by cmd_cell.cellcode
+    </CommandString>
+  </Command>
+  <Command ID="SelectInDate">
+    <CommandString>
+      select * from CMD_Cell where Cellcode='{0}' and InDate is null
+    </CommandString>
+  </Command>
 
 </SqlCommand>

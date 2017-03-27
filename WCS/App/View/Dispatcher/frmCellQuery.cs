@@ -201,12 +201,12 @@ namespace App.View.Dispatcher
                                 int top = 0;
                                 if (shelf % 2 == 0)
                                     top = pnlContent.Height / 2;
-
+                                string cellcode = cellRow["Cellcode"].ToString();
                                 int column = Convert.ToInt32(cellRow["CellColumn"]);
                                 int row = Rows[currentPage-1] - Convert.ToInt32(cellRow["CellRow"]) + 1;
                                 int quantity = ReturnColorFlag(cellRow["PalletBarCode"].ToString(), cellRow["IsActive"].ToString(), cellRow["IsLock"].ToString(), cellRow["ErrorFlag"].ToString());
                                 //FillCell(e.Graphics, top, row, column, quantity);
-                                FillCell(e.Graphics, top, row, column, quantity, cellRow["ShelfCode"].ToString());
+                                FillCell(e.Graphics, top, row, column, quantity, cellRow["ShelfCode"].ToString(),cellcode);
                             }
                         }
                     }
@@ -227,11 +227,11 @@ namespace App.View.Dispatcher
             {
                 shelfCode = cellRow["ShelfCode"].ToString();
                 int column = Convert.ToInt32(cellRow["CellColumn"]) ;
-                
+                string cellCode = cellRow["CellCode"].ToString();
 
                 int row = Rows[currentPage-1] - Convert.ToInt32(cellRow["CellRow"]) + 1;
                 int quantity = ReturnColorFlag(cellRow["PalletBarCode"].ToString(), cellRow["IsActive"].ToString(), cellRow["IsLock"].ToString(), cellRow["ErrorFlag"].ToString());
-
+               
                 int x = left + (column-1) * cellWidth;
                 int y = top + row * cellHeight;
 
@@ -240,7 +240,7 @@ namespace App.View.Dispatcher
 
                 if (!filtered)
                 {
-                    FillCell(g, top, row, column, quantity, shelfCode);
+                    FillCell(g, top, row, column, quantity, shelfCode,cellCode);
                 }
             }
             for (int j = 1; j <= Columns[currentPage - 1]; j++)
@@ -270,7 +270,7 @@ namespace App.View.Dispatcher
             else if (quantity == 7) //托盘锁定
                 g.FillRectangle(Brushes.Gold, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
         }
-        private void FillCell(Graphics g, int top, int row, int column, int quantity,string shelfCode)
+        private void FillCell(Graphics g, int top, int row, int column, int quantity,string shelfCode,string CellCode)
         {           
             int x = left + (column-1) * cellWidth;
 
@@ -278,9 +278,30 @@ namespace App.View.Dispatcher
             if (quantity == 1)  //空货位锁定
                 g.FillRectangle(Brushes.Yellow, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
             else if (quantity == 2) //有货未锁定
-                g.FillRectangle(Brushes.Black, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
+            {
+                DataTable dtColor = bll.FillDataTable("Cmd.SelectProductColor", new DataParameter("{0}", CellCode));
+                if (dtColor.Rows[0]["productCode"].ToString()=="0")
+                {
+                    g.FillRectangle(Brushes.BlueViolet, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
+                }
+                else
+                {
+                    g.FillRectangle(Brushes.Blue, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
+                }
+            }
             else if (quantity == 3) //有货且锁定
-                g.FillRectangle(Brushes.Green, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
+            {
+                DataTable dtIndate=bll.FillDataTable("Cmd.SelectInDate",new DataParameter("{0}",CellCode));
+                if (dtIndate.Rows.Count==0)
+	            {
+                    g.FillRectangle(Brushes.Green, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
+                }
+		        else
+	            {
+                    g.FillRectangle(Brushes.LawnGreen, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
+	            }
+             }
+                
             else if (quantity == 4) //禁用
                 g.FillRectangle(Brushes.Gray, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
             else if (quantity == 5) //有问题
