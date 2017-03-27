@@ -331,7 +331,7 @@ public partial class WebUI_InStock_InStockPallet : BasePage
                 }
             }
         }
-        if (bll.GetRowCount("WMS_Pallet", string.Format("PalletCode='{0}' and CellCode<>''", txtSearch.Text)) > 0)
+        if (bll.GetRowCount("CMD_Cell", string.Format("PalletCode='{0}' and Indate is not NULL", txtSearch.Text)) > 0)
         {
             JScript.ShowMessage(this.updatePanel1, "托盘已经入库,无法保存！");
             return;
