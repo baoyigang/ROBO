@@ -35,6 +35,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.bsMain = new System.Windows.Forms.BindingSource(this.components);
             this.SHELFNAME = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
@@ -57,6 +58,10 @@
             this.sbShelf = new System.Windows.Forms.VScrollBar();
             this.pnlTool = new System.Windows.Forms.Panel();
             this.PColor = new System.Windows.Forms.Panel();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -74,7 +79,6 @@
             this.btnExit = new System.Windows.Forms.Button();
             this.btnChart = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
-            this.ToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsMain)).BeginInit();
             this.pnlMain.SuspendLayout();
@@ -93,14 +97,21 @@
             this.ToolStripMenuItem1,
             this.ToolStripMenuItem2});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(125, 48);
             // 
             // ToolStripMenuItem1
             // 
             this.ToolStripMenuItem1.Name = "ToolStripMenuItem1";
-            this.ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
             this.ToolStripMenuItem1.Text = "货位编辑";
             this.ToolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1_Click);
+            // 
+            // ToolStripMenuItem2
+            // 
+            this.ToolStripMenuItem2.Name = "ToolStripMenuItem2";
+            this.ToolStripMenuItem2.Size = new System.Drawing.Size(124, 22);
+            this.ToolStripMenuItem2.Text = "货位刷新";
+            this.ToolStripMenuItem2.Click += new System.EventHandler(this.ToolStripMenuItem2_Click);
             // 
             // toolTip1
             // 
@@ -122,7 +133,7 @@
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMain.Location = new System.Drawing.Point(0, 0);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(1057, 505);
+            this.pnlMain.Size = new System.Drawing.Size(1183, 505);
             this.pnlMain.TabIndex = 1;
             // 
             // pnlContent
@@ -132,7 +143,7 @@
             this.pnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlContent.Location = new System.Drawing.Point(0, 47);
             this.pnlContent.Name = "pnlContent";
-            this.pnlContent.Size = new System.Drawing.Size(1057, 458);
+            this.pnlContent.Size = new System.Drawing.Size(1183, 458);
             this.pnlContent.TabIndex = 3;
             // 
             // pnlData
@@ -142,7 +153,7 @@
             this.pnlData.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlData.Location = new System.Drawing.Point(0, 0);
             this.pnlData.Name = "pnlData";
-            this.pnlData.Size = new System.Drawing.Size(1057, 171);
+            this.pnlData.Size = new System.Drawing.Size(1183, 171);
             this.pnlData.TabIndex = 3;
             // 
             // pnlProgress
@@ -169,13 +180,13 @@
             this.dgvMain.AllowUserToDeleteRows = false;
             this.dgvMain.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.dgvMain.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvMain.AutoGenerateColumns = false;
             this.dgvMain.BackgroundColor = System.Drawing.Color.WhiteSmoke;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -195,7 +206,7 @@
             this.dgvMain.DataSource = this.bsMain;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -208,7 +219,7 @@
             this.dgvMain.ReadOnly = true;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -217,7 +228,7 @@
             this.dgvMain.RowHeadersWidth = 30;
             this.dgvMain.RowTemplate.Height = 23;
             this.dgvMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMain.Size = new System.Drawing.Size(1057, 171);
+            this.dgvMain.Size = new System.Drawing.Size(1183, 171);
             this.dgvMain.TabIndex = 10;
             // 
             // Column4
@@ -306,7 +317,7 @@
             this.pnlChart.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlChart.Location = new System.Drawing.Point(0, 377);
             this.pnlChart.Name = "pnlChart";
-            this.pnlChart.Size = new System.Drawing.Size(1057, 81);
+            this.pnlChart.Size = new System.Drawing.Size(1183, 81);
             this.pnlChart.TabIndex = 2;
             this.pnlChart.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlChart_Paint);
             this.pnlChart.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnlChart_MouseClick);
@@ -318,7 +329,7 @@
             // 
             this.sbShelf.Dock = System.Windows.Forms.DockStyle.Right;
             this.sbShelf.LargeChange = 30;
-            this.sbShelf.Location = new System.Drawing.Point(1038, 0);
+            this.sbShelf.Location = new System.Drawing.Point(1164, 0);
             this.sbShelf.Maximum = 90;
             this.sbShelf.Name = "sbShelf";
             this.sbShelf.Size = new System.Drawing.Size(19, 81);
@@ -338,11 +349,15 @@
             this.pnlTool.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTool.Location = new System.Drawing.Point(0, 0);
             this.pnlTool.Name = "pnlTool";
-            this.pnlTool.Size = new System.Drawing.Size(1057, 47);
+            this.pnlTool.Size = new System.Drawing.Size(1183, 47);
             this.pnlTool.TabIndex = 2;
             // 
             // PColor
             // 
+            this.PColor.Controls.Add(this.label18);
+            this.PColor.Controls.Add(this.label17);
+            this.PColor.Controls.Add(this.label16);
+            this.PColor.Controls.Add(this.label15);
             this.PColor.Controls.Add(this.label13);
             this.PColor.Controls.Add(this.label14);
             this.PColor.Controls.Add(this.label12);
@@ -359,8 +374,44 @@
             this.PColor.Controls.Add(this.label5);
             this.PColor.Location = new System.Drawing.Point(172, 4);
             this.PColor.Name = "PColor";
-            this.PColor.Size = new System.Drawing.Size(844, 38);
+            this.PColor.Size = new System.Drawing.Size(1010, 38);
             this.PColor.TabIndex = 51;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(881, 12);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(53, 12);
+            this.label18.TabIndex = 54;
+            this.label18.Text = "入库锁定";
+            // 
+            // label17
+            // 
+            this.label17.BackColor = System.Drawing.Color.LawnGreen;
+            this.label17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label17.Location = new System.Drawing.Point(845, 6);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(28, 23);
+            this.label17.TabIndex = 53;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(806, 12);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(29, 12);
+            this.label16.TabIndex = 52;
+            this.label16.Text = "空箱";
+            // 
+            // label15
+            // 
+            this.label15.BackColor = System.Drawing.Color.BlueViolet;
+            this.label15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label15.Location = new System.Drawing.Point(774, 6);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(28, 23);
+            this.label15.TabIndex = 51;
             // 
             // label13
             // 
@@ -530,18 +581,11 @@
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
-            // ToolStripMenuItem2
-            // 
-            this.ToolStripMenuItem2.Name = "ToolStripMenuItem2";
-            this.ToolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
-            this.ToolStripMenuItem2.Text = "货位刷新";
-            this.ToolStripMenuItem2.Click += new System.EventHandler(this.ToolStripMenuItem2_Click);
-            // 
             // frmCellQuery
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1057, 505);
+            this.ClientSize = new System.Drawing.Size(1183, 505);
             this.ControlBox = false;
             this.Controls.Add(this.pnlMain);
             this.Name = "frmCellQuery";
@@ -606,5 +650,9 @@
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column11;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column12;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem2;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label17;
     }
 }
