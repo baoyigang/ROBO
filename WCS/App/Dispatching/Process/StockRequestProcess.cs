@@ -85,21 +85,26 @@ namespace App.Dispatching.Process
                         taskNo = dt.Rows[0]["TaskNo"].ToString();
                         //如果是盘点任务,因为盘点回原库位，所以按照库位指定入库站台
 
-                        
+
                         if (dt.Rows[0]["TaskType"].ToString() == "14" && dt.Rows[0]["State"].ToString() == "8")
                         {
+
                             string CellCode = dt.Rows[0]["CellCode"].ToString();
+
                             if (CellCode.Length > 0)
                             {
-                                if (CellCode.Substring(9, 1) == "2")
+                                if (dt.Rows[0]["AisleNo"].ToString() == "03")
                                 {
-                                    SlideNum = 1;
-                                    StationNo = "01";
-                                }
-                                else
-                                {
-                                    SlideNum = 3;
-                                    StationNo = "03";
+                                    if (CellCode.Substring(9, 1) == "2")
+                                    {
+                                        SlideNum = 1;
+                                        StationNo = "01";
+                                    }
+                                    else
+                                    {
+                                        SlideNum = 3;
+                                        StationNo = "03";
+                                    }
                                 }
                             }
                             else
@@ -108,6 +113,7 @@ namespace App.Dispatching.Process
                                 return;
                             }
                         }
+
                         else
                         {
                             //判断此条码有没有在库位上存在或在途
@@ -123,7 +129,7 @@ namespace App.Dispatching.Process
                                 Logger.Error("没有空余的货位可以入库!");
                                 return;
                             }
-                            
+
                         }
                     }
                     else
