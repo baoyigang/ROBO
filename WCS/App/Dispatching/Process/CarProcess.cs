@@ -395,8 +395,8 @@ namespace App.Dispatching.Process
 
                             int TaskFlag = int.Parse(obj1[0].ToString());
                             int Layer = int.Parse(obj[3].ToString());
-                            int FromLayer = int.Parse(obj[5].ToString());
-                            int FromColumn = int.Parse(obj[4].ToString());
+                            int FromLayer = int.Parse(obj[6].ToString());
+                            int FromColumn = int.Parse(obj[5].ToString());
                             int ToLayer = int.Parse(obj[9].ToString());
                             int Column = int.Parse(obj[2].ToString());
                             int ToColumn = int.Parse(obj[8].ToString());
