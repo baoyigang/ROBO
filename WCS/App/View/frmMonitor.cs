@@ -126,19 +126,22 @@ namespace App.View
                 //e.States
                 string miniloadNo = "02";
                 GetMiniload(miniloadNo);
-                if (e.ItemName.IndexOf("Status") >= 0)
-                    dicMiniload[miniloadNo].Status = e.States;
-                else if (e.ItemName.IndexOf("Mode") >= 0)
-                    dicMiniload[miniloadNo].Mode = bool.Parse(e.State.ToString());
-                else if (e.ItemName.IndexOf("ForkStatus") >= 0)
-                    dicMiniload[miniloadNo].ForkStatus = bool.Parse(e.State.ToString());
-                else if (e.ItemName.IndexOf("TaskANo") >= 0)
-                    dicMiniload[miniloadNo].TaskANo = e.State.ToString();
-                else if (e.ItemName.IndexOf("TaskBNo") >= 0)
-                    dicMiniload[miniloadNo].TaskBNo = e.State.ToString();
-                else if (e.ItemName.IndexOf("AlarmCode") >= 0)
-                    dicMiniload[miniloadNo].AlarmCode = int.Parse(e.State.ToString());
-                Miniloads.MiniloadInfo(dicMiniload[miniloadNo]);
+                lock (dicMiniload[miniloadNo])
+                {
+                    if (e.ItemName.IndexOf("Status") >= 0)
+                        dicMiniload[miniloadNo].Status = e.States;
+                    else if (e.ItemName.IndexOf("Mode") >= 0)
+                        dicMiniload[miniloadNo].Mode = bool.Parse(e.State.ToString());
+                    else if (e.ItemName.IndexOf("ForkStatus") >= 0)
+                        dicMiniload[miniloadNo].ForkStatus = bool.Parse(e.State.ToString());
+                    else if (e.ItemName.IndexOf("TaskANo") >= 0)
+                        dicMiniload[miniloadNo].TaskANo = e.State.ToString();
+                    else if (e.ItemName.IndexOf("TaskBNo") >= 0)
+                        dicMiniload[miniloadNo].TaskBNo = e.State.ToString();
+                    else if (e.ItemName.IndexOf("AlarmCode") >= 0)
+                        dicMiniload[miniloadNo].AlarmCode = int.Parse(e.State.ToString());
+                    Miniloads.MiniloadInfo(dicMiniload[miniloadNo]);
+                }
 
             }
             catch (Exception ex)
@@ -234,13 +237,16 @@ namespace App.View
                 //e.States
                 string carNo = e.ItemName.Substring(e.ItemName.Length-2,2);
                 GetCar(carNo);
-                if(e.ItemName.IndexOf("Status")>=0)
-                    dicCar[carNo].Status = e.States;
-                else if (e.ItemName.IndexOf("CarTaskNo") >= 0)
-                    dicCar[carNo].TaskNo = e.State.ToString();
-                else if (e.ItemName.IndexOf("AlarmCode") >= 0)
-                    dicCar[carNo].AlarmCode = int.Parse(e.State.ToString());
-                Cars.CarInfo(dicCar[carNo]);
+                lock (dicCar[carNo])
+                {
+                    if (e.ItemName.IndexOf("Status") >= 0)
+                        dicCar[carNo].Status = e.States;
+                    else if (e.ItemName.IndexOf("CarTaskNo") >= 0)
+                        dicCar[carNo].TaskNo = e.State.ToString();
+                    else if (e.ItemName.IndexOf("AlarmCode") >= 0)
+                        dicCar[carNo].AlarmCode = int.Parse(e.State.ToString());
+                    Cars.CarInfo(dicCar[carNo]);
+                }
 
             }
             catch (Exception ex)
@@ -361,13 +367,14 @@ namespace App.View
                     return;
 
                 string txt = e.ItemName.Split('_')[0];
-                Conveyor conveyor = GetConveyorByID(txt);
-                conveyor.value = e.State.ToString();
 
-                conveyor.ID = txt;
-
-
-                Conveyors.ConveyorInfo(conveyor);
+                GetConveyorByID(txt);
+                lock (dicConveyor[txt])
+                {
+                    dicConveyor[txt].value = e.State.ToString();
+                    dicConveyor[txt].ID = txt;
+                    Conveyors.ConveyorInfo(dicConveyor[txt]);
+                }
 
             }
             catch (Exception ex)
@@ -445,19 +452,22 @@ namespace App.View
             if (e.State == null)
                 return;
             string CraneNo = "01";
-            GetCrane(CraneNo);
-            if (e.ItemName.IndexOf("Status") >= 0)
-                dicCrane[CraneNo].Status = e.States;
-            else if (e.ItemName.IndexOf("Mode") >= 0)
-                dicCrane[CraneNo].Mode = bool.Parse(e.State.ToString());
-            else if (e.ItemName.IndexOf("ForkStatus") >= 0)
-                dicCrane[CraneNo].ForkStatus = bool.Parse(e.State.ToString());
-            else if (e.ItemName.IndexOf("TaskNo") >= 0)
-                dicCrane[CraneNo].TaskNo = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(e.States));
+            Crane crane = GetCrane(CraneNo);
+            lock (crane)
+            {
+                if (e.ItemName.IndexOf("Status") >= 0)
+                    crane.Status = e.States;
+                else if (e.ItemName.IndexOf("Mode") >= 0)
+                    crane.Mode = bool.Parse(e.State.ToString());
+                else if (e.ItemName.IndexOf("ForkStatus") >= 0)
+                    crane.ForkStatus = bool.Parse(e.State.ToString());
+                else if (e.ItemName.IndexOf("TaskNo") >= 0)
+                    crane.TaskNo = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(e.States));
 
-            else if (e.ItemName.IndexOf("AlarmCode") >= 0)
-                dicCrane[CraneNo].AlarmCode = int.Parse(e.State.ToString());
-            Cranes.CraneInfo(dicCrane[CraneNo]);
+                else if (e.ItemName.IndexOf("AlarmCode") >= 0)
+                    crane.AlarmCode = int.Parse(e.State.ToString());
+                Cranes.CraneInfo(crane);
+            }
         }
 
         void Monitor_OnCrane(CraneEventArgs args)

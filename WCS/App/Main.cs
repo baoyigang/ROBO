@@ -12,7 +12,7 @@ using DataGridViewAutoFilter;
 
 namespace App
 {
-    public partial class Main : App.View.BaseForm
+    public partial class Main :Form
     {
         private bool IsActiveForm = false;
         public bool IsActiveTab = false;
@@ -716,13 +716,11 @@ namespace App
         {
             string serviceName = "CranePLC1";
             string TaskNo = dr["TaskNo"].ToString();
-
-            int taskType = getTaskType(dr["TaskType"].ToString(), dr["State"].ToString());
-
+           
             string fromStation = dr["FromStation"].ToString();
             string toStation = dr["ToStation"].ToString();
-
-            int[] cellAddr = new int[10];
+           
+            int[] cellAddr = new int[9];
 
             cellAddr[0] = 0;
             cellAddr[1] = 0;
@@ -734,14 +732,13 @@ namespace App
             cellAddr[6] = byte.Parse(toStation.Substring(0, 3));
             cellAddr[7] = byte.Parse(toStation.Substring(3, 3));
             cellAddr[8] = byte.Parse(toStation.Substring(6, 3));
-            cellAddr[9] = taskType;
+            sbyte[] taskNo = new sbyte[10];
+            Util.ConvertStringChar.stringToBytes(dr["TaskNo"].ToString(), 10).CopyTo(taskNo, 0);
+            context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
 
-            int taskNo = int.Parse(TaskNo);
-
-            Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
-            Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
-            Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 2);
-
+            context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+            context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 1);
+          
             //Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + carNo + "穿梭车;起始地址:" + fromStation + ",目标地址:" + toStation);
         }
         private void Send2PLC2(DataRow dr)
@@ -770,9 +767,9 @@ namespace App
 
             int taskNo = int.Parse(TaskNo);
 
-            Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
-            Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
-            Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 2);
+            context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+            context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+            context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 2);
 
             Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + CarNo + "穿梭车;起始地址:" + fromStation + ",目标地址:" + toStation);
         }
@@ -815,9 +812,9 @@ namespace App
 
             int taskNo = int.Parse(TaskNo);
 
-            Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
-            Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
-            Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 2);
+            context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+            context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+            context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 2);
 
             //Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + carNo + "穿梭车;起始地址:" + fromStation + ",目标地址:" + toStation);
         }
