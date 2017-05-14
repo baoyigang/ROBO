@@ -12,7 +12,7 @@ using DataGridViewAutoFilter;
 
 namespace App
 {
-    public partial class Main : App.View.BaseForm
+    public partial class Main :Form
     {
         private bool IsActiveForm = false;
         public bool IsActiveTab = false;

@@ -452,21 +452,21 @@ namespace App.View
             if (e.State == null)
                 return;
             string CraneNo = "01";
-            GetCrane(CraneNo);
-            lock (dicCrane[CraneNo])
+            Crane crane = GetCrane(CraneNo);
+            lock (crane)
             {
                 if (e.ItemName.IndexOf("Status") >= 0)
-                    dicCrane[CraneNo].Status = e.States;
+                    crane.Status = e.States;
                 else if (e.ItemName.IndexOf("Mode") >= 0)
-                    dicCrane[CraneNo].Mode = bool.Parse(e.State.ToString());
+                    crane.Mode = bool.Parse(e.State.ToString());
                 else if (e.ItemName.IndexOf("ForkStatus") >= 0)
-                    dicCrane[CraneNo].ForkStatus = bool.Parse(e.State.ToString());
+                    crane.ForkStatus = bool.Parse(e.State.ToString());
                 else if (e.ItemName.IndexOf("TaskNo") >= 0)
-                    dicCrane[CraneNo].TaskNo = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(e.States));
+                    crane.TaskNo = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(e.States));
 
                 else if (e.ItemName.IndexOf("AlarmCode") >= 0)
-                    dicCrane[CraneNo].AlarmCode = int.Parse(e.State.ToString());
-                Cranes.CraneInfo(dicCrane[CraneNo]);
+                    crane.AlarmCode = int.Parse(e.State.ToString());
+                Cranes.CraneInfo(crane);
             }
         }
 

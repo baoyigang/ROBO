@@ -106,7 +106,7 @@ namespace App.Dispatching.Process
 
                             List<string> comds = new List<string>();
                             List<DataParameter[]> paras = new List<DataParameter[]>();
-                            if (TaskType == "12" || TaskType == "15" || TaskType == "14")  //输送线处理程序
+                            if (TaskType == "12" || TaskType == "15" || (TaskType == "14" && strState=="4"))  //输送线处理程序
                             {
                                 comds.Add("WCS.Sp_TaskProcess"); //更新为出库任务完成
                                 para = new DataParameter[] { new DataParameter("@TaskNo", TaskNo) };
