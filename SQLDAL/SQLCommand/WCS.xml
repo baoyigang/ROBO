@@ -319,4 +319,12 @@
       where TaskNo=@TaskNo
     </CommandString>
   </Command>
+  <Command ID="SelectTaskProductDetail1">
+    <CommandString>
+      select *  from WCS_TaskProductDetail
+      pallet inner join CMD_Product product on pallet.ProductCode=product.ProductCode
+      inner join WMS_Pallet w on w.PalletCode=pallet.PalletCode
+      where pallet.TaskNo=@TaskNo
+    </CommandString>
+  </Command>
 </SqlCommand>

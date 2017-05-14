@@ -395,8 +395,8 @@ namespace App.Dispatching.Process
 
                             int TaskFlag = int.Parse(obj1[0].ToString());
                             int Layer = int.Parse(obj[3].ToString());
-                            int FromLayer = int.Parse(obj[5].ToString());
-                            int FromColumn = int.Parse(obj[4].ToString());
+                            int FromLayer = int.Parse(obj[6].ToString());
+                            int FromColumn = int.Parse(obj[5].ToString());
                             int ToLayer = int.Parse(obj[9].ToString());
                             int Column = int.Parse(obj[2].ToString());
                             int ToColumn = int.Parse(obj[8].ToString());
@@ -459,6 +459,9 @@ namespace App.Dispatching.Process
                     {
                         //读取小车状态
                         string serviceName = "CarPLC01" + dicCars[i].CarNo;
+
+                        object[] obj3 = ObjectUtil.GetObjects(WriteToService("CarPLC0101", "CarStatus"));
+                        object[] obj4 = ObjectUtil.GetObjects(WriteToService("CarPLC0102", "CarStatus"));
                         object[] obj = ObjectUtil.GetObjects(WriteToService(serviceName, "CarStatus"));
                         object[] obj1 = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished"));
                         object[] obj2 = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress"));
@@ -470,7 +473,7 @@ namespace App.Dispatching.Process
                         int FromColumn = int.Parse(obj[5].ToString());
                         int FromLayer = int.Parse(obj[6].ToString());
                         int ToLayer = int.Parse(obj[9].ToString());
-                        int ToColumn = int.Parse(obj[5].ToString());
+                        int ToColumn = int.Parse(obj[8].ToString());
                         int TaskType = int.Parse(obj[12].ToString());
 
                         //如果出库站台有任务，不下发出库任务
