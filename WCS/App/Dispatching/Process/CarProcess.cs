@@ -460,8 +460,6 @@ namespace App.Dispatching.Process
                         //读取小车状态
                         string serviceName = "CarPLC01" + dicCars[i].CarNo;
 
-                        object[] obj3 = ObjectUtil.GetObjects(WriteToService("CarPLC0101", "CarStatus"));
-                        object[] obj4 = ObjectUtil.GetObjects(WriteToService("CarPLC0102", "CarStatus"));
                         object[] obj = ObjectUtil.GetObjects(WriteToService(serviceName, "CarStatus"));
                         object[] obj1 = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished"));
                         object[] obj2 = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress"));
