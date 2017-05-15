@@ -39,10 +39,8 @@ namespace App
                 Logger.OnLog += new LogEventHandler(Logger_OnLog);
                 FormDialog.OnDialog += new DialogEventHandler(FormDialog_OnDialog);
                 context = new Context();
-
                 ContextInitialize initialize = new ContextInitialize();
                 initialize.InitializeContext(context);
-
                 View.frmMonitor f = new View.frmMonitor();
                 ShowForm(f);
                 MainData.OnTask += new TaskEventHandler(Data_OnTask);
@@ -593,6 +591,7 @@ namespace App
 
                 string fromStation = dr["FromStation"].ToString();
                 string toStation = dr["ToStation"].ToString();
+                string CarNo = dr["CarNo"].ToString();
 
                 if (fromStation.Trim() == "" || toStation.Trim() == "")
                 {
@@ -600,7 +599,10 @@ namespace App
                     return;
                 }
                 if (State == "3" || State == "4")
+                {
                     Send2PLC(dr);
+                    Logger.Info(TaskNo + "已重新发下给" + CarNo + "穿梭车");
+                }
                 else
                 {
                     Logger.Info("非正在上下架的任务无法重新下发");
