@@ -127,29 +127,29 @@ namespace App.View.Dispatcher
                     list.Add("WCS.InsertPallet");
                     paras.Add(para);
                 }
-                para = new DataParameter[] {new DataParameter("@BillID",this.txtBillID.Text),  new DataParameter("@PalletCode", this.txtPalletCode.Text) };
-                list.Add("WCS.DeleteCheckDetail");
-                paras.Add(para);
+                //para = new DataParameter[] {new DataParameter("@BillID",this.txtBillID.Text),  new DataParameter("@PalletCode", this.txtPalletCode.Text) };
+                //list.Add("WCS.DeleteCheckDetail");
+                //paras.Add(para);
                 
-                //增加盘点明细
-                drs = dtPallet.Select("", "RowID");
-                for (int i = 0; i < drs.Length; i++)
-                {
-                    para = new DataParameter[] {   
-                                                 new DataParameter("@BillID", this.txtBillID.Text),                         
-                                                 new DataParameter("@PalletCode", this.txtPalletCode.Text),
-                                                 new DataParameter("@RowID",i+1),
-                                                 new DataParameter("@CellCode", this.txtCellCode.Text),
-                                                 new DataParameter("@TaskNo", this.txtTaskNo.Text),
+                ////增加盘点明细
+                //drs = dtPallet.Select("", "RowID");
+                //for (int i = 0; i < drs.Length; i++)
+                //{
+                //    para = new DataParameter[] {   
+                //                                 new DataParameter("@BillID", this.txtBillID.Text),                         
+                //                                 new DataParameter("@PalletCode", this.txtPalletCode.Text),
+                //                                 new DataParameter("@RowID",i+1),
+                //                                 new DataParameter("@CellCode", this.txtCellCode.Text),
+                //                                 new DataParameter("@TaskNo", this.txtTaskNo.Text),
 
-                                                 new DataParameter("@ProductCode",drs[i]["ProductCode"].ToString()),
-                                                 new DataParameter("@Quantity",drs[i]["Quantity"]),
-                                                 new DataParameter("@RealQty",drs[i]["RealQty"]),
-                                                 new DataParameter("@DiffQty", (int)drs[i]["RealQty"]-(int)drs[i]["Quantity"])
-                    };
-                    list.Add("WCS.InsertCheckDetail");
-                    paras.Add(para);
-                }
+                //                                 new DataParameter("@ProductCode",drs[i]["ProductCode"].ToString()),
+                //                                 new DataParameter("@Quantity",drs[i]["Quantity"]),
+                //                                 new DataParameter("@RealQty",drs[i]["RealQty"]),
+                //                                 new DataParameter("@DiffQty", (int)drs[i]["RealQty"]-(int)drs[i]["Quantity"])
+                //    };
+                //    list.Add("WCS.InsertCheckDetail");
+                //    paras.Add(para);
+                //}
 
                 //现有托盘与实际托盘不符
                 if (PalletCode.ToLower() != this.txtPalletCode.Text.Trim().ToLower())
