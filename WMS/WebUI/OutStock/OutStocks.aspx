@@ -47,6 +47,7 @@
                                      
                                     <asp:ListItem Value="FactoryName">工厂</asp:ListItem>
                                     <asp:ListItem Value="BillID">入库单号</asp:ListItem>
+                                    <asp:ListItem Value="StateDesc">单据状态</asp:ListItem>
                                     <asp:ListItem Value="Memo">备注</asp:ListItem>
                                  </asp:dropdownlist>
                             </td>

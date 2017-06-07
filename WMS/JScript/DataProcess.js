@@ -145,9 +145,9 @@ function getMultiItems(FormID, KeyField, ButtonValue, HdnValue, strWhere) {
     if (strReturn != null) {
         for (var i = 0; i < strReturn.length; i++) {
             if (sValue == "")
-                sValue += "'" + escape(strReturn[i][KeyField]) + "'";
+                sValue += "'" + strReturn[i][KeyField] + "'";
             else
-                sValue += ",'" + escape(strReturn[i][KeyField]) + "'";
+                sValue += ",'" + strReturn[i][KeyField] + "'";
         }
     }
     //按鈕顏色變紅色
@@ -521,9 +521,9 @@ function getProductMultiItems(FormID, KeyField, ButtonValue, HdnValue, strWhere)
     if (strReturn != null) {
         for (var i = 0; i < strReturn.length; i++) {
             if (sValue == "")
-                sValue += "'" + escape(strReturn[i][KeyField]) + "'";
+                sValue += "'" + strReturn[i][KeyField] + "'";
             else
-                sValue += ",'" + escape(strReturn[i][KeyField]) + "'";
+                sValue += ",'" + strReturn[i][KeyField] + "'";
         }
     }
     //按鈕顏色變紅色

@@ -70,13 +70,13 @@
       <OPCItem ItemName="Move09" ClientHandler="98" OPCItemName="DB1,INT196,1"  />
     </Server>
     <Server Name="Car0101Server" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[CarPLC0101]" UpdateRate="350">
-      <OPCItem ItemName="Status01" ClientHandler="3" OPCItemName="DB541,INT2,13"/>
       <OPCItem ItemName="CarTaskNo01" ClientHandler="4" OPCItemName="DB541,DINT108,1"/>
+      <OPCItem ItemName="Status01" ClientHandler="3" OPCItemName="DB541,INT2,13"/>
       <OPCItem ItemName="AlarmCode01" ClientHandler="5" OPCItemName="DB541,DINT104,1"/>
     </Server>
     <Server Name="Car0102Server" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[CarPLC0102]" UpdateRate="350">
-      <OPCItem ItemName="Status02" ClientHandler="7" OPCItemName="DB541,INT2,13"/>
       <OPCItem ItemName="CarTaskNo02" ClientHandler="8" OPCItemName="DB541,DINT108,1"/>
+      <OPCItem ItemName="Status02" ClientHandler="7" OPCItemName="DB541,INT2,13"/>
       <OPCItem ItemName="AlarmCode02" ClientHandler="9" OPCItemName="DB541,DINT104,1"/>
     </Server>
     <Server Name="MiniloadServer" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[PLC04]" UpdateRate="350">
@@ -88,11 +88,11 @@
       <OPCItem ItemName="TaskBNo" ClientHandler="15" OPCItemName="DB541,DINT24,1"/>
     </Server>
     <Server Name="CraneServer" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[PLC01]" UpdateRate="350">
+      <OPCItem ItemName="TaskNo" ClientHandler="15" OPCItemName="DB541,CHAR20,10"/>
       <OPCItem ItemName="Mode" ClientHandler="10" OPCItemName="DB541,X0.7,1"/>
       <OPCItem ItemName="ForkStatus" ClientHandler="11" OPCItemName="DB541,X1.4,1"/>
       <OPCItem ItemName="AlarmCode" ClientHandler="12" OPCItemName="DB541,INT6,1"/>
       <OPCItem ItemName="Status" ClientHandler="13" OPCItemName="DB541,INT8,5"/>
-      <OPCItem ItemName="TaskNo" ClientHandler="15" OPCItemName="DB541,CHAR20,10"/>
     </Server>
   </Servers>
 </Configuration>

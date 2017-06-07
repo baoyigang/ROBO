@@ -76,7 +76,7 @@
             window.close();
         }
         function Select() {
-            window.returnValue = "[" + document.getElementById('HdnSelectedValues').value + "]";
+            window.returnValue = "[" + unescape(document.getElementById('HdnSelectedValues').value) + "]";
             window.close();
         }
         function SelectSearch() {
