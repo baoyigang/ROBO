@@ -101,7 +101,7 @@
                                 sWareHouse = record.parentNode.id;
                                 sAreaCode = tNodeID;
                             }
-                            if (tNodeIDLen < 6 && tNodeIDLen > 3) {
+                            if (tNodeIDLen <= 6 && tNodeIDLen > 3) {
                                 sAreaCode = record.parentNode.id;
                                 sShelfCode = tNodeID;
                             }
