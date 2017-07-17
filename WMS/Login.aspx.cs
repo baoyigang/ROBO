@@ -58,7 +58,6 @@ public partial class Login : System.Web.UI.Page
                         #endregion
                         TimeSpan stLogin = new TimeSpan(0, 0, System.Web.HttpContext.Current.Session.Timeout, 0, 0);
                         HttpContext.Current.Cache.Insert(key, Page.Request.UserHostAddress, null, DateTime.MaxValue, stLogin, System.Web.Caching.CacheItemPriority.NotRemovable, null);
-
                         Response.Redirect("Default.aspx", false);
                     }
                     else
