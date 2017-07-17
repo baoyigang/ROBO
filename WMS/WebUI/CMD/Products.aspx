@@ -19,6 +19,13 @@
             var h = document.documentElement.clientHeight - 58;
             $("#table-container").css("height", h);
         }
+        function AddExcel() {
+            var returnValue = window.showModalDialog('../../Common/Excel.aspx', window, 'DialogHeight:200px;DialogWidth:400px;help:no;scroll:no;location:no;Resizable:yes;');
+            if (returnValue=="1") {
+                    return true;
+            }
+            return false;
+        }
     </script>
 </head>
 <body>
@@ -31,10 +38,10 @@
                         <img alt="Loading" src="../../images/loading.gif" />
                 </div>      
             </ProgressTemplate> 
-        </asp:UpdateProgress>  
-        <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">                
+        </asp:UpdateProgress> 
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">             
             <ContentTemplate>
-                <div>
+                <div> 
                     <table  style="width: 100%; height: 20px;">
                     <tr>
 						    <td class="smalltitle" align="center" width="7%" >
@@ -51,26 +58,26 @@
 						    <td class="smalltitle" align="center" width="7%">
                                 <asp:Literal ID="Literal2" Text="查询内容" runat="server"></asp:Literal>
                             </td>
-						    <td  width="26%" height="20" valign="middle">&nbsp;<asp:textbox id="txtSearch" 
+						    <td  width="16%" height="20" valign="middle">&nbsp;<asp:textbox id="txtSearch" 
                                     tabIndex="1" runat="server" Width="90%" CssClass="TextBox"  
                                     heigth="16px" ></asp:textbox>
                                
                           </td>
-                          <td width="15%" align="left">
+                          <td width="35%" align="left">
                            &nbsp;<asp:button id="btnSearch" tabIndex="2" runat="server" Width="58px" 
                                     CssClass="ButtonQuery" Text="查询" OnClientClick="return Search()" 
                                     onclick="btnSearch_Click"></asp:button>&nbsp;&nbsp;
                               <asp:Button ID="btnRefresh" runat="server" CssClass="ButtonRefresh" 
                                   onclick="btnSearch_Click" OnClientClick="return Refresh()" tabIndex="2" 
-                                  Text="刷新" Width="58px" />
-                          
+                                  Text="刷新" Width="58px" /> 
                           </td>
-                          <td align="right"  style="width:30%" valign="middle">
-                             <%-- <asp:Button ID="btnPrint" runat="server" Text="导出" CssClass="ButtonPrint" OnClientClick="return print();"/>--%>
-                           
+                          <td align="right"  style="width:20%" valign="middle">
+                            <asp:Button ID="btnExcel" runat="server" Text="导入" 
+                                  OnClientClick="return AddExcel();" CssClass="ButtonExport" 
+                                  onclick="btnExcel_Click"/>&nbsp;
                             <asp:Button ID="btnAdd" runat="server" Text="新增" OnClientClick="return Add();" CssClass="ButtonCreate"/>&nbsp;
                             <asp:Button ID="btnDelete" runat="server" Text="刪除" CssClass="ButtonDel" onclick="btnDeletet_Click" OnClientClick="return Delete('GridView1')" Width="51px"/>&nbsp;
-                             <asp:Button ID="btnPrint" runat="server" CssClass="ButtonPrint" Visible="false"   Text="打印" />&nbsp;
+                            <asp:Button ID="btnPrint" runat="server" CssClass="ButtonPrint" Visible="false"   Text="打印" />&nbsp;
                             <asp:Button ID="btnExit" runat="server" Text="离开" CssClass="ButtonExit" OnClientClick="return Exit()" Width="51px" />&nbsp;&nbsp;
                             
                           </td>
