@@ -157,7 +157,8 @@ namespace App.View.Task
 
                 param = new DataParameter[] 
                 {
-                    new DataParameter("@AreaCode", this.cmbAreaCode.SelectedValue.ToString())                
+                    new DataParameter("@AreaCode", this.cmbAreaCode.SelectedValue.ToString()),
+                    new DataParameter("@palletCode",this.txtBarcode.Text)
                 };
                 if (this.radioButton1.Checked)
                 {
@@ -181,6 +182,16 @@ namespace App.View.Task
                 {
                     MessageBox.Show("自动获取的货位或指定的货位非空货位,请确认！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
+                }
+                if (this.txtBarcode.Text.Substring(0, 1).ToLower() == "d" && this.radioButton2.Checked)
+                {
+                    int count = bll.GetRowCount("cmd_cell", "HeightType='L' and CellCode='" + this.txtCellCode.Text + "'");
+                    if (count == 0)
+                    {
+                        MessageBox.Show("托盘为矮板托盘，请分配矮板货位！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+
                 }
                 //锁定货位
                 param = new DataParameter[] 

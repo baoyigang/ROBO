@@ -441,13 +441,13 @@ namespace App
             string PalletCodeSub = "";
             if (AreaCode!="001")
             {
-                 PalletCodeSub = "!=";
+                 PalletCodeSub = "not in ";
             }
             else
             {
-                PalletCodeSub = " = ";
+                PalletCodeSub = " in ";
             }
-            DataTable dt = bll.FillDataTable("WCS.SelectTask", new DataParameter[] { new DataParameter("{0}", string.Format("(WCS_TASK.State not in('7','9')) and SUBSTRING(palletCode,1,1){0} 'a'",PalletCodeSub)) });
+            DataTable dt = bll.FillDataTable("WCS.SelectTask", new DataParameter[] { new DataParameter("{0}", string.Format("(WCS_TASK.State not in('7','9')) and SUBSTRING(palletCode,1,1){0} ('a','d') ",PalletCodeSub)) });
             return dt;
         }
 
@@ -600,8 +600,7 @@ namespace App
                 }
                 if (State == "3" || State == "4")
                 {
-                    Send2PLC(dr);
-                    Logger.Info(TaskNo + "已重新发下给" + CarNo + "穿梭车");
+                    Send2PLC(dr);                 
                 }
                 else
                 {
@@ -728,12 +727,12 @@ namespace App
             cellAddr[1] = 0;
             cellAddr[2] = 0;
 
-            cellAddr[3] = byte.Parse(fromStation.Substring(0, 3));
-            cellAddr[4] = byte.Parse(fromStation.Substring(3, 3));
-            cellAddr[5] = byte.Parse(fromStation.Substring(6, 3));
-            cellAddr[6] = byte.Parse(toStation.Substring(0, 3));
-            cellAddr[7] = byte.Parse(toStation.Substring(3, 3));
-            cellAddr[8] = byte.Parse(toStation.Substring(6, 3));
+            cellAddr[3] = byte.Parse(fromStation.Substring(3, 3));
+            cellAddr[4] = byte.Parse(fromStation.Substring(6, 3));
+            cellAddr[5] = byte.Parse(fromStation.Substring(0, 3));
+            cellAddr[6] = byte.Parse(toStation.Substring(3, 3));
+            cellAddr[7] = byte.Parse(toStation.Substring(6, 3));
+            cellAddr[8] = byte.Parse(toStation.Substring(0, 3));
             sbyte[] taskNo = new sbyte[10];
             Util.ConvertStringChar.stringToBytes(dr["TaskNo"].ToString(), 10).CopyTo(taskNo, 0);
             context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
@@ -741,7 +740,7 @@ namespace App
             context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
             context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 1);
           
-            //Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + carNo + "穿梭车;起始地址:" + fromStation + ",目标地址:" + toStation);
+            Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给堆垛机;起始地址:" + fromStation + ",目标地址:" + toStation);
         }
         private void Send2PLC2(DataRow dr)
         {
@@ -818,7 +817,7 @@ namespace App
             context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
             context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 2);
 
-            //Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + carNo + "穿梭车;起始地址:" + fromStation + ",目标地址:" + toStation);
+            Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给MiniLoad;起始地址:" + fromStation + ",目标地址:" + toStation);
         }
 
 
