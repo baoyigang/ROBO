@@ -62,10 +62,6 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -358,10 +354,6 @@
             this.PColor.Controls.Add(this.label17);
             this.PColor.Controls.Add(this.label16);
             this.PColor.Controls.Add(this.label15);
-            this.PColor.Controls.Add(this.label13);
-            this.PColor.Controls.Add(this.label14);
-            this.PColor.Controls.Add(this.label12);
-            this.PColor.Controls.Add(this.label11);
             this.PColor.Controls.Add(this.label2);
             this.PColor.Controls.Add(this.label9);
             this.PColor.Controls.Add(this.label1);
@@ -372,15 +364,15 @@
             this.PColor.Controls.Add(this.label8);
             this.PColor.Controls.Add(this.label6);
             this.PColor.Controls.Add(this.label5);
-            this.PColor.Location = new System.Drawing.Point(172, 4);
+            this.PColor.Location = new System.Drawing.Point(236, 4);
             this.PColor.Name = "PColor";
-            this.PColor.Size = new System.Drawing.Size(1010, 38);
+            this.PColor.Size = new System.Drawing.Size(634, 38);
             this.PColor.TabIndex = 51;
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(881, 12);
+            this.label18.Location = new System.Drawing.Point(562, 13);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(53, 12);
             this.label18.TabIndex = 54;
@@ -390,7 +382,7 @@
             // 
             this.label17.BackColor = System.Drawing.Color.LawnGreen;
             this.label17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label17.Location = new System.Drawing.Point(845, 6);
+            this.label17.Location = new System.Drawing.Point(526, 7);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(28, 23);
             this.label17.TabIndex = 53;
@@ -398,7 +390,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(806, 12);
+            this.label16.Location = new System.Drawing.Point(487, 13);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(29, 12);
             this.label16.TabIndex = 52;
@@ -408,55 +400,19 @@
             // 
             this.label15.BackColor = System.Drawing.Color.BlueViolet;
             this.label15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label15.Location = new System.Drawing.Point(774, 6);
+            this.label15.Location = new System.Drawing.Point(455, 7);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(28, 23);
             this.label15.TabIndex = 51;
             // 
-            // label13
-            // 
-            this.label13.BackColor = System.Drawing.Color.Gold;
-            this.label13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label13.Location = new System.Drawing.Point(669, 6);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(28, 23);
-            this.label13.TabIndex = 50;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(703, 12);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(65, 12);
-            this.label14.TabIndex = 49;
-            this.label14.Text = "锁定的托盘";
-            // 
-            // label12
-            // 
-            this.label12.BackColor = System.Drawing.Color.Orange;
-            this.label12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label12.Location = new System.Drawing.Point(550, 7);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(28, 23);
-            this.label12.TabIndex = 48;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(584, 13);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(77, 12);
-            this.label11.TabIndex = 47;
-            this.label11.Text = "未锁定的托盘";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(460, 12);
+            this.label2.Location = new System.Drawing.Point(372, 12);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 12);
+            this.label2.Size = new System.Drawing.Size(65, 12);
             this.label2.TabIndex = 38;
-            this.label2.Text = "锁定的空货位";
+            this.label2.Text = "空货位锁定";
             // 
             // label9
             // 
@@ -480,7 +436,7 @@
             // 
             this.label10.BackColor = System.Drawing.Color.Yellow;
             this.label10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label10.Location = new System.Drawing.Point(429, 7);
+            this.label10.Location = new System.Drawing.Point(341, 7);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(28, 23);
             this.label10.TabIndex = 45;
@@ -489,7 +445,7 @@
             // 
             this.label4.BackColor = System.Drawing.Color.Blue;
             this.label4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label4.Location = new System.Drawing.Point(119, 7);
+            this.label4.Location = new System.Drawing.Point(93, 7);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(28, 23);
             this.label4.TabIndex = 39;
@@ -497,7 +453,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(367, 12);
+            this.label7.Location = new System.Drawing.Point(281, 12);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(53, 12);
             this.label7.TabIndex = 44;
@@ -506,17 +462,17 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(149, 13);
+            this.label3.Location = new System.Drawing.Point(123, 13);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(77, 12);
+            this.label3.Size = new System.Drawing.Size(29, 12);
             this.label3.TabIndex = 40;
-            this.label3.Text = "有货且未锁定";
+            this.label3.Text = "有货";
             // 
             // label8
             // 
             this.label8.BackColor = System.Drawing.Color.Gray;
             this.label8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label8.Location = new System.Drawing.Point(337, 7);
+            this.label8.Location = new System.Drawing.Point(251, 7);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(28, 23);
             this.label8.TabIndex = 43;
@@ -525,7 +481,7 @@
             // 
             this.label6.BackColor = System.Drawing.Color.Green;
             this.label6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label6.Location = new System.Drawing.Point(229, 7);
+            this.label6.Location = new System.Drawing.Point(161, 8);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(28, 23);
             this.label6.TabIndex = 41;
@@ -533,11 +489,11 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(259, 12);
+            this.label5.Location = new System.Drawing.Point(191, 13);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(65, 12);
+            this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 42;
-            this.label5.Text = "有货且锁定";
+            this.label5.Text = "出库锁定";
             // 
             // btnExit
             // 
@@ -622,8 +578,6 @@
         private System.Windows.Forms.VScrollBar sbShelf;
         protected System.Windows.Forms.Panel pnlTool;
         private System.Windows.Forms.Panel PColor;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label1;
@@ -638,8 +592,6 @@
         protected System.Windows.Forms.Button btnChart;
         protected System.Windows.Forms.Button btnRefresh;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn SHELFNAME;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column1;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column2;

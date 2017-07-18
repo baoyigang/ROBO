@@ -150,6 +150,11 @@ namespace App.View.Dispatcher
 
                             SetCellSize(ShelfColumn[key], ShelfRow[key]);
                         }
+                        else
+                        {
+                            DataRow[] rows = cellTable.Select(string.Format("ShelfCode='{0}'", ShelfCode[key]), "CellCode desc");
+                            shelf[key] = rows;
+                        }
                         Font font = new Font("微软雅黑", 10);
                         SizeF size = e.Graphics.MeasureString("第1排第5层", font);
                         float adjustHeight = Math.Abs(size.Height - cellHeight) / 2;
@@ -204,9 +209,9 @@ namespace App.View.Dispatcher
                                 string cellcode = cellRow["Cellcode"].ToString();
                                 int column = Convert.ToInt32(cellRow["CellColumn"]);
                                 int row = Rows[currentPage-1] - Convert.ToInt32(cellRow["CellRow"]) + 1;
-                                int quantity = ReturnColorFlag(cellRow["PalletBarCode"].ToString(), cellRow["IsActive"].ToString(), cellRow["IsLock"].ToString(), cellRow["ErrorFlag"].ToString());
-                                //FillCell(e.Graphics, top, row, column, quantity);
-                                FillCell(e.Graphics, top, row, column, quantity, cellRow["ShelfCode"].ToString(),cellcode);
+                                int quantity = ReturnColorFlag(cellRow["PalletBarCode"].ToString(), cellRow["IsActive"].ToString(), cellRow["IsLock"].ToString(), cellRow["ErrorFlag"].ToString(), int.Parse(cellRow["PalletProductCount"].ToString()), cellRow["InDate"].ToString());
+                                FillCell(e.Graphics, top, row, column, quantity);
+                               // FillCell(e.Graphics, top, row, column, quantity, cellRow["ShelfCode"].ToString(),cellcode);
                             }
                         }
                     }
@@ -230,7 +235,7 @@ namespace App.View.Dispatcher
                 string cellCode = cellRow["CellCode"].ToString();
 
                 int row = Rows[currentPage-1] - Convert.ToInt32(cellRow["CellRow"]) + 1;
-                int quantity = ReturnColorFlag(cellRow["PalletBarCode"].ToString(), cellRow["IsActive"].ToString(), cellRow["IsLock"].ToString(), cellRow["ErrorFlag"].ToString());
+                int quantity = ReturnColorFlag(cellRow["PalletBarCode"].ToString(), cellRow["IsActive"].ToString(), cellRow["IsLock"].ToString(), cellRow["ErrorFlag"].ToString(), int.Parse(cellRow["PalletProductCount"].ToString()), cellRow["InDate"].ToString());
                
                 int x = left + (column-1) * cellWidth;
                 int y = top + row * cellHeight;
@@ -240,7 +245,7 @@ namespace App.View.Dispatcher
 
                 if (!filtered)
                 {
-                    FillCell(g, top, row, column, quantity, shelfCode,cellCode);
+                    FillCell(g, top, row, column, quantity);
                 }
             }
             for (int j = 1; j <= Columns[currentPage - 1]; j++)
@@ -253,22 +258,24 @@ namespace App.View.Dispatcher
 
         private void FillCell(Graphics g, int top, int row, int column, int quantity)
         {
-            int x = left + (44  - column) * cellWidth;
+
+            //0:空货位，1:空货位锁定 2:有货,3:出库锁定 4:禁用 ,5:有问题 6:入库锁定 7:空箱
+            int x = left + (column - 1) * cellWidth;
             int y = top + row * cellHeight;
             if (quantity == 1)  //空货位锁定
                 g.FillRectangle(Brushes.Yellow, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
-            else if (quantity == 2) //有货未锁定
+            else if (quantity == 2) //有货
                 g.FillRectangle(Brushes.Blue, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
-            else if (quantity == 3) //有货且锁定
+            else if (quantity == 3) //出库锁定
                 g.FillRectangle(Brushes.Green, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
             else if (quantity == 4) //禁用
                 g.FillRectangle(Brushes.Gray, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
             else if (quantity == 5) //有问题
                 g.FillRectangle(Brushes.Red, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
-            else if (quantity == 6) //托盘
-                g.FillRectangle(Brushes.Orange, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
-            else if (quantity == 7) //托盘锁定
-                g.FillRectangle(Brushes.Gold, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
+            else if (quantity == 6) //入库锁定
+                g.FillRectangle(Brushes.LawnGreen, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
+            else if (quantity == 7) //空箱
+                g.FillRectangle(Brushes.BlueViolet, new Rectangle(x + 2, y + 2, cellWidth - 3, cellHeight - 3));
         }
         private void FillCell(Graphics g, int top, int row, int column, int quantity,string shelfCode,string CellCode)
         {           
@@ -316,7 +323,7 @@ namespace App.View.Dispatcher
             Columns[0] = 18;
             Columns[1] = 36;
             Columns[2] = 36;
-            Rows[0] = 5;
+            Rows[0] = 7;
             Rows[1] = 10;
             Rows[2] = 10;
             Depth[0] = 1;
@@ -441,8 +448,10 @@ namespace App.View.Dispatcher
             TextRenderer.DrawText(e.Graphics, (e.RowIndex + 1).ToString(), dgvMain.RowHeadersDefaultCellStyle.Font, rectangle, dgvMain.RowHeadersDefaultCellStyle.ForeColor, TextFormatFlags.VerticalCenter | TextFormatFlags.Right);
         }
 
-        private int ReturnColorFlag(string ProductCode, string IsActive, string IsLock, string ErrFlag)
+        private int ReturnColorFlag(string ProductCode, string IsActive, string IsLock, string ErrFlag,int ProductCount,string indate)
         {
+             //0:空货位，1:空货位锁定 2:有货,3:出库锁定 4:禁用 ,5:有问题 6:入库锁定 7:空箱
+                
             int Flag = 0;
             if (ProductCode == "")
             {
@@ -455,15 +464,15 @@ namespace App.View.Dispatcher
             {
                 if (IsLock == "0")
                 {
-                    if (ProductCode == "0001")
-                        Flag = 6;
+                    if (ProductCount == 0)
+                        Flag = 7;
                     else
                         Flag = 2;
                 }
                 else
                 {
-                    if (ProductCode == "0001")
-                        Flag = 7;
+                    if (indate == "")
+                        Flag = 6;
                     else
                         Flag = 3;
                 }
