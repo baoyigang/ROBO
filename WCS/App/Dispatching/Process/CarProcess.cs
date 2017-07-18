@@ -555,7 +555,12 @@ namespace App.Dispatching.Process
                                 carOK = false;
                                 break;
                             }
-
+                            //其他车任务目标层在起始层 
+                            if (carFromLayer == ToLayer && ToColumn == 0 && ToLayer == 1 && TaskType > 0)
+                            {
+                                carOK = false;
+                                break;
+                            }
                             //目标层有车
                             if (carToLayer == Layer && Column==0)
                             {
