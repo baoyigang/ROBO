@@ -536,14 +536,14 @@ namespace App.Dispatching.Process
                             {
                                 carOK = false;
                                 break;
-                            }
+                            }  
                             //起始层有车
                             if (carFromLayer == Layer)
                             {
                                 carOK = false;
                                 break;
                             }
-                            //其他车任务起始层也在这层,且当前车当前层与起始层不同
+                            //其他车任务起始层也在这层 
                             if (carFromLayer == FromLayer && carFromLayer!=carLayer && TaskType > 0)
                             {
                                 carOK = false;
@@ -555,9 +555,8 @@ namespace App.Dispatching.Process
                                 carOK = false;
                                 break;
                             }
-
                             //其他车任务目标层在起始层 
-                            if (carFromLayer == ToLayer && ToColumn == 0 && ToLayer==1 && TaskType > 0)
+                            if (carFromLayer == ToLayer && ToColumn == 0 && ToLayer == 1 && TaskType > 0)
                             {
                                 carOK = false;
                                 break;
