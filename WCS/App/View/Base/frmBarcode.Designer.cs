@@ -40,12 +40,14 @@
             this.barcode1 = new Cobainsoft.Windows.Forms.Barcode(this.components);
             this.pnlMain = new System.Windows.Forms.Panel();
             this.pnlContent = new System.Windows.Forms.Panel();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.dgvMain = new System.Windows.Forms.DataGridView();
             this.colTaskNo = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column1 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.colState = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column8 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column4 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.Select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.pnlTool = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton_Refresh = new System.Windows.Forms.ToolStripButton();
@@ -92,30 +94,43 @@
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMain.Location = new System.Drawing.Point(0, 0);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(800, 421);
+            this.pnlMain.Size = new System.Drawing.Size(986, 421);
             this.pnlMain.TabIndex = 5;
             // 
             // pnlContent
             // 
+            this.pnlContent.Controls.Add(this.checkBox1);
             this.pnlContent.Controls.Add(this.dgvMain);
             this.pnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlContent.Location = new System.Drawing.Point(0, 56);
             this.pnlContent.Name = "pnlContent";
-            this.pnlContent.Size = new System.Drawing.Size(800, 309);
+            this.pnlContent.Size = new System.Drawing.Size(986, 309);
             this.pnlContent.TabIndex = 1;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.checkBox1.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.checkBox1.Location = new System.Drawing.Point(751, 6);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(15, 14);
+            this.checkBox1.TabIndex = 6;
+            this.checkBox1.UseVisualStyleBackColor = false;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // dgvMain
             // 
             this.dgvMain.AllowUserToAddRows = false;
             this.dgvMain.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.dgvMain.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvMain.AutoGenerateColumns = false;
             this.dgvMain.BackgroundColor = System.Drawing.Color.WhiteSmoke;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -127,11 +142,12 @@
             this.Column1,
             this.colState,
             this.Column8,
-            this.Column4});
+            this.Column4,
+            this.Select});
             this.dgvMain.DataSource = this.bsMain;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -139,12 +155,10 @@
             this.dgvMain.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMain.Location = new System.Drawing.Point(0, 0);
-            this.dgvMain.MultiSelect = false;
             this.dgvMain.Name = "dgvMain";
-            this.dgvMain.ReadOnly = true;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -153,8 +167,9 @@
             this.dgvMain.RowHeadersWidth = 40;
             this.dgvMain.RowTemplate.Height = 23;
             this.dgvMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMain.Size = new System.Drawing.Size(800, 309);
+            this.dgvMain.Size = new System.Drawing.Size(986, 309);
             this.dgvMain.TabIndex = 5;
+            this.dgvMain.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMain_CellContentClick);
             this.dgvMain.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvMain_CellMouseClick);
             // 
             // colTaskNo
@@ -163,7 +178,6 @@
             this.colTaskNo.FilteringEnabled = false;
             this.colTaskNo.HeaderText = "仓库编号";
             this.colTaskNo.Name = "colTaskNo";
-            this.colTaskNo.ReadOnly = true;
             this.colTaskNo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // Column1
@@ -172,7 +186,6 @@
             this.Column1.FilteringEnabled = false;
             this.Column1.HeaderText = "仓库名称";
             this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
             this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Column1.Width = 150;
             // 
@@ -182,7 +195,6 @@
             this.colState.FilteringEnabled = false;
             this.colState.HeaderText = "库区编号";
             this.colState.Name = "colState";
-            this.colState.ReadOnly = true;
             this.colState.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // Column8
@@ -191,7 +203,6 @@
             this.Column8.FilteringEnabled = false;
             this.Column8.HeaderText = "库区名称";
             this.Column8.Name = "Column8";
-            this.Column8.ReadOnly = true;
             this.Column8.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Column8.Width = 150;
             // 
@@ -201,9 +212,18 @@
             this.Column4.FilteringEnabled = false;
             this.Column4.HeaderText = "条码编号";
             this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
             this.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Column4.Width = 120;
+            // 
+            // Select
+            // 
+            this.Select.FalseValue = "0";
+            this.Select.HeaderText = "打印";
+            this.Select.Name = "Select";
+            this.Select.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Select.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Select.TrueValue = "1";
+            this.Select.Width = 138;
             // 
             // pnlTool
             // 
@@ -212,7 +232,7 @@
             this.pnlTool.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTool.Location = new System.Drawing.Point(0, 0);
             this.pnlTool.Name = "pnlTool";
-            this.pnlTool.Size = new System.Drawing.Size(800, 56);
+            this.pnlTool.Size = new System.Drawing.Size(986, 56);
             this.pnlTool.TabIndex = 0;
             // 
             // toolStrip1
@@ -225,7 +245,7 @@
             this.toolStripButton_Close});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(800, 52);
+            this.toolStrip1.Size = new System.Drawing.Size(986, 52);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -269,7 +289,7 @@
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlBottom.Location = new System.Drawing.Point(0, 365);
             this.pnlBottom.Name = "pnlBottom";
-            this.pnlBottom.Size = new System.Drawing.Size(800, 56);
+            this.pnlBottom.Size = new System.Drawing.Size(986, 56);
             this.pnlBottom.TabIndex = 2;
             this.pnlBottom.Visible = false;
             // 
@@ -282,7 +302,7 @@
             this.barcodeControl1.BarcodeType = Cobainsoft.Windows.Forms.BarcodeType.CODE39;
             this.barcodeControl1.CopyRight = "";
             this.barcodeControl1.Data = "00000";
-            this.barcodeControl1.Font = new System.Drawing.Font("Microsoft YaHei", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.barcodeControl1.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.barcodeControl1.ForeColor = System.Drawing.Color.Black;
             this.barcodeControl1.InvalidDataAction = Cobainsoft.Windows.Forms.InvalidDataAction.DisplayInvalid;
             this.barcodeControl1.Location = new System.Drawing.Point(3, 3);
@@ -297,7 +317,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 421);
+            this.ClientSize = new System.Drawing.Size(986, 421);
             this.ControlBox = false;
             this.Controls.Add(this.pnlMain);
             this.Name = "frmBarcode";
@@ -307,6 +327,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.bsMain)).EndInit();
             this.pnlMain.ResumeLayout(false);
             this.pnlContent.ResumeLayout(false);
+            this.pnlContent.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).EndInit();
             this.pnlTool.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
@@ -325,17 +346,19 @@
         private System.Windows.Forms.ToolStripButton toolStripButton_Print;
         private System.Windows.Forms.ToolStripButton toolStripButton_Close;
         private System.Windows.Forms.Panel pnlBottom;
-        private System.Windows.Forms.DataGridView dgvMain;
         private System.Windows.Forms.BindingSource bsMain;
         private System.Windows.Forms.ToolStripButton toolStripButton_Refresh;
+        private System.Drawing.Printing.PrintDocument printDocument1;
+        private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
+        private Cobainsoft.Windows.Forms.Barcode barcode1;
+        private Cobainsoft.Windows.Forms.BarcodeControl barcodeControl1;
+        private System.Windows.Forms.DataGridView dgvMain;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colTaskNo;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column1;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colState;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column8;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column4;
-        private System.Drawing.Printing.PrintDocument printDocument1;
-        private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
-        private Cobainsoft.Windows.Forms.Barcode barcode1;
-        private Cobainsoft.Windows.Forms.BarcodeControl barcodeControl1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Select;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

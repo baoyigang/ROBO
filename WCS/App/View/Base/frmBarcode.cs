@@ -41,7 +41,7 @@ namespace App.View.Base
         {
             if (e.Button == MouseButtons.Right)
             {
-                if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+                if (e.RowIndex >= 0 && e.ColumnIndex == 5)
                 {
                     //若行已是选中状态就不再进行设置
                     if (dgvMain.Rows[e.RowIndex].Selected == false)
@@ -53,10 +53,25 @@ namespace App.View.Base
                     if (dgvMain.SelectedRows.Count == 1)
                     {
                         dgvMain.CurrentCell = dgvMain.Rows[e.RowIndex].Cells[e.ColumnIndex];
-                    }                    
+                    }
                     //弹出操作菜单
                 }
             }
+            //if (e.ColumnIndex == 5 && e.RowIndex >= 0)
+            //{
+            //    var dataSelect = dgvMain.SelectedRows;
+            //    foreach (DataGridViewRow row in dataSelect)
+            //    {
+            //        if (row.Cells[5].Value == "1")
+            //        {
+            //            row.Cells[5].Value = "0";
+            //        }
+            //        else
+            //        {
+            //            row.Cells[5].Value = "1";
+            //        }
+            //    }
+            //}
         }
         
 
@@ -72,27 +87,58 @@ namespace App.View.Base
 
         private void toolStripButton_Print_Click(object sender, EventArgs e)
         {
-            // printDocument1 为 打印控件  
-            //设置打印用的纸张 当设置为Custom的时候，可以自定义纸张的大小，还可以选择A4,A5等常用纸型 
-            PrintPreviewDialog printPreviewDialog = new PrintPreviewDialog();
-            PrintDocument pd = new PrintDocument();
-            pd.PrintController = new StandardPrintController();
-            foreach (PaperSize ps in pd.PrinterSettings.PaperSizes)//查找当前设置纸张
+            try
             {
-                if ("ROBO" == ps.PaperName)
+
+                // printDocument1 为 打印控件  
+                //设置打印用的纸张 当设置为Custom的时候，可以自定义纸张的大小，还可以选择A4,A5等常用纸型 
+                PrintPreviewDialog printPreviewDialog = new PrintPreviewDialog();
+                PrintDocument pd = new PrintDocument();
+                pd.PrintController = new StandardPrintController();
+
+                DataTable dt = new DataTable();
+
+                // 列强制转换  
+                for (int count = 0; count < dgvMain.Columns.Count; count++)
                 {
-                    pd.DefaultPageSettings.PaperSize = ps;
-                    break;
+                    DataColumn dc = new DataColumn(dgvMain.Columns[count].Name.ToString());
+                    dt.Columns.Add(dc);
                 }
+
+                // 循环行  
+                for (int count = 0; count < dgvMain.Rows.Count; count++)
+                {
+                    DataRow dr = dt.NewRow();
+                    for (int countsub = 0; countsub < dgvMain.Columns.Count; countsub++)
+                    {
+                        dr[countsub] = Convert.ToString(dgvMain.Rows[count].Cells[countsub].Value);
+                    }
+                    dt.Rows.Add(dr);
+                }
+                drs = dt.Select("Select='1'");
+                PageCount = drs.Length;
+                foreach (PaperSize ps in pd.PrinterSettings.PaperSizes)//查找当前设置纸张
+                {
+                    if ("ROBO" == ps.PaperName)
+                    {
+                        pd.DefaultPageSettings.PaperSize = ps;
+                        break;
+                    }
+                }
+                //pd.DefaultPageSettings.PaperSize = new PaperSize("Custum", 80, 40);
+                pd.PrintPage += new PrintPageEventHandler(MyPrintDocument_PrintPage);
+                //将写好的格式给打印预览控件以便预览  
+                printPreviewDialog.Document = pd;
+                printPreviewDialog.ShowDialog();
+                //显示打印预览  
+                //DialogResult result = printPreviewDialog1.ShowDialog();
             }
-            //pd.DefaultPageSettings.PaperSize = new PaperSize("Custum", 80, 40);
-            pd.PrintPage += new PrintPageEventHandler(MyPrintDocument_PrintPage);
-            //将写好的格式给打印预览控件以便预览  
-            printPreviewDialog.Document = pd;
-            printPreviewDialog.ShowDialog();
-            //显示打印预览  
-            //DialogResult result = printPreviewDialog1.ShowDialog();
+            catch (Exception ex)
+            {
+
+            }
         }
+        DataRow[] drs;
         int PageCount = 2;
         int currentPage = 0;
         /// <summary>  
@@ -102,14 +148,14 @@ namespace App.View.Base
   /// <param name="e"></param>  
         private void MyPrintDocument_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            DataTable dt = (DataTable)this.bsMain.DataSource;
+
             Margins margins = new Margins(5, 5, 5, 5);
             e.PageSettings.Margins = margins;
 
             Graphics g = e.Graphics;
 
 
-            string Barcode = dt.Rows[currentPage]["PalletBarcode"].ToString();
+            string Barcode = drs[currentPage]["Column4"].ToString();
             //e.Graphics.DrawString(Barcode, new Font(new FontFamily("黑体"), 8), System.Drawing.Brushes.Black, 9, 35);
 
             barcodeControl1.Data = Barcode;
@@ -128,5 +174,46 @@ namespace App.View.Base
 
             g.Dispose();
         }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked==true)
+            {
+                foreach (DataGridViewRow row in dgvMain.Rows)
+                {
+                    ((DataGridViewCheckBoxCell)row.Cells[5]).Value = "1";
+                }
+            }
+            else
+            {
+                foreach (DataGridViewRow row in dgvMain.Rows)
+                {
+                    ((DataGridViewCheckBoxCell)row.Cells[5]).Value = "0";
+                }
+            }
+        }
+
+
+        private void dgvMain_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 5 && e.RowIndex >= 0)
+            {
+                var dataSelect = dgvMain.SelectedRows;
+                foreach (DataGridViewRow row in dataSelect)
+                {
+                    if (row.Cells[5].Value == "1")
+                    {
+                        row.Cells[5].Value = "0";
+                    }
+                    else
+                    {
+                        row.Cells[5].Value = "1";
+                    }
+                }
+            }
+        }
+
+
+
     }
 }
