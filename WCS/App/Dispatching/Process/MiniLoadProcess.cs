@@ -134,6 +134,9 @@ namespace App.Dispatching.Process
                         }
                     }
                     break;
+                case "PLCCheck":
+                    WriteToService(stateItem.Name, "WriteFinished", 0);
+                    break;
                 case "AlarmCode":
                     object obj1 = ObjectUtil.GetObject(stateItem.State);
                     if (obj1 == null)
@@ -220,14 +223,19 @@ namespace App.Dispatching.Process
             {
                 string serviceName = "MiniLoad0" + craneNo;
 
-                object[] objMode = ObjectUtil.GetObjects(WriteToService(serviceName, "CraneMode"));
-                object[] objAlarm = ObjectUtil.GetObjects(WriteToService(serviceName, "AlarmCode"));
-                object[] objStatus = ObjectUtil.GetObjects(WriteToService(serviceName, "CraneStatus"));
-                string Mode = objMode[4].ToString();
-                int AlarmCode = int.Parse(objAlarm[0].ToString());
-                int Status = int.Parse(objStatus[0].ToString());
+                string plcTaskNo1 = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "CraneTaskNo1")));
+                string craneMode = ObjectUtil.GetObject(Context.ProcessDispatcher.WriteToService(serviceName, "CraneMode")).ToString();
+                string CraneState1 = ObjectUtil.GetObject(Context.ProcessDispatcher.WriteToService(serviceName, "CraneState1")).ToString();
+                string CraneAlarmCode = ObjectUtil.GetObject(Context.ProcessDispatcher.WriteToService(serviceName, "AlarmCode")).ToString();
 
-                if (Mode == "True" && AlarmCode == 0 && Status == 0)
+                string plcTaskNo2 = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "CraneTaskNo2")));
+                string craneState2 = ObjectUtil.GetObject(Context.ProcessDispatcher.WriteToService(serviceName, "CraneState2")).ToString();
+
+                string CraneLoad1 = ObjectUtil.GetObject(Context.ProcessDispatcher.WriteToService(serviceName, "CraneLoad1")).ToString();
+                string CraneLoad2 = ObjectUtil.GetObject(Context.ProcessDispatcher.WriteToService(serviceName, "CraneLoad1")).ToString();
+
+
+                if (plcTaskNo1 == "" && craneMode == "1" && CraneAlarmCode == "0" && CraneState1 == "1" && plcTaskNo2 == "" && craneState2 == "1" && CraneLoad1 == "0" && CraneLoad2 == "0")
                     return true;
                 else
                     return false;
@@ -443,29 +451,25 @@ namespace App.Dispatching.Process
         private void Send2PLC(DataRow[] drs)
         {
             int[] TaskNo = new int[2];
-            int[] cellAddr = new int[19];
+            string NextState = "3";
             string[] fStation = new string[2];
             string[] tStation = new string[2];
-            string NextState = "3";
-
             for (int i = 0; i < drs.Length; i++)
             {
                 DataRow dr = drs[i];
 
-                
+                int TaskIndex = 1;
                 int taskType = int.Parse(dr["TaskType"].ToString());
                 string fromStation = dr["FromStation"].ToString();
                 string toStation = dr["ToStation"].ToString();
                 int fromDepth = int.Parse(fromStation.Substring(9, 1));
                 int toDepth = int.Parse(toStation.Substring(9, 1));
                 string state = dr["State"].ToString();
-                
 
                 if (state == "0")
                 {
                     NextState = "4";
                 }
-
                 if (drs.Length == 1)
                 {
                     if (taskType == 11 || taskType == 14 || taskType == 16)
@@ -473,71 +477,40 @@ namespace App.Dispatching.Process
                         //下到B任务
                         if (fromDepth == 2 && toDepth == 1)
                         {
+                            TaskIndex = 2;
+                            TaskNo[1] = int.Parse(dr["TaskNo"].ToString());
                             fStation[1] = dr["FromStation"].ToString();
                             tStation[1] = dr["ToStation"].ToString();
-                            TaskNo[1] = int.Parse(dr["TaskNo"].ToString());
-                            cellAddr[11] = int.Parse(fromStation.Substring(3, 3));
-                            cellAddr[12] = int.Parse(fromStation.Substring(6, 3));
-                            cellAddr[13] = int.Parse(fromStation.Substring(0, 3));
-                            cellAddr[14] = int.Parse(fromStation.Substring(9, 1));
-                            cellAddr[15] = int.Parse(toStation.Substring(3, 3));
-                            cellAddr[16] = int.Parse(toStation.Substring(6, 3));
-                            cellAddr[17] = int.Parse(toStation.Substring(0, 3));
-                            cellAddr[18] = int.Parse(toStation.Substring(9, 1));
-
                             bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "B"), new DataParameter("@MergeTaskNo", TaskNo[1]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
                         }
                         else
                         {
                             //下到A任务
+                            TaskIndex = 1;
                             fStation[0] = dr["FromStation"].ToString();
                             tStation[0] = dr["ToStation"].ToString();
                             TaskNo[0] = int.Parse(dr["TaskNo"].ToString());
-                            cellAddr[3] = int.Parse(fromStation.Substring(3, 3));
-                            cellAddr[4] = int.Parse(fromStation.Substring(6, 3));
-                            cellAddr[5] = int.Parse(fromStation.Substring(0, 3));
-                            cellAddr[6] = int.Parse(fromStation.Substring(9, 1));
-                            cellAddr[7] = int.Parse(toStation.Substring(3, 3));
-                            cellAddr[8] = int.Parse(toStation.Substring(6, 3));
-                            cellAddr[9] = int.Parse(toStation.Substring(0, 3));
-                            cellAddr[10] = int.Parse(toStation.Substring(9, 1));
                             bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "A"), new DataParameter("@MergeTaskNo", TaskNo[0]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
-
                         }
                     }
                     else
                     {
-                        if (fromDepth == 2 || toDepth==2)
+                        if (fromDepth == 2 || toDepth == 2)
                         {
                             //下到A任务
+                            TaskIndex = 1;
                             fStation[0] = dr["FromStation"].ToString();
                             tStation[0] = dr["ToStation"].ToString();
                             TaskNo[0] = int.Parse(dr["TaskNo"].ToString());
-                            cellAddr[3] = int.Parse(fromStation.Substring(3, 3));
-                            cellAddr[4] = int.Parse(fromStation.Substring(6, 3));
-                            cellAddr[5] = int.Parse(fromStation.Substring(0, 3));
-                            cellAddr[6] = int.Parse(fromStation.Substring(9, 1));
-                            cellAddr[7] = int.Parse(toStation.Substring(3, 3));
-                            cellAddr[8] = int.Parse(toStation.Substring(6, 3));
-                            cellAddr[9] = int.Parse(toStation.Substring(0, 3));
-                            cellAddr[10] = int.Parse(toStation.Substring(9, 1));
                             bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "A"), new DataParameter("@MergeTaskNo", TaskNo[0]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
-                            
+
                         }
                         else
                         {
+                            TaskIndex = 2;
                             fStation[1] = dr["FromStation"].ToString();
                             tStation[1] = dr["ToStation"].ToString();
                             TaskNo[1] = int.Parse(dr["TaskNo"].ToString());
-                            cellAddr[11] = int.Parse(fromStation.Substring(3, 3));
-                            cellAddr[12] = int.Parse(fromStation.Substring(6, 3));
-                            cellAddr[13] = int.Parse(fromStation.Substring(0, 3));
-                            cellAddr[14] = int.Parse(fromStation.Substring(9, 1));
-                            cellAddr[15] = int.Parse(toStation.Substring(3, 3));
-                            cellAddr[16] = int.Parse(toStation.Substring(6, 3));
-                            cellAddr[17] = int.Parse(toStation.Substring(0, 3));
-                            cellAddr[18] = int.Parse(toStation.Substring(9, 1));
-
                             bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "B"), new DataParameter("@MergeTaskNo", TaskNo[1]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
 
                         }
@@ -549,37 +522,38 @@ namespace App.Dispatching.Process
                     tStation[i] = dr["ToStation"].ToString();
                     if (i == 0)
                     {
+                        TaskIndex = 1;
                         TaskNo[0] = int.Parse(dr["TaskNo"].ToString());
-                        cellAddr[3] = int.Parse(fromStation.Substring(3, 3));
-                        cellAddr[4] = int.Parse(fromStation.Substring(6, 3));
-                        cellAddr[5] = int.Parse(fromStation.Substring(0, 3));
-                        cellAddr[6] = int.Parse(fromStation.Substring(9, 1));
-                        cellAddr[7] = int.Parse(toStation.Substring(3, 3));
-                        cellAddr[8] = int.Parse(toStation.Substring(6, 3));
-                        cellAddr[9] = int.Parse(toStation.Substring(0, 3));
-                        cellAddr[10] = int.Parse(toStation.Substring(9, 1));
                         bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "A"), new DataParameter("@MergeTaskNo", TaskNo[0]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
 
                     }
                     else
                     {
+                        TaskIndex = 2;
                         TaskNo[1] = int.Parse(dr["TaskNo"].ToString());
-                        cellAddr[11] = int.Parse(fromStation.Substring(3, 3));
-                        cellAddr[12] = int.Parse(fromStation.Substring(6, 3));
-                        cellAddr[13] = int.Parse(fromStation.Substring(0, 3));
-                        cellAddr[14] = int.Parse(fromStation.Substring(9, 1));
-                        cellAddr[15] = int.Parse(toStation.Substring(3, 3));
-                        cellAddr[16] = int.Parse(toStation.Substring(6, 3));
-                        cellAddr[17] = int.Parse(toStation.Substring(0, 3));
-                        cellAddr[18] = int.Parse(toStation.Substring(9, 1));
-
                         bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "B"), new DataParameter("@MergeTaskNo", TaskNo[0]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
 
                     }
                 }
+
+                int[] cellAddr = new int[6];
+                cellAddr[0] = int.Parse(fromStation.Substring(4, 3));
+                cellAddr[1] = int.Parse(fromStation.Substring(7, 3));
+                cellAddr[2] = GetPLCShelf(fromStation);
+                cellAddr[3] = int.Parse(toStation.Substring(4, 3));
+                cellAddr[4] = int.Parse(toStation.Substring(7, 3));
+                cellAddr[5] = GetPLCShelf(toStation);
+                //寫入任務號完成之後,讀取任務號是否寫入一致!
+                sbyte[] sTaskNo = new sbyte[20];
+                Util.ConvertStringChar.stringToBytes(dr["TaskNo"].ToString(), 20).CopyTo(sTaskNo, 0);
+
+                WriteToService(serviceName, "TaskNo" + TaskIndex, sTaskNo);
+                WriteToService(serviceName, "TaskAddress" + TaskIndex, cellAddr);
+
+                WriteToService(serviceName, "TaskType" + TaskIndex, 1);
+
             }
-            WriteToService(serviceName, "TaskAddress", cellAddr);
-            WriteToService(serviceName, "TaskNo", TaskNo);
+           
             if (WriteToService(serviceName, "WriteFinished", 1))
             {
                 for (int i = 0; i < drs.Length; i++)
@@ -596,6 +570,25 @@ namespace App.Dispatching.Process
                 Logger.Info("A任务:" + TaskNo[0] + ",起始地址：" + fStation[0] + ",目标地址：" +  tStation[0] + ";B任务:" + TaskNo[1] + ",起始地址：" + fStation[1] + ",目标地址：" +  tStation[1] + "已下发");
             }
             
+        }
+
+        private int GetPLCShelf(string CellCode)
+        {
+            int reshelf = 5;
+            int shelf = int.Parse(CellCode.Substring(0, 3));
+            int Depth = int.Parse(CellCode.Substring(9, 1));
+            if (shelf == 5)
+            {
+                if (Depth == 2)
+                    reshelf = shelf;
+                else
+                    reshelf = shelf + 1;
+            }
+            else
+            {
+                reshelf = shelf + Depth;
+            }
+            return reshelf;
         }
     }
 }

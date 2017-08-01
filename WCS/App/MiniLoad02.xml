@@ -1,35 +1,67 @@
 ﻿<?xml version='1.0' ?>
 <Config>
   <OPCServer ConnectionString="OPC.SimaticNET">
-    <!--<OPCGroup GroupName="PLCGroup" GroupString="S7:[@LOCALSERVER]" UpdateRate="350">-->
     <OPCGroup GroupName="PLCGroup" GroupString="S7:[PLC04]" UpdateRate="350">
       <!--握手信号-->
       <OPCItem ItemName="ReadHandShake" ClientHandler="1" OPCItemName="DB541,X0.0,1"  ItemType="READ" IsActive="false"/>
-      <!--<OPCItem ItemName="TaskFinished1" ClientHandler="2" OPCItemName="DB541,X1.2,1" ItemType="READ" IsActive="true"/>
-      <OPCItem ItemName="TaskFinished2" ClientHandler="3" OPCItemName="DB541,X1.3,1" ItemType="READ" IsActive="true"/>-->
-      <OPCItem ItemName="TaskFinished1" ClientHandler="2" OPCItemName="DB541,DINT20,1" ItemType="READ" IsActive="true"/>
-      <OPCItem ItemName="TaskFinished2" ClientHandler="3" OPCItemName="DB541,DINT24,1" ItemType="READ" IsActive="true"/>
-      <!--堆垛机负载、货叉-->
-      <OPCItem ItemName="CraneLoad" ClientHandler="4" OPCItemName="DB541,X1.4,3" ItemType="READ" IsActive="false"/>
+      <OPCItem ItemName="TaskFinished1" ClientHandler="2" OPCItemName="DB541,INT40,1" ItemType="READ" IsActive="true"/>
+      <OPCItem ItemName="TaskFinished1" ClientHandler="3" OPCItemName="DB541,INT52,1" ItemType="READ" IsActive="true"/>
+      <!--<OPCItem ItemName="CraneTaskFinished1" ClientHandler="2" OPCItemName="DB541,INT40,1" ItemType="READ" IsActive="false"/>
+      <OPCItem ItemName="CraneTaskFinished2" ClientHandler="3" OPCItemName="DB541,INT52,1" ItemType="READ" IsActive="false"/>-->
 
-      <!--堆垛机运行模式-->
-      <OPCItem ItemName="CraneMode" ClientHandler="6" OPCItemName="DB541,X0.3,5"  ItemType="READ" IsActive="false"/>
-      <!--堆垛机报警代码、位置-->
-      <OPCItem ItemName="AlarmCode" ClientHandler="7" OPCItemName="DB541,INT6,1"  ItemType="READ" IsActive="true"/>
-      <!--堆垛机报警代码、位置-->
-      <OPCItem ItemName="CraneStatus" ClientHandler="8" OPCItemName="DB541,INT8,6"  ItemType="READ" IsActive="false"/>
+      <OPCItem ItemName="CraneMode" ClientHandler="5" OPCItemName="DB541,INT4,1"  ItemType="READ" IsActive="false"/>
+      <!--堆垛机狀態-->
+      <OPCItem ItemName="CraneState1" ClientHandler="6" OPCItemName="DB541,INT46,1"  ItemType="READ" IsActive="false"/>
+      <!--堆垛机货叉-->
+      <OPCItem ItemName="CraneFork1" ClientHandler="7" OPCItemName="DB541,INT16,1"  ItemType="READ" IsActive="false"/>
       <!--任务号-->
-      <OPCItem ItemName="CraneTaskNo" ClientHandler="11" OPCItemName="DB541,DINT20,2"  ItemType="READ" IsActive="false"/>
+      <OPCItem ItemName="CraneTaskNo1" ClientHandler="8" OPCItemName="DB541,CHAR62,20"  ItemType="READ" IsActive="false"/>
+      <!--堆垛机负载-->
+      <OPCItem ItemName="CraneLoad1" ClientHandler="9" OPCItemName="DB541,INT8,1"  ItemType="READ" IsActive="false"/>
+
+
+      <!--堆垛机狀態-->
+      <OPCItem ItemName="CraneState2" ClientHandler="16" OPCItemName="DB541,INT58,1"  ItemType="READ" IsActive="false"/>
+      <!--堆垛机货叉-->
+      <OPCItem ItemName="CraneFork2" ClientHandler="17" OPCItemName="DB541,INT18,1"  ItemType="READ" IsActive="false"/>
+      <!--任务号-->
+      <OPCItem ItemName="CraneTaskNo2" ClientHandler="18" OPCItemName="DB541,CHAR82,20"  ItemType="READ" IsActive="false"/>
+      <!--堆垛机负载-->
+      <OPCItem ItemName="CraneLoad2" ClientHandler="19" OPCItemName="DB541,INT10,1"  ItemType="READ" IsActive="false"/>
+      
+      
+      
+      <!--堆垛機位置-->
+      <OPCItem ItemName="CraneStation" ClientHandler="22" OPCItemName="DB541,INT12,2"  ItemType="READ" IsActive="false"/>
+
+      <OPCItem ItemName="AlarmCode" ClientHandler="23" OPCItemName="DB541,INT60,1"  ItemType="READ" IsActive="true"/>
+      <!--<OPCItem ItemName="CraneAlarmCode" ClientHandler="23" OPCItemName="DB541,INT60,1"  ItemType="READ" IsActive="false"/>-->
 
       <!--握手信号-->
-      <OPCItem ItemName="HandShake" ClientHandler="15" OPCItemName="DB540,INT0,1"  ItemType="WRITE"/>
-
-      <!--任务类型、起始地址、目标地址-->
-      <OPCItem ItemName="TaskAddress" ClientHandler="16" OPCItemName="DB540,INT4,19"  ItemType="WRITE"/>
+      <OPCItem ItemName="HandShake" ClientHandler="24" OPCItemName="DB540,INT0,1"  ItemType="WRITE"/>
+      <!--起始地址、目标地址-->
+      <OPCItem ItemName="TaskAddress1" ClientHandler="25" OPCItemName="DB540,INT8,6"  ItemType="WRITE"/>
       <!--任务号-->
-      <OPCItem ItemName="TaskNo" ClientHandler="17" OPCItemName="DB540,DINT42,2"  ItemType="WRITE"/>
+      <OPCItem ItemName="TaskNo1" ClientHandler="26" OPCItemName="DB540,CHAR54,20"  ItemType="WRITE"/>
       <!--任务标识-->
-      <OPCItem ItemName="WriteFinished" ClientHandler="18" OPCItemName="DB540,INT50,1"  ItemType="WRITE"/>
+      <OPCItem ItemName="TaskType1" ClientHandler="27" OPCItemName="DB540,INT20,1"  ItemType="WRITE"/>
+      
+      <!--起始地址、目标地址-->
+      <OPCItem ItemName="TaskAddress2" ClientHandler="28" OPCItemName="DB540,INT26,6"  ItemType="WRITE"/>
+      <!--任务号-->
+      <OPCItem ItemName="TaskNo2" ClientHandler="29" OPCItemName="DB540,CHAR74,20"  ItemType="WRITE"/>
+   
+      <OPCItem ItemName="TaskType2" ClientHandler="30" OPCItemName="DB540,INT38,1"  ItemType="WRITE"/>
+
+      <OPCItem ItemName="WriteFinished" ClientHandler="31" OPCItemName="DB540,INT50,1"  ItemType="WRITE"/>
+      <OPCItem ItemName="PLCCheck" ClientHandler="32" OPCItemName="DB540,INT52,1"  ItemType="READ" IsActive="true"/>
+      <!--<OPCItem ItemName="PLCCheck" ClientHandler="32" OPCItemName="DB540,INT52,1"  ItemType="READ" IsActive="false"/>-->
+      
+      <!--解警-->
+      <OPCItem ItemName="Reset" ClientHandler="41" OPCItemName="DB540,INT42,1"  ItemType="WRITE"/>
+      <!--急停-->
+      <OPCItem ItemName="Stop" ClientHandler="51" OPCItemName="DB540,INT40,1"  ItemType="WRITE"/>
+
     </OPCGroup>
   </OPCServer>
 </Config>
