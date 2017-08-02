@@ -83,25 +83,19 @@ namespace App.Dispatching.Process
                     object obj = ObjectUtil.GetObject(stateItem.State);
                     if (obj == null)
                         return;
-
-                    int taskIndex = int.Parse(stateItem.ItemName.Substring(stateItem.ItemName.Length - 1, 1));
-                    int TaskNo = int.Parse(obj.ToString());
                     string TaskFinish = obj.ToString();
-                    //if (TaskFinish.Equals("True") || TaskFinish.Equals("1"))
-                    if (TaskNo > 0)
-                    {                        
-                        //object[] objTaskNo = ObjectUtil.GetObjects(WriteToService(stateItem.Name, "CraneTaskNo"));                //int TaskNo = int.Parse(objTaskNo[taskIndex].ToString());
-                        
-                        //清除堆垛机任务号
-                        WriteToService(stateItem.Name, stateItem.ItemName, 0);
-                        //存储过程处理
-                        if (TaskNo>0)
-                        {
-                            Logger.Info(stateItem.ItemName + "完成标志,任务号:" + TaskNo);
-                            //更新任务状态
-                            DataParameter[] param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo) };
-                            bll.ExecNonQueryTran("WCS.Sp_TaskProcess", param);
-                        }
+                    if (TaskFinish.Equals("True") || TaskFinish.Equals("1"))
+                    {
+                        int taskIndex = int.Parse(stateItem.ItemName.Substring(stateItem.ItemName.Length - 1, 1));
+                        string TaskNo = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(stateItem.Name, "CraneTaskNo" + taskIndex)));
+
+                        if (TaskNo.Length == 0)
+                            return;
+                        Logger.Info(stateItem.ItemName + "完成标志,任务号:" + TaskNo);
+                        //更新任务状态
+                        DataParameter[] param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo) };
+                        bll.ExecNonQueryTran("WCS.Sp_TaskProcess", param);
+
                         DataParameter[] paras = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_Task.TaskNo='{0}'", TaskNo)) };
                         DataTable dt = bll.FillDataTable("WCS.SelectTask", paras);
 
@@ -132,6 +126,9 @@ namespace App.Dispatching.Process
                                 bll.ExecNonQuery("WCS.UpdateTaskStateByTaskNo", new DataParameter[] { new DataParameter("@State", 6), new DataParameter("@TaskNo", TaskNo) });
                             }
                         }
+                        sbyte[] ClearTaskNo = new sbyte[20];
+                        Util.ConvertStringChar.stringToBytes("", 20).CopyTo(ClearTaskNo, 0);
+                        WriteToService(stateItem.Name, "TaskNo" + taskIndex, ClearTaskNo);
                     }
                     break;
                 case "PLCCheck":
@@ -280,13 +277,13 @@ namespace App.Dispatching.Process
                 DataParameter[] param = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_Task.TaskType in ('12','13','14','15') and WCS_Task.State='0' and WCS_Task.CraneNo='{0}'", CraneNo)) };
                 DataTable dt = bll.FillDataTable("WCS.sp_GetOutStockTask", new DataParameter[] { new DataParameter("@AreaCode", AreaCode) });
 
-                //先找12，15在同一列的双任务
-                //找移库任务，执行
-                //找单一出库任务，拼双任务
-                //盘点任务，以同一列的货位下任务，不管是单个还是两个，都一次性下发执行，为了回原库位考虑
+                //先找12，15在同一列的双任务 100
+                //找移库任务，执行 101
+                //找单一出库任务，拼双任务，  深度为1为102；深度为2 为 103
+                //盘点任务，以同一列的货位下任务，不管是单个还是两个，都一次性下发执行，为了回原库位考虑 104
                 if (dt.Rows.Count > 0)
                 {
-                    if (dt.Rows[0]["Flag"].ToString() == "100")
+                    if (dt.Rows[0]["Flag"].ToString() == "100") 
                     {
                         DataRow[] drs = new DataRow[2];
                         drs[0] = dt.Rows[0];
@@ -319,9 +316,23 @@ namespace App.Dispatching.Process
                     }
                     else if (dt.Rows[0]["Flag"].ToString() == "103")
                     {
-                        DataRow[] drs = new DataRow[1];
-                        drs[0] = dt.Rows[0];
-                        Send2PLC(drs);
+                        string TaskNo = dt.Rows[0]["TaskNo"].ToString();
+                        string filter = string.Format("Flag='103' and TaskNo<>'{0}'", TaskNo);
+                        DataRow[] drs2 = dt.Select(filter, "TaskLevel");
+
+                        if (drs2.Length > 0)
+                        {
+                            DataRow[] drs = new DataRow[2];
+                            drs[0] = drs2[0];
+                            drs[1] = dt.Rows[0];
+                            Send2PLC(drs);
+                        }
+                        else
+                        {
+                            DataRow[] drs = new DataRow[1];
+                            drs[0] = dt.Rows[0];
+                            Send2PLC(drs);
+                        }
                     }
                     else if (dt.Rows[0]["Flag"].ToString() == "104")
                     {
@@ -472,76 +483,107 @@ namespace App.Dispatching.Process
                 }
                 if (drs.Length == 1)
                 {
-                    if (taskType == 11 || taskType == 14 || taskType == 16)
-                    {
-                        //下到B任务
-                        if (fromDepth == 2 && toDepth == 1)
-                        {
-                            TaskIndex = 2;
-                            TaskNo[1] = int.Parse(dr["TaskNo"].ToString());
-                            fStation[1] = dr["FromStation"].ToString();
-                            tStation[1] = dr["ToStation"].ToString();
-                            bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "B"), new DataParameter("@MergeTaskNo", TaskNo[1]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
-                        }
-                        else
-                        {
-                            //下到A任务
-                            TaskIndex = 1;
-                            fStation[0] = dr["FromStation"].ToString();
-                            tStation[0] = dr["ToStation"].ToString();
-                            TaskNo[0] = int.Parse(dr["TaskNo"].ToString());
-                            bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "A"), new DataParameter("@MergeTaskNo", TaskNo[0]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
-                        }
-                    }
-                    else
-                    {
-                        if (fromDepth == 2 || toDepth == 2)
-                        {
-                            //下到A任务
-                            TaskIndex = 1;
-                            fStation[0] = dr["FromStation"].ToString();
-                            tStation[0] = dr["ToStation"].ToString();
-                            TaskNo[0] = int.Parse(dr["TaskNo"].ToString());
-                            bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "A"), new DataParameter("@MergeTaskNo", TaskNo[0]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
 
-                        }
-                        else
-                        {
-                            TaskIndex = 2;
-                            fStation[1] = dr["FromStation"].ToString();
-                            tStation[1] = dr["ToStation"].ToString();
-                            TaskNo[1] = int.Parse(dr["TaskNo"].ToString());
-                            bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "B"), new DataParameter("@MergeTaskNo", TaskNo[1]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
-
-                        }
-                    }
+                    TaskIndex = 1;
+                    TaskNo[0] = int.Parse(dr["TaskNo"].ToString());
+                    fStation[0] = dr["FromStation"].ToString();
+                    tStation[0] = dr["ToStation"].ToString();
+                    bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "B"), new DataParameter("@MergeTaskNo", TaskNo[0]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
                 }
                 else
                 {
+
                     fStation[i] = dr["FromStation"].ToString();
                     tStation[i] = dr["ToStation"].ToString();
-                    if (i == 0)
-                    {
-                        TaskIndex = 1;
-                        TaskNo[0] = int.Parse(dr["TaskNo"].ToString());
-                        bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "A"), new DataParameter("@MergeTaskNo", TaskNo[0]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
 
+                    int fromDepth1 = int.Parse(drs[0]["FromStation"].ToString().Substring(9, 1));
+                    int fromDepth2 = int.Parse(drs[1]["FromStation"].ToString().Substring(9, 1));
+                    if (fromDepth1 == 2 && fromDepth2 == 2)
+                    {
+                        if (i == 0)
+                        {
+
+                            TaskIndex = 2;
+                            toStation = "0050000011"; //修改出库口位置
+                            
+                            TaskNo[1] = int.Parse(dr["TaskNo"].ToString());
+                            fStation[1] = dr["FromStation"].ToString();
+                            tStation[1] = toStation;
+                            bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "A"), new DataParameter("@MergeTaskNo", TaskNo[0]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
+                        }
+                        else
+                        {
+                            TaskIndex = 1;
+                            TaskNo[0] = int.Parse(dr["TaskNo"].ToString());
+                            fStation[0] = dr["FromStation"].ToString();
+                            tStation[0] = dr["ToStation"].ToString();
+                            bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "B"), new DataParameter("@MergeTaskNo", TaskNo[1]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
+                        }
                     }
                     else
                     {
-                        TaskIndex = 2;
-                        TaskNo[1] = int.Parse(dr["TaskNo"].ToString());
-                        bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "B"), new DataParameter("@MergeTaskNo", TaskNo[0]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
 
+                        if (taskType == 11 || (taskType == 14 && state == "2") || taskType == 16)
+                        {
+                            if (fromDepth == 2)
+                            {
+                                TaskIndex = 2;
+                                TaskNo[1] = int.Parse(dr["TaskNo"].ToString());
+                                fStation[1] = dr["FromStation"].ToString();
+                                tStation[1] = dr["ToStation"].ToString();
+                                bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "A"), new DataParameter("@MergeTaskNo", TaskNo[0]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
+                            }
+                            else
+                            {
+                                TaskIndex = 1;
+                                TaskNo[0] = int.Parse(dr["TaskNo"].ToString());
+                                fStation[0] = dr["FromStation"].ToString();
+                                tStation[0] = dr["ToStation"].ToString();
+                                bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "B"), new DataParameter("@MergeTaskNo", TaskNo[1]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
+                            }
+                        }
+                        else
+                        {
+                            if (fromDepth == 2)
+                            {
+                                TaskIndex = 1;
+                                TaskNo[0] = int.Parse(dr["TaskNo"].ToString());
+                                fStation[0] = dr["FromStation"].ToString();
+                                tStation[0] = dr["ToStation"].ToString();
+                                bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "B"), new DataParameter("@MergeTaskNo", TaskNo[1]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
+                            }
+                            else
+                            {
+                                TaskIndex = 2;
+                                TaskNo[1] = int.Parse(dr["TaskNo"].ToString());
+                                fStation[1] = dr["FromStation"].ToString();
+                                tStation[1] = dr["ToStation"].ToString();
+                                bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "A"), new DataParameter("@MergeTaskNo", TaskNo[0]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
+                            }
+                        }
                     }
+                    //if (i == 0)
+                    //{
+                    //    TaskIndex = 2;
+                    //    TaskNo[0] = int.Parse(dr["TaskNo"].ToString());
+                    //    bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "B"), new DataParameter("@MergeTaskNo", TaskNo[0]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
+
+                    //}
+                    //else
+                    //{
+                    //    TaskIndex = 1;
+                    //    TaskNo[1] = int.Parse(dr["TaskNo"].ToString());
+                    //    bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "A"), new DataParameter("@MergeTaskNo", TaskNo[0]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
+
+                    //}
                 }
 
                 int[] cellAddr = new int[6];
-                cellAddr[0] = int.Parse(fromStation.Substring(4, 3));
-                cellAddr[1] = int.Parse(fromStation.Substring(7, 3));
+                cellAddr[0] = int.Parse(fromStation.Substring(3, 3));
+                cellAddr[1] = int.Parse(fromStation.Substring(6, 3));
                 cellAddr[2] = GetPLCShelf(fromStation);
-                cellAddr[3] = int.Parse(toStation.Substring(4, 3));
-                cellAddr[4] = int.Parse(toStation.Substring(7, 3));
+                cellAddr[3] = int.Parse(toStation.Substring(3, 3));
+                cellAddr[4] = int.Parse(toStation.Substring(6, 3));
                 cellAddr[5] = GetPLCShelf(toStation);
                 //寫入任務號完成之後,讀取任務號是否寫入一致!
                 sbyte[] sTaskNo = new sbyte[20];

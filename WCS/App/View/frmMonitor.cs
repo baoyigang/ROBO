@@ -26,6 +26,7 @@ namespace App.View
         Dictionary<int, string> dicCraneFork = new Dictionary<int, string>();
         Dictionary<int, string> dicCraneStatus = new Dictionary<int, string>();
         Dictionary<int, string> dicCraneAction = new Dictionary<int, string>();
+        Dictionary<int, string> dicCraneState = new Dictionary<int, string>();
 
         Dictionary<int, string> dicCarFork = new Dictionary<int, string>();
         Dictionary<int, string> dicCarStatus = new Dictionary<int, string>();
@@ -197,7 +198,7 @@ namespace App.View
 
                         this.txtTaskNo4.Text = miniload.TaskANo;
                         this.txtTaskNo5.Text = miniload.TaskBNo;
-                        this.txtStatus4.Text = dicCraneStatus[int.Parse(miniload.Status.ToString())];
+                        this.txtStatus4.Text = dicCraneState[int.Parse(miniload.Status.ToString())];
                         this.txtActionMode4.Text = miniload.Mode==1 ? dicCraneAction[1] : dicCraneAction[0];
                         this.txtRow4.Text = "005";
                         this.txtColumn4.Text = miniload.Station[0].ToString();
@@ -553,6 +554,24 @@ namespace App.View
         {
             dicCraneFork.Add(0, "非原点");
             dicCraneFork.Add(1, "原点");
+
+
+            dicCraneState.Add(0, "未知");
+            dicCraneState.Add(1, "空閒");
+            dicCraneState.Add(2, "檢查任務數據");
+            dicCraneState.Add(3, "定位到取貨位");
+            dicCraneState.Add(4, "取貨中");
+            dicCraneState.Add(7, "取貨完成");
+            dicCraneState.Add(8, "等待調度柜允許");
+            dicCraneState.Add(9, "移動到放貨位置");
+            dicCraneState.Add(10, "放貨中");
+            dicCraneState.Add(13, "搬運完成");
+            dicCraneState.Add(14, "空載避讓");
+            dicCraneState.Add(15, "檢查任務數據");
+            dicCraneState.Add(20, "檢查源位置");
+            dicCraneState.Add(21, "檢查目標位置");
+            dicCraneState.Add(99, "報警");
+
 
             dicCraneStatus.Add(0, "空闲");
             dicCraneStatus.Add(1, "等待");
