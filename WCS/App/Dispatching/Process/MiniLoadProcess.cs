@@ -309,9 +309,22 @@ namespace App.Dispatching.Process
                         }
                         else
                         {
-                            DataRow[] drs = new DataRow[1];
-                            drs[0] = dt.Rows[0];
-                            Send2PLC(drs);
+                            string TaskNo = dt.Rows[0]["TaskNo"].ToString();
+                            filter = string.Format("Flag='102' and TaskNo<>'{0}'", TaskNo);
+                            DataRow[] drs3 = dt.Select(filter, "TaskLevel");
+                            if (drs3.Length > 0)
+                            {
+                                DataRow[] drs = new DataRow[2];
+                                drs[0] = drs3[0];
+                                drs[1] = dt.Rows[0];
+                                Send2PLC(drs);
+                            }
+                            else
+                            {
+                                DataRow[] drs = new DataRow[1];
+                                drs[0] = dt.Rows[0];
+                                Send2PLC(drs);
+                            }
                         }
                     }
                     else if (dt.Rows[0]["Flag"].ToString() == "103")
@@ -495,10 +508,30 @@ namespace App.Dispatching.Process
 
                     fStation[i] = dr["FromStation"].ToString();
                     tStation[i] = dr["ToStation"].ToString();
-
                     int fromDepth1 = int.Parse(drs[0]["FromStation"].ToString().Substring(9, 1));
                     int fromDepth2 = int.Parse(drs[1]["FromStation"].ToString().Substring(9, 1));
-                    if (fromDepth1 == 2 && fromDepth2 == 2)
+                    if (fromDepth1 == 1 && fromDepth2 == 1)
+                    {
+                        if (i == 0)
+                        {
+                            TaskIndex = 2;
+                            TaskNo[1] = int.Parse(dr["TaskNo"].ToString());
+                            fStation[1] = dr["FromStation"].ToString();
+                            tStation[1] = toStation;
+                            bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "A"), new DataParameter("@MergeTaskNo", TaskNo[0]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
+                        }
+                        else
+                        {
+                            TaskIndex = 1;
+                            toStation = "0050000012"; //修改出库口位置
+                            TaskNo[0] = int.Parse(dr["TaskNo"].ToString());
+                            fStation[0] = dr["FromStation"].ToString();
+                            tStation[0] = dr["ToStation"].ToString();
+                            bll.ExecNonQuery("WCS.UpdateTaskAB", new DataParameter[] { new DataParameter("@TaskAB", "B"), new DataParameter("@MergeTaskNo", TaskNo[1]), new DataParameter("@TaskNo", dr["TaskNo"].ToString()) });
+                        }
+                    }
+
+                    else if (fromDepth1 == 2 && fromDepth2 == 2)
                     {
                         if (i == 0)
                         {
