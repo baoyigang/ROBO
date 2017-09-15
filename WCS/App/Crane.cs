@@ -121,9 +121,10 @@ namespace App
     public class Miniload
     {
         public string MiniloadNo { get; set; }
-        public object[] Status { get; set; }
-        public bool Mode { get; set; }
-        public bool ForkStatus { get; set; }
+        public object Status { get; set; }
+        public object[] Station { get; set; }
+        public int Mode { get; set; }
+        public int ForkStatus { get; set; }
         public string TaskANo { get; set; }
         public string TaskBNo { get; set; }
         public int AlarmCode { get; set; }

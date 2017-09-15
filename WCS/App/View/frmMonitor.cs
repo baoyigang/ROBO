@@ -26,6 +26,7 @@ namespace App.View
         Dictionary<int, string> dicCraneFork = new Dictionary<int, string>();
         Dictionary<int, string> dicCraneStatus = new Dictionary<int, string>();
         Dictionary<int, string> dicCraneAction = new Dictionary<int, string>();
+        Dictionary<int, string> dicCraneState = new Dictionary<int, string>();
 
         Dictionary<int, string> dicCarFork = new Dictionary<int, string>();
         Dictionary<int, string> dicCarStatus = new Dictionary<int, string>();
@@ -129,15 +130,17 @@ namespace App.View
                 lock (dicMiniload[miniloadNo])
                 {
                     if (e.ItemName.IndexOf("Status") >= 0)
-                        dicMiniload[miniloadNo].Status = e.States;
+                        dicMiniload[miniloadNo].Status = e.State;
+                    if (e.ItemName.IndexOf("Station") >= 0)
+                        dicMiniload[miniloadNo].Station = e.States;
                     else if (e.ItemName.IndexOf("Mode") >= 0)
-                        dicMiniload[miniloadNo].Mode = bool.Parse(e.State.ToString());
+                        dicMiniload[miniloadNo].Mode = int.Parse(e.State.ToString());
                     else if (e.ItemName.IndexOf("ForkStatus") >= 0)
-                        dicMiniload[miniloadNo].ForkStatus = bool.Parse(e.State.ToString());
+                        dicMiniload[miniloadNo].ForkStatus = int.Parse(e.State.ToString());
                     else if (e.ItemName.IndexOf("TaskANo") >= 0)
-                        dicMiniload[miniloadNo].TaskANo = e.State.ToString();
+                        dicMiniload[miniloadNo].TaskANo = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(e.States));
                     else if (e.ItemName.IndexOf("TaskBNo") >= 0)
-                        dicMiniload[miniloadNo].TaskBNo = e.State.ToString();
+                        dicMiniload[miniloadNo].TaskBNo = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(e.States));
                     else if (e.ItemName.IndexOf("AlarmCode") >= 0)
                         dicMiniload[miniloadNo].AlarmCode = int.Parse(e.State.ToString());
                     Miniloads.MiniloadInfo(dicMiniload[miniloadNo]);
@@ -184,9 +187,9 @@ namespace App.View
                         Point P2 = InitialP4;
                         if (miniload.Status == null)
                             return;
-                        if (miniload.Status.Length < 3)
+                        if (miniload.Station.Length < 2)
                             return;
-                        int miniloadColumn = int.Parse(miniload.Status[1].ToString());
+                        int miniloadColumn = int.Parse(miniload.Station[0].ToString());
                         if (miniloadColumn < 37)
                         {
                             P2 = dicMiniloadLocation[miniloadColumn];
@@ -195,12 +198,12 @@ namespace App.View
 
                         this.txtTaskNo4.Text = miniload.TaskANo;
                         this.txtTaskNo5.Text = miniload.TaskBNo;
-                        this.txtStatus4.Text = dicCraneStatus[int.Parse(miniload.Status[0].ToString())];
-                        this.txtActionMode4.Text = miniload.Mode ? dicCraneAction[1] : dicCraneAction[0];
+                        this.txtStatus4.Text = dicCraneState[int.Parse(miniload.Status.ToString())];
+                        this.txtActionMode4.Text = miniload.Mode==1 ? dicCraneAction[1] : dicCraneAction[0];
                         this.txtRow4.Text = "005";
-                        this.txtColumn4.Text = miniload.Status[1].ToString();
-                        this.txtLayer4.Text = miniload.Status[2].ToString();
-                        this.txtForkStatus4.Text = miniload.ForkStatus?dicCraneFork[0]:dicCraneFork[1];
+                        this.txtColumn4.Text = miniload.Station[0].ToString();
+                        this.txtLayer4.Text = miniload.Station[1].ToString();
+                        this.txtForkStatus4.Text = miniload.ForkStatus == 0 ? dicCraneFork[1] : dicCraneFork[0];
                         this.txtAlarmCode4.Text = miniload.AlarmCode.ToString();
                         if (miniload.AlarmCode > 0)
                         {
@@ -211,7 +214,7 @@ namespace App.View
                                 this.txtAlarmDesc4.Text = "设备未知错误！";
                         }
                         else
-                            this.txtAlarmDesc2.Text = "";
+                            this.txtAlarmDesc4.Text = "";
                     }
                     
                 }
@@ -551,6 +554,24 @@ namespace App.View
         {
             dicCraneFork.Add(0, "非原点");
             dicCraneFork.Add(1, "原点");
+
+
+            dicCraneState.Add(0, "未知");
+            dicCraneState.Add(1, "空閒");
+            dicCraneState.Add(2, "檢查任務數據");
+            dicCraneState.Add(3, "定位到取貨位");
+            dicCraneState.Add(4, "取貨中");
+            dicCraneState.Add(7, "取貨完成");
+            dicCraneState.Add(8, "等待調度柜允許");
+            dicCraneState.Add(9, "移動到放貨位置");
+            dicCraneState.Add(10, "放貨中");
+            dicCraneState.Add(13, "搬運完成");
+            dicCraneState.Add(14, "空載避讓");
+            dicCraneState.Add(15, "檢查任務數據");
+            dicCraneState.Add(20, "檢查源位置");
+            dicCraneState.Add(21, "檢查目標位置");
+            dicCraneState.Add(99, "報警");
+
 
             dicCraneStatus.Add(0, "空闲");
             dicCraneStatus.Add(1, "等待");
