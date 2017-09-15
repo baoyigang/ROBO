@@ -26,7 +26,6 @@ namespace App.Dispatching.Process
         }
         protected override void StateChanged(StateItem stateItem, IProcessDispatcher dispatcher)
         {
-
             object obj = ObjectUtil.GetObject(stateItem.State);
             isRead = false;
             string TaskFinish = obj.ToString();

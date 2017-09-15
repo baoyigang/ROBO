@@ -343,7 +343,6 @@ namespace App
 
         private void toolStripButton_StartCrane_Click(object sender, EventArgs e)
         {
-
             if (this.toolStripButton_StartCrane.Text == "联机自动")
             {
                 if (BLL.Server.GetAreaCode() == "001")

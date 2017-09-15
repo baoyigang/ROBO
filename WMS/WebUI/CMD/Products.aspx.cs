@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using Util;
+using System.Data.OleDb;
 
 public partial class WebUI_CMD_Products : BasePage
 {
@@ -28,7 +29,9 @@ public partial class WebUI_CMD_Products : BasePage
 
             writeJsvar(FormID, SqlCmd, "");
         }
-
+        //PostBackTrigger trigger = new PostBackTrigger();
+        //trigger.ControlID = btnExcel.UniqueID;
+        //UpdatePanel1.Triggers.Add(trigger);
         ScriptManager.RegisterStartupScript(this.UpdatePanel1, this.UpdatePanel1.GetType(), "Resize", "resize();", true);
 
 
@@ -134,6 +137,18 @@ public partial class WebUI_CMD_Products : BasePage
     {
 
     }
+    protected void btnExcel_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            ViewState["filter"] = filter;
+            ViewState["CurrentPage"] = 1;
+            SetBtnEnabled(int.Parse(ViewState["CurrentPage"].ToString()), SqlCmd, ViewState["filter"].ToString(), pageSize, GridView1, btnFirst, btnPre, btnNext, btnLast, btnToPage, lblCurrentPage, this.UpdatePanel1);
 
-
+        }
+        catch (Exception exp)
+        {
+            JScript.ShowMessage(this.UpdatePanel1, exp.Message);
+        }
+    }
 }
