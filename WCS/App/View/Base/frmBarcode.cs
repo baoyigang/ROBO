@@ -213,6 +213,21 @@ namespace App.View.Base
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string SBarcode = textBox1.Text;
+
+                dgvMain.FirstDisplayedScrollingRowIndex = int.Parse(SBarcode.Substring(1)) - 1;
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+
 
 
     }
