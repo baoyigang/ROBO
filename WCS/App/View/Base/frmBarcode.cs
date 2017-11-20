@@ -29,6 +29,7 @@ namespace App.View.Base
         {
             DataTable dt = bll.FillDataTable("CMD.SelectPallet", new DataParameter[] { new DataParameter("{0}", "AreaCode='002'") });
             bsMain.DataSource = dt;
+            DataTable dt1 = new DataTable();
         }
 
         private void frmBarcode_Load(object sender, EventArgs e)
