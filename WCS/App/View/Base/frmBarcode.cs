@@ -36,7 +36,6 @@ namespace App.View.Base
             for (int i = 0; i < this.dgvMain.Columns.Count; i++)
                 ((DataGridViewAutoFilterTextBoxColumn)this.dgvMain.Columns[i]).FilteringEnabled = true;
         }
-        //TEST
         private void dgvMain_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
