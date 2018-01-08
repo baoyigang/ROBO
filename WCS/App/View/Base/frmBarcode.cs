@@ -200,7 +200,7 @@ namespace App.View.Base
                 var dataSelect = dgvMain.SelectedRows;
                 foreach (DataGridViewRow row in dataSelect)
                 {
-                    if (row.Cells[5].Value == "1")
+                    if (row.Cells[5].Value.ToString() == "1")
                     {
                         row.Cells[5].Value = "0";
                     }
