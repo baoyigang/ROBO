@@ -29,11 +29,16 @@ namespace App.View.Base
         {
             DataTable dt = bll.FillDataTable("CMD.SelectPallet", new DataParameter[] { new DataParameter("{0}", "AreaCode='002'") });
             bsMain.DataSource = dt;
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                dgvMain.Rows[i].Cells[5].Value = "0";
+            }
+            
         }
 
         private void frmBarcode_Load(object sender, EventArgs e)
         {
-            for (int i = 0; i < this.dgvMain.Columns.Count; i++)
+            for (int i = 0; i < this.dgvMain.Columns.Count - 1 ; i++)
                 ((DataGridViewAutoFilterTextBoxColumn)this.dgvMain.Columns[i]).FilteringEnabled = true;
         }
         private void dgvMain_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)

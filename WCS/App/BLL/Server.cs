@@ -50,5 +50,14 @@ namespace BLL
             confg.Release();
             return AreaCode;
         }
+        public static string GetIsShowFlag()
+        {
+            MCP.Config.Configuration confg = new MCP.Config.Configuration();
+            confg.Load("Config.xml");
+            string IsShowFlag = confg.Attributes["IsShowFlag"];
+            confg.Release();
+            return IsShowFlag;
+        }
+
     }
 }

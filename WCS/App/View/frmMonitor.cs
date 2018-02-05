@@ -74,7 +74,8 @@ namespace App.View
                 System.Threading.Thread.Sleep(300);
                 Cars.OnCar += new CarEventHandler(Monitor_OnCar);
                 System.Threading.Thread.Sleep(300);
-                Miniloads.OnMiniload += new MiniloadEventHandler(Monitor_OnMiniload);
+                if (BLL.Server.GetIsShowFlag() == "1")
+                    Miniloads.OnMiniload += new MiniloadEventHandler(Monitor_OnMiniload);
                 System.Threading.Thread.Sleep(300);
                 Cranes.OnCrane += new CraneEventHandler(Monitor_OnCrane);
                 for (int i = 0; i < Servers.Length; i++)
@@ -95,7 +96,7 @@ namespace App.View
                     {
                         opcServer.Groups.DefaultGroup.OnDataChanged += new OPCGroup.DataChangedEventHandler(Car_OnDataChanged);
                     }
-                    if (Servers[i].Name == "MiniloadServer")
+                    if (Servers[i].Name == "MiniloadServer" && BLL.Server.GetIsShowFlag()=="1")
                     {
                         opcServer.Groups.DefaultGroup.OnDataChanged += new OPCGroup.DataChangedEventHandler(Miniload_OnDataChanged);
                     }

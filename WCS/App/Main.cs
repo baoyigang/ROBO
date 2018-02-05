@@ -350,7 +350,10 @@ namespace App
                 else
                 {
                     context.ProcessDispatcher.WriteToProcess("CarProcess", "Run", 1);
-                    context.ProcessDispatcher.WriteToProcess("MiniLoadProcess", "Run", 1);
+                    if (BLL.Server.GetIsShowFlag()=="1")
+                    {
+                        context.ProcessDispatcher.WriteToProcess("MiniLoadProcess", "Run", 1);
+                    }
                 }
                 this.toolStripButton_StartCrane.Image = App.Properties.Resources.process_accept;
                 this.toolStripButton_StartCrane.Text = "脱机";

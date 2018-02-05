@@ -42,12 +42,6 @@
             this.pnlContent = new System.Windows.Forms.Panel();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.dgvMain = new System.Windows.Forms.DataGridView();
-            this.colTaskNo = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.Column1 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.colState = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.Column8 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.Column4 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.Select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.pnlTool = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -57,6 +51,12 @@
             this.toolStripButton_Close = new System.Windows.Forms.ToolStripButton();
             this.pnlBottom = new System.Windows.Forms.Panel();
             this.barcodeControl1 = new Cobainsoft.Windows.Forms.BarcodeControl();
+            this.colTaskNo = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.Column1 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.colState = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.Column8 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.Column4 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.Select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.bsMain)).BeginInit();
             this.pnlMain.SuspendLayout();
             this.pnlContent.SuspendLayout();
@@ -175,65 +175,6 @@
             this.dgvMain.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMain_CellContentClick);
             this.dgvMain.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvMain_CellMouseClick);
             // 
-            // colTaskNo
-            // 
-            this.colTaskNo.DataPropertyName = "WarehouseCode";
-            this.colTaskNo.FilteringEnabled = false;
-            this.colTaskNo.HeaderText = "仓库编号";
-            this.colTaskNo.Name = "colTaskNo";
-            this.colTaskNo.ReadOnly = true;
-            this.colTaskNo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // Column1
-            // 
-            this.Column1.DataPropertyName = "WarehouseName";
-            this.Column1.FilteringEnabled = false;
-            this.Column1.HeaderText = "仓库名称";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column1.Width = 150;
-            // 
-            // colState
-            // 
-            this.colState.DataPropertyName = "AreaCode";
-            this.colState.FilteringEnabled = false;
-            this.colState.HeaderText = "库区编号";
-            this.colState.Name = "colState";
-            this.colState.ReadOnly = true;
-            this.colState.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // Column8
-            // 
-            this.Column8.DataPropertyName = "AreaName";
-            this.Column8.FilteringEnabled = false;
-            this.Column8.HeaderText = "库区名称";
-            this.Column8.Name = "Column8";
-            this.Column8.ReadOnly = true;
-            this.Column8.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column8.Width = 150;
-            // 
-            // Column4
-            // 
-            this.Column4.DataPropertyName = "PalletBarcode";
-            this.Column4.FilteringEnabled = false;
-            this.Column4.HeaderText = "条码编号";
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            this.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column4.Width = 120;
-            // 
-            // Select
-            // 
-            this.Select.FalseValue = "0";
-            this.Select.HeaderText = "打印";
-            this.Select.Name = "Select";
-            this.Select.ReadOnly = true;
-            this.Select.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Select.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.Select.TrueValue = "1";
-            this.Select.Width = 138;
-            // 
             // pnlTool
             // 
             this.pnlTool.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
@@ -341,6 +282,66 @@
             this.barcodeControl1.StretchText = false;
             this.barcodeControl1.TabIndex = 6;
             // 
+            // colTaskNo
+            // 
+            this.colTaskNo.DataPropertyName = "WarehouseCode";
+            this.colTaskNo.FilteringEnabled = false;
+            this.colTaskNo.HeaderText = "仓库编号";
+            this.colTaskNo.Name = "colTaskNo";
+            this.colTaskNo.ReadOnly = true;
+            this.colTaskNo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "WarehouseName";
+            this.Column1.FilteringEnabled = false;
+            this.Column1.HeaderText = "仓库名称";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column1.Width = 150;
+            // 
+            // colState
+            // 
+            this.colState.DataPropertyName = "AreaCode";
+            this.colState.FilteringEnabled = false;
+            this.colState.HeaderText = "库区编号";
+            this.colState.Name = "colState";
+            this.colState.ReadOnly = true;
+            this.colState.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // Column8
+            // 
+            this.Column8.DataPropertyName = "AreaName";
+            this.Column8.FilteringEnabled = false;
+            this.Column8.HeaderText = "库区名称";
+            this.Column8.Name = "Column8";
+            this.Column8.ReadOnly = true;
+            this.Column8.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column8.Width = 150;
+            // 
+            // Column4
+            // 
+            this.Column4.DataPropertyName = "PalletBarcode";
+            this.Column4.FilteringEnabled = false;
+            this.Column4.HeaderText = "条码编号";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column4.Width = 120;
+            // 
+            // Select
+            // 
+            this.Select.FalseValue = "0";
+            this.Select.HeaderText = "打印";
+            this.Select.IndeterminateValue = "";
+            this.Select.Name = "Select";
+            this.Select.ReadOnly = true;
+            this.Select.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Select.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Select.TrueValue = "1";
+            this.Select.Width = 138;
+            // 
             // frmBarcode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -382,14 +383,14 @@
         private Cobainsoft.Windows.Forms.Barcode barcode1;
         private Cobainsoft.Windows.Forms.BarcodeControl barcodeControl1;
         private System.Windows.Forms.DataGridView dgvMain;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox1;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colTaskNo;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column1;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colState;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column8;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Select;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox1;
     }
 }

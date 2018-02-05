@@ -62,17 +62,15 @@
     <Reference Include="IServices">
       <HintPath>..\..\..\Lib\IServices.dll</HintPath>
     </Reference>
-    <Reference Include="MCP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\MCP.dll</HintPath>
+    <Reference Include="MCP">
+      <HintPath>..\..\..\..\LIB\MCP.dll</HintPath>
     </Reference>
     <Reference Include="MCP.Service.Siemens, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Lib\MCP.Service.Siemens.dll</HintPath>
     </Reference>
-    <Reference Include="MCP.Service.TCP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Lib\MCP.Service.TCP.dll</HintPath>
+    <Reference Include="MCP.Service.TCP">
+      <HintPath>..\..\..\LIB\MCP.Service.TCP.dll</HintPath>
     </Reference>
     <Reference Include="OPC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -103,6 +101,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="TCP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\LIB\TCP.dll</HintPath>
+    </Reference>
     <Reference Include="Util, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Lib\Util.dll</HintPath>
